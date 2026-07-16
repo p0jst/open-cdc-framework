@@ -15,10 +15,9 @@ Each of these was avoidable with the kind of structured, practitioner-written gu
 
 ## Who I am
 
-- Frederik B. Krogsgaard
-- Senior Manager, Norlys Cyber Defence Center
+- Frederik B. Krogsgaard, Senior Manager @ Norlys Cyber Defence Center
 - Certifications: SANS LDR553 Cyber Incident Management, LDR551 Building and Leading Security Operations Centers, FOR500 Windows Forensics, MITRE Application of the MITRE ATT&CK Framework, Investigation Theory, Effective Information Security Writing, Kusto Query Language (KQL) for Security Analyst and many, many more...
-- https://www.linkedin.com/in/frederikbogeskov/
+- Feel free to reach out at https://www.linkedin.com/in/frederikbogeskov/
 
 This is a personal, community-driven project. It is not affiliated with, endorsed by, or the position of my employer, nor of NIST, ENISA, MITRE, or any authority referenced in it.
 

@@ -81,7 +81,6 @@ This framework synthesises and builds upon the following publicly available work
 
 ## How to cite this framework
 
-> Open CDC Framework (OCDF), version 0.1, 2026. Licensed CC BY 4.0. Available at: [repository URL].
 
 ## Corrections
 

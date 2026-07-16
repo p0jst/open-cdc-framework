@@ -34,7 +34,7 @@ Establish the mandate, accountability, and decision-making structures that let t
 - **Executive sponsor** (board member or C-level) — owns cyber risk acceptance.
 - **CISO / Head of Security** — owns the policy framework.
 - **CDC Director / SOC Manager** — owns the charter execution and reports maturity.
-- **Legal / DPO** — owns regulatory interpretation (GDPR Art. 33 breach notification, NIS2 reporting).
+- **GRC / Legal / DPO** — owns regulatory interpretation (GDPR Art. 33 breach notification, NIS2 reporting).
 
 ## Maturity criteria
 
