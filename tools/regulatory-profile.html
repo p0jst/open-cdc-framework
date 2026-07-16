@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCDF — Regulatory Profile Selector</title>
+<style>
+  :root{
+    --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
+    --eu:#123a6d; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
+    --ok:#1f6f43; --chipbg:#f1efe8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.55}
+  header{background:var(--eu);color:#fff;padding:26px 28px;border-bottom:4px solid var(--accent)}
+  header h1{margin:0;font-size:1.35rem;font-weight:600;letter-spacing:.02em}
+  header p{margin:6px 0 0;max-width:70ch;color:#cfdcef;font-size:.92rem}
+  .doc-id{font-family:ui-monospace,Consolas,monospace;font-size:.75rem;color:#9db6d8;letter-spacing:.12em;text-transform:uppercase}
+  main{display:grid;grid-template-columns:300px 1fr;gap:0;max-width:1200px;margin:0 auto}
+  /* ---- selector panel ---- */
+  aside{border-right:1px solid var(--line);padding:22px 20px;position:sticky;top:0;align-self:start;
+    max-height:100vh;overflow:auto;background:#f6f4ee}
+  aside h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:18px 0 8px}
+  aside h2:first-child{margin-top:0}
+  .law{display:flex;gap:9px;align-items:flex-start;padding:7px 8px;border-radius:6px;cursor:pointer}
+  .law:hover{background:#edeae1}
+  .law input{margin-top:3px;accent-color:var(--eu)}
+  .law b{font-weight:600;font-size:.9rem;display:block}
+  .law small{color:var(--muted);font-size:.78rem;line-height:1.35;display:block}
+  .panel-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .panel-actions button{border:1px solid var(--line);background:#fff;border-radius:6px;
+    padding:6px 11px;font-size:.8rem;cursor:pointer;color:var(--ink)}
+  .panel-actions button:hover{border-color:var(--eu);color:var(--eu)}
+  .panel-actions button:focus-visible, .law input:focus-visible{outline:2px solid var(--eu);outline-offset:2px}
+  #status{margin-top:14px;font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
+  #status b{color:var(--ink)}
+  /* ---- content ---- */
+  article{padding:26px 34px 70px;min-width:0}
+  article h2{font-size:1.08rem;border-bottom:2px solid var(--eu);padding-bottom:6px;margin:34px 0 12px;font-weight:650}
+  article h2:first-child{margin-top:0}
+  article h3{font-size:.95rem;margin:22px 0 6px}
+  table{border-collapse:collapse;width:100%;font-size:.86rem;margin:10px 0}
+  th{background:var(--eu-soft);text-align:left;font-weight:600}
+  th,td{border:1px solid var(--line-soft);padding:7px 10px;vertical-align:top}
+  /* signature element: law stamps */
+  .stamp{display:inline-block;font-family:ui-monospace,Consolas,monospace;font-size:.68rem;
+    letter-spacing:.06em;border:1.5px solid var(--eu);color:var(--eu);border-radius:3px;
+    padding:1px 6px;margin-left:6px;text-transform:uppercase;background:#fff;white-space:nowrap}
+  .stamp.dk{border-color:var(--accent);color:var(--accent)}
+  [data-law]{transition:opacity .15s ease}
+  .law-hidden{display:none !important}
+  .hidden-note{font-size:.78rem;color:var(--muted);font-style:italic;
+    border-left:3px solid var(--line);padding:4px 10px;margin:8px 0;background:#f4f2ec}
+  .callout{border:1px solid var(--line);border-left:4px solid var(--eu);background:#fff;
+    padding:12px 16px;margin:12px 0;border-radius:0 6px 6px 0;font-size:.9rem}
+  .callout.dk{border-left-color:var(--accent)}
+  footer{max-width:1200px;margin:0 auto;padding:18px 34px;border-top:1px solid var(--line);
+    font-size:.78rem;color:var(--muted)}
+  @media (max-width:820px){ main{grid-template-columns:1fr} aside{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)} article{padding:22px 18px 60px} }
+  @media print{
+    aside,.panel-actions,#status,.hidden-note{display:none !important}
+    header{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
+    header p,.doc-id{color:var(--muted)}
+    body{font-size:12px}
+  }
+  @media (prefers-reduced-motion:reduce){ [data-law]{transition:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="doc-id">Open CDC Framework · Tool 01</div>
+  <h1>Regulatory Profile Selector</h1>
+  <p>Tick the laws that apply to your organisation. Every regulatory reference in this document shows or hides
+     to match your profile. Use <em>Print / save PDF</em> to export your tailored version.
+     Orientation only — not legal advice.</p>
+</header>
+
+<main>
+<aside aria-label="Law selection">
+  <h2>EU-wide instruments</h2>
+  <label class="law"><input type="checkbox" data-toggle="nis2" checked>
+    <span><b>NIS2 <span class="stamp">NIS2</span></b><small>Directive (EU) 2022/2555 — essential &amp; important entities</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="gdpr" checked>
+    <span><b>GDPR <span class="stamp">GDPR</span></b><small>Regulation (EU) 2016/679 — applies to virtually all CDCs</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="dora">
+    <span><b>DORA <span class="stamp">DORA</span></b><small>Regulation (EU) 2022/2554 — financial entities</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="cra">
+    <span><b>Cyber Resilience Act <span class="stamp">CRA</span></b><small>Regulation (EU) 2024/2847 — products with digital elements</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="cer">
+    <span><b>CER <span class="stamp">CER</span></b><small>Directive (EU) 2022/2557 — critical entities (physical resilience)</small></span></label>
+
+  <h2>Member states</h2>
+  <div id="country-boxes"></div>
+
+  <h2>Denmark — detailed acts</h2>
+  <p style="font-size:.75rem;color:var(--muted);margin:0 0 6px">Denmark is the reference annex with per-act tagging:</p>
+  <label class="law"><input type="checkbox" data-toggle="dk-nis2">
+    <span><b>NIS 2-loven <span class="stamp dk">DK·NIS2</span></b><small>Lov nr. 434/2025 — horizontal Danish NIS2 act</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="dk-energi">
+    <span><b>Lov om styrket beredskab i energisektoren <span class="stamp dk">DK·ENERGI</span></b><small>Energy sector — NIS2 + CER combined regime</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="dk-tele">
+    <span><b>Lov om sikkerhed og beredskab i telesektoren <span class="stamp dk">DK·TELE</span></b><small>Telecom sector NIS2 implementation</small></span></label>
+  <label class="law"><input type="checkbox" data-toggle="dk-cer">
+    <span><b>CER-loven <span class="stamp dk">DK·CER</span></b><small>Kritiske enheders modstandsdygtighed</small></span></label>
+
+  <div class="panel-actions">
+    <button id="btn-all" type="button">Select all</button>
+    <button id="btn-none" type="button">Clear</button>
+    <button type="button" onclick="window.print()">Print / save PDF</button>
+  </div>
+  <div id="status" role="status"></div>
+</aside>
+
+<article>
+  <h2>1 · Statutory incident-reporting deadlines</h2>
+  <p>Rows appear only for regimes in your profile. Build these clocks into your incident response plan (§4 of the IR plan template).</p>
+  <table>
+    <thead><tr><th>Regime</th><th>Trigger</th><th>Deadline</th><th>Recipient</th></tr></thead>
+    <tbody>
+      <tr data-law="nis2"><td>NIS2 Art. 23 <span class="stamp">NIS2</span></td><td>Significant incident</td><td><b>Early warning ≤ 24 h</b> · notification ≤ 72 h · final report ≤ 1 month</td><td>National CSIRT / competent authority</td></tr>
+      <tr data-law="gdpr"><td>GDPR Art. 33 <span class="stamp">GDPR</span></td><td>Personal data breach with risk to individuals</td><td><b>≤ 72 h from awareness</b></td><td>Data protection authority</td></tr>
+      <tr data-law="gdpr"><td>GDPR Art. 34 <span class="stamp">GDPR</span></td><td>High risk to individuals</td><td>Without undue delay</td><td>Affected data subjects</td></tr>
+      <tr data-law="dora"><td>DORA Art. 19 <span class="stamp">DORA</span></td><td>Major ICT-related incident</td><td>Initial ≤ 4 h from classification / ≤ 24 h from awareness · intermediate ≤ 72 h · final ≤ 1 month</td><td>Competent financial authority</td></tr>
+      <tr data-law="cra"><td>CRA Art. 14 <span class="stamp">CRA</span></td><td>Actively exploited vulnerability / severe incident in a product you manufacture</td><td>Early warning ≤ 24 h</td><td>ENISA / CSIRT via single reporting platform</td></tr>
+      <tr data-law="dk-nis2 dk-tele dk-energi"><td>Denmark — national channel <span class="stamp dk">DK</span></td><td>Significant incident (Danish entities)</td><td>NIS2 pattern: 24 h / 72 h / 1 month</td><td>Via <b>virk.dk</b> — CSIRT function: Forsvarets Efterretningstjeneste / CFCS</td></tr>
+    </tbody>
+  </table>
+  <div class="hidden-note" data-hiddennote>Some reporting rows are hidden by your profile.</div>
+
+  <h2>2 · Regulatory hooks per framework function</h2>
+
+  <h3>GOVERN</h3>
+  <ul>
+    <li data-law="nis2">Management bodies must approve measures, oversee implementation and follow training; personal liability possible — NIS2 Art. 20. <span class="stamp">NIS2</span></li>
+    <li data-law="nis2">All-hazards, proportionate risk-management approach — NIS2 Art. 21(1). <span class="stamp">NIS2</span></li>
+    <li data-law="dora">Management body bears final responsibility for ICT risk — DORA Art. 5. <span class="stamp">DORA</span></li>
+    <li data-law="gdpr">Controller accountability and appropriate measures — GDPR Art. 24 &amp; 32. <span class="stamp">GDPR</span></li>
+    <li data-law="dk-nis2">Registration duty on virk.dk for covered entities — NIS 2-loven § 33. <span class="stamp dk">DK·NIS2</span></li>
+    <li data-law="dk-energi">Top management approval and legal accountability for beredskabsplaner; requirements exceed the EU minimum. <span class="stamp dk">DK·ENERGI</span></li>
+  </ul>
+
+  <h3>IDENTIFY</h3>
+  <ul>
+    <li data-law="nis2">Risk analysis and vulnerability handling policies — NIS2 Art. 21(2)(a),(e); supplier/dependency knowledge — Art. 21(2)(d). <span class="stamp">NIS2</span></li>
+    <li data-law="gdpr">Records of processing double as data-flow inventory — GDPR Art. 30. <span class="stamp">GDPR</span></li>
+    <li data-law="dora">Identification of ICT-supported functions and information assets — DORA Art. 8. <span class="stamp">DORA</span></li>
+    <li data-law="cra">Security requirements for products with digital elements feed procurement criteria. <span class="stamp">CRA</span></li>
+  </ul>
+
+  <h3>PROTECT</h3>
+  <ul>
+    <li data-law="nis2">Cryptography policies, access control, MFA, hygiene &amp; training — NIS2 Art. 21(2)(f)–(j). <span class="stamp">NIS2</span></li>
+    <li data-law="gdpr">Encryption and pseudonymisation as named measures — GDPR Art. 32. <span class="stamp">GDPR</span></li>
+    <li data-law="dora">Protection and prevention measures — DORA Art. 9. <span class="stamp">DORA</span></li>
+    <li data-law="dk-energi">Mandated network segmentation, physical security integration, constraints on control-centre location. <span class="stamp dk">DK·ENERGI</span></li>
+    <li data-law="cer dk-cer">Physical resilience measures for critical entities complement cyber controls. <span class="stamp">CER</span></li>
+  </ul>
+
+  <h3>DETECT</h3>
+  <ul>
+    <li data-law="nis2">Reporting deadlines are only achievable with functioning detection — NIS2 Art. 21(2)(b), 23. <span class="stamp">NIS2</span></li>
+    <li data-law="gdpr">Detection speed determines 72 h feasibility; security logs about employees are personal data — purpose-limit them. — GDPR Art. 33, Art. 5. <span class="stamp">GDPR</span></li>
+    <li data-law="dora">Prompt anomaly-detection mechanisms — DORA Art. 10. <span class="stamp">DORA</span></li>
+    <li data-law="dk-energi">Real-time 24/7 monitoring of critical installations required. <span class="stamp dk">DK·ENERGI</span></li>
+  </ul>
+
+  <h3>RESPOND</h3>
+  <ul>
+    <li data-law="nis2">Incident handling and staged reporting — NIS2 Art. 21(2)(b), 23. <span class="stamp">NIS2</span></li>
+    <li data-law="gdpr">Notify DPA ≤ 72 h; document all breaches, even non-notified — GDPR Art. 33(5), 34. <span class="stamp">GDPR</span></li>
+    <li data-law="dora">Incident management, classification and reporting — DORA Art. 17–19. <span class="stamp">DORA</span></li>
+    <li data-law="dk-nis2 dk-tele">Report via virk.dk; drill the flow against the 24 h early-warning clock. <span class="stamp dk">DK</span></li>
+  </ul>
+
+  <h3>RECOVER</h3>
+  <ul>
+    <li data-law="nis2">Business continuity, backups, disaster recovery and crisis management — NIS2 Art. 21(2)(c); final report ≤ 1 month — Art. 23. <span class="stamp">NIS2</span></li>
+    <li data-law="gdpr">Ability to restore availability and access to personal data in a timely manner — GDPR Art. 32(1)(c). <span class="stamp">GDPR</span></li>
+    <li data-law="dora">Response &amp; recovery plans, backup policies, testing — DORA Art. 11–12. <span class="stamp">DORA</span></li>
+    <li data-law="cer dk-cer">Continuity of essential societal functions under all-hazards scenarios. <span class="stamp">CER</span></li>
+  </ul>
+  <div class="hidden-note" data-hiddennote>Some regulatory hooks are hidden by your profile.</div>
+
+  <h2>3 · National implementations (all 27 member states)</h2>\n  <p>Tick your member state(s) in the panel. Status verified July 2026 — always confirm against the national gazette; detailed annexes live in <code>docs/annexes/</code>.</p>
+  <div class="callout dk" data-law="dk-nis2 dk-energi dk-tele dk-cer">
+    <b>Denmark:</b> NIS2/CER arrive as a <em>family</em> of acts (NIS 2-loven; energy, tele and finance sector acts; CER-loven), in force since 2025.
+    Coordination: Styrelsen for Samfundssikkerhed (SAMSIK); CSIRT: CFCS/FE; sector authorities supervise their sectors.
+    SAMSIK/CFCS guidance uses <em>skal / bør / kan</em> tiers — map your control evidence to it.
+    Full detail: <code>docs/annexes/annex-dk.md</code>.
+  </div>
+  <div id="country-cards"></div>
+  <div class="callout" data-law="nis2">
+    <b>Other member states:</b> transposition varies — contribute a national annex for your country (see CONTRIBUTING.md).
+  </div>
+  <div class="hidden-note" data-hiddennote>Country notes are hidden by your profile.</div>
+</article>
+</main>
+
+<footer>
+  Open CDC Framework · CC BY 4.0 · References: docs/19-references.md · This tool renders orientation content only; verify against EUR-Lex and national law.
+</footer>
+
+<script>
+// National implementation data — status verified July 2026; see docs/annexes/ for detail and sources.
+const COUNTRIES = {"at": {"n": "Austria", "status": "Adopted — phasing in", "law": "Netz- und Informationssystemsicherheitsgesetz (NISG) — adopted December 2025 after an earlier bill lapsed; main obligations phase in during 2026 (reported entry into force 1 Oct 2026 — verify)", "auth": "Bundesministerium für Inneres (BMI) as cyber security authority", "csirt": "CERT.at / GovCERT Austria", "link": "https://www.nis.gv.at"}, "be": {"n": "Belgium", "status": "In force", "law": "Loi/Wet of 26 April 2024 transposing NIS2 — in force 18 October 2024 (one of the first in the EU)", "auth": "Centre for Cybersecurity Belgium (CCB)", "csirt": "CCB / cert.be", "link": "https://ccb.belgium.be"}, "bg": {"n": "Bulgaria", "status": "In force", "law": "Amendment to the Cybersecurity Act (Закон за киберсигурност) — State Gazette No. 17 of 13 February 2026, in force same date", "auth": "National Cybersecurity Coordinator / Ministry of e-Government", "csirt": "CERT Bulgaria (govcert.bg)", "link": "https://www.gov.bg"}, "hr": {"n": "Croatia", "status": "In force", "law": "Zakon o kibernetičkoj sigurnosti (Cybersecurity Act), NN 14/2024 — in force 15 February 2024; first member state to transpose", "auth": "Sigurnosno-obavještajna agencija (SOA) — central state authority for cybersecurity", "csirt": "Croatian national CERT (CARNET) / ZSIS CERT", "link": "https://www.soa.hr"}, "cy": {"n": "Cyprus", "status": "Adopted — verify completeness", "law": "Cybersecurity law transposing NIS2 (Ο περί Κυβερνοασφάλειας Νόμος) — adopted; Commission still listed Cyprus in the May 2025 reasoned opinions pending full notification (verify current status)", "auth": "Digital Security Authority (DSA / Αρχή Ψηφιακής Ασφάλειας)", "csirt": "CSIRT-CY", "link": "https://dsa.cy"}, "cz": {"n": "Czechia", "status": "In force", "law": "New Cybersecurity Act (nový zákon o kybernetické bezpečnosti, 2025) replacing Act 181/2014 — effective 1 November 2025", "auth": "NÚKIB (Národní úřad pro kybernetickou a informační bezpečnost)", "csirt": "GovCERT.CZ (NÚKIB) and national CSIRT.CZ", "link": "https://nukib.gov.cz"}, "dk": {"n": "Denmark", "status": "In force", "law": "Family of acts in force 2025: NIS 2-loven (Lov nr. 434/2025), Lov om styrket beredskab i energisektoren, Lov om sikkerhed og beredskab i telesektoren, CER-loven; finance via Lov om finansiel virksomhed", "auth": "Styrelsen for Samfundssikkerhed (SAMSIK) + sector authorities", "csirt": "CFCS / Forsvarets Efterretningstjeneste — reporting via virk.dk", "link": "https://samsik.dk/nis2"}, "ee": {"n": "Estonia", "status": "Adopted — verify", "law": "Amendments to the Cybersecurity Act (küberturvalisuse seadus) transposing NIS2 — adopted 2025 (verify exact entry into force)", "auth": "Riigi Infosüsteemi Amet (RIA — Information System Authority)", "csirt": "CERT-EE (part of RIA)", "link": "https://www.ria.ee"}, "fi": {"n": "Finland", "status": "In force", "law": "Kyberturvallisuuslaki (Cybersecurity Act 124/2025) — in force 8 April 2025", "auth": "Traficom (Finnish Transport and Communications Agency) + sector authorities", "csirt": "NCSC-FI (Kyberturvallisuuskeskus, part of Traficom)", "link": "https://www.kyberturvallisuuskeskus.fi"}, "fr": {"n": "France", "status": "Pending — in legislative process", "law": "Projet de loi relative à la résilience des infrastructures critiques et au renforcement de la cybersécurité (transposing NIS2, CER and DORA adjustments) — still in the legislative process as of mid-2026 (verify)", "auth": "ANSSI (Agence nationale de la sécurité des systèmes d'information)", "csirt": "CERT-FR", "link": "https://cyber.gouv.fr"}, "de": {"n": "Germany", "status": "In force", "law": "NIS-2-Umsetzungs- und Cybersicherheitsstärkungsgesetz (NIS2UmsuCG), amending the BSIG — in force 6 December 2025", "auth": "BSI (Bundesamt für Sicherheit in der Informationstechnik)", "csirt": "CERT-Bund (BSI)", "link": "https://www.bsi.bund.de/nis-2"}, "gr": {"n": "Greece", "status": "In force", "law": "Law 5160/2024 transposing NIS2 — in force November 2024", "auth": "National Cybersecurity Authority (Εθνική Αρχή Κυβερνοασφάλειας, Ministry of Digital Governance)", "csirt": "National CSIRT-GR", "link": "https://mindigital.gr"}, "hu": {"n": "Hungary", "status": "In force", "law": "Act LXIX of 2024 on Hungary's cybersecurity — in force 1 January 2025", "auth": "SZTFH (Regulated Activities Supervisory Authority)", "csirt": "NBSZ NKI (National Cyber Security Center)", "link": "https://nki.gov.hu"}, "ie": {"n": "Ireland", "status": "Pending — verify", "law": "National Cyber Security Bill — still completing passage as of mid-2026 (verify; adoption reported imminent/possibly complete)", "auth": "NCSC Ireland (lead competent authority) + sector regulators", "csirt": "CSIRT-IE (NCSC)", "link": "https://www.ncsc.gov.ie"}, "it": {"n": "Italy", "status": "In force", "law": "Decreto legislativo 138/2024 — in force October 2024", "auth": "ACN (Agenzia per la Cybersicurezza Nazionale)", "csirt": "CSIRT Italia (ACN)", "link": "https://www.acn.gov.it"}, "lv": {"n": "Latvia", "status": "In force", "law": "Nacionālās kiberdrošības likums (National Cybersecurity Law) — in force 1 September 2024", "auth": "National Cybersecurity Centre (Ministry of Defence)", "csirt": "CERT.LV", "link": "https://www.ncsc.gov.lv"}, "lt": {"n": "Lithuania", "status": "In force", "law": "Amended Kibernetinio saugumo įstatymas (Cybersecurity Law) — applying from 18 October 2024; among the first transpositions", "auth": "NKSC (National Cyber Security Centre under MoND)", "csirt": "CERT-LT (NKSC)", "link": "https://www.nksc.lt"}, "lu": {"n": "Luxembourg", "status": "Pending — verify", "law": "Bill n°8364 transposing NIS2 — still in legislative process as of mid-2026 (verify)", "auth": "ILR (Institut Luxembourgeois de Régulation) for most sectors; CSSF for finance", "csirt": "CIRCL and GOVCERT.LU", "link": "https://www.ilr.lu"}, "mt": {"n": "Malta", "status": "In force", "law": "Measures for a High Common Level of Cybersecurity Regulations (subsidiary legislation transposing NIS2, 2024)", "auth": "CSA — Critical Infrastructure Protection Directorate / Malta's designated competent authority", "csirt": "CSIRTMalta", "link": "https://csirtmalta.gov.mt"}, "nl": {"n": "Netherlands", "status": "Entering into force — verify", "law": "Cyberbeveiligingswet (Cbw, bill 36.764) + Wet weerbaarheid kritieke entiteiten (CER) — adopted by the Tweede Kamer 15 April 2026; entry into force expected ~1 July 2026 pending Senate (verify — may be in force now)", "auth": "RDI (Rijksinspectie Digitale Infrastructuur) + sector authorities", "csirt": "NCSC-NL", "link": "https://www.ncsc.nl"}, "pl": {"n": "Poland", "status": "Pending/nearing adoption — verify", "law": "Nowelizacja ustawy o krajowym systemie cyberbezpieczeństwa (KSC amendment) — in final legislative stages as of early–mid 2026 (verify)", "auth": "Ministry of Digital Affairs + sector authorities", "csirt": "CSIRT NASK, CSIRT GOV, CSIRT MON (three-CSIRT model)", "link": "https://www.gov.pl/web/cyfryzacja"}, "pt": {"n": "Portugal", "status": "Adopted", "law": "Regime jurídico da cibersegurança (decree-law transposing NIS2) — adopted 2025 (verify number/date of entry into force)", "auth": "CNCS (Centro Nacional de Cibersegurança)", "csirt": "CERT.PT (CNCS)", "link": "https://www.cncs.gov.pt"}, "ro": {"n": "Romania", "status": "In force", "law": "OUG nr. 155/2024 (emergency ordinance transposing NIS2) — in force end of December 2024", "auth": "DNSC (Directoratul Național de Securitate Cibernetică)", "csirt": "DNSC national CSIRT", "link": "https://www.dnsc.ro"}, "sk": {"n": "Slovakia", "status": "In force", "law": "Act No. 366/2024 amending Act No. 69/2018 on Cybersecurity — effective 1 January 2025", "auth": "NBÚ (Národný bezpečnostný úrad)", "csirt": "SK-CERT (NBÚ)", "link": "https://www.nbu.gov.sk"}, "si": {"n": "Slovenia", "status": "In force (verify secondary acts)", "law": "ZInfV-1 (Zakon o informacijski varnosti, new Information Security Act transposing NIS2) — adopted 2025", "auth": "Urad RS za informacijsko varnost (URSIV)", "csirt": "SI-CERT", "link": "https://www.gov.si/drzavni-organi/organi-v-sestavi/urad-za-informacijsko-varnost/"}, "es": {"n": "Spain", "status": "Pending — verify", "law": "Anteproyecto de Ley de Coordinación y Gobernanza de la Ciberseguridad — still in legislative process as of mid-2026 (verify)", "auth": "Expected: National Cybersecurity Centre coordination; CCN (public sector), INCIBE (private/citizens), sector authorities", "csirt": "CCN-CERT, INCIBE-CERT, ESPDEF-CERT", "link": "https://www.incibe.es"}, "se": {"n": "Sweden", "status": "In force", "law": "Cybersäkerhetslagen (new Cybersecurity Act transposing NIS2) — adopted 2025, in force January 2026 (verify exact date)", "auth": "MSB (Myndigheten för samhällsskydd och beredskap) coordinating + sector supervisory authorities", "csirt": "CERT-SE (MSB)", "link": "https://www.msb.se"}};
+(function(){
+  const boxHost = document.getElementById('country-boxes');
+  const cardHost = document.getElementById('country-cards');
+  Object.entries(COUNTRIES).forEach(([iso, c])=>{
+    const tag = iso + '-nat';
+    // sidebar checkbox
+    const label = document.createElement('label');
+    label.className = 'law';
+    label.innerHTML = '<input type="checkbox" data-toggle="'+tag+'"'+(iso==='dk'?' ':'')+'>'
+      + '<span><b>'+c.n+' <span class="stamp dk">'+iso.toUpperCase()+'</span></b>'
+      + '<small>'+c.status+'</small></span>';
+    boxHost.appendChild(label);
+    // country card in section 3
+    const card = document.createElement('div');
+    card.className = 'callout dk';
+    card.setAttribute('data-law', tag + (iso==='dk' ? ' dk-nis2 dk-energi dk-tele dk-cer' : ''));
+    card.innerHTML = '<b>'+c.n+'</b> — <i>'+c.status+'</i><br>'
+      + '<b>Law:</b> '+c.law+'<br>'
+      + '<b>Authority:</b> '+c.auth+' · <b>CSIRT/reporting:</b> '+c.csirt+'<br>'
+      + '<b>Start here:</b> <a href="'+c.link+'" rel="noopener">'+c.link+'</a>'
+      + ' · Full annex: <code>docs/annexes/annex-'+iso+'.md</code>';
+    cardHost.appendChild(card);
+  });
+})();
+</script>
+<script>
+(function(){
+  const boxes = Array.from(document.querySelectorAll('input[data-toggle]'));
+  const items = Array.from(document.querySelectorAll('[data-law]'));
+  const status = document.getElementById('status');
+
+  function active(){ return new Set(boxes.filter(b=>b.checked).map(b=>b.dataset.toggle)); }
+
+  function apply(){
+    const on = active();
+    let hidden = 0;
+    items.forEach(el=>{
+      const laws = el.dataset.law.split(/\s+/);
+      const show = laws.some(l=>on.has(l));   // visible if ANY tagged law is selected
+      el.classList.toggle('law-hidden', !show);
+      if(!show) hidden++;
+    });
+    // per-section hidden notes: show only when that section actually hides something
+    document.querySelectorAll('[data-hiddennote]').forEach(note=>{
+      const scope = note.parentElement.querySelectorAll('.law-hidden').length;
+      note.style.display = scope ? '' : 'none';
+    });
+    status.innerHTML = '<b>'+on.size+'</b> law'+(on.size===1?'':'s')+' selected · <b>'+hidden+'</b> reference'+(hidden===1?'':'s')+' hidden';
+  }
+
+  boxes.forEach(b=>b.addEventListener('change', apply));
+  document.getElementById('btn-all').addEventListener('click', ()=>{boxes.forEach(b=>b.checked=true);apply();});
+  document.getElementById('btn-none').addEventListener('click', ()=>{boxes.forEach(b=>b.checked=false);apply();});
+  apply();
+})();
+</script>
+</body>
+</html>
