@@ -19,12 +19,11 @@ Denmark implemented NIS2 and CER through a **family of laws** in force since 202
 ## Key Danish specifics for your CDC
 
 1. **Registration duty:** entities covered by the NIS 2-loven must register on **virk.dk** (initial deadline was 1 October 2025; new entities register when they come into scope).
-2. **Incident reporting channel:** significant incidents are reported via **virk.dk**; the national CSIRT function is performed by **Forsvarets Efterretningstjeneste / Center for Cybersikkerhed (CFCS)**. Timelines follow the NIS2 pattern: early warning ≤ 24 h, notification ≤ 72 h, final report ≤ 1 month.
+2. **Incident reporting channel:** significant incidents are reported via **virk.dk**; the national CSIRT function is performed by **Center for Cybersikkerhed (CFCS)**, which has been part of **Styrelsen for Samfundssikkerhed (SAMSIK)** since 2025. Timelines follow the NIS2 pattern: early warning ≤ 24 h, notification ≤ 72 h, final report ≤ 1 month.
 3. **Authorities to know:**
-   - **Styrelsen for Samfundssikkerhed (SAMSIK)** — overall coordination and cross-sector guidance (samsik.dk/nis2)
+   - **Styrelsen for Samfundssikkerhed (SAMSIK)** — overall coordination and cross-sector guidance, incorporating CFCS for technical advisory and incident reception (samsik.dk/nis2)
    - **Sector-responsible authorities** supervise their own sectors (e.g., Digitaliseringsstyrelsen for digital sectors, Energistyrelsen for energy, Finanstilsynet for finance, Trafikstyrelsen for transport)
-   - **CFCS** — technical advisory and incident reception
-4. **Guidance materials:** SAMSIK/CFCS publish cross-cutting NIS2 vejledninger structuring measures as *skal* (must), *bør* (should, justify deviations) and *kan* (may) — a useful evidence structure for your maturity assessments (map OCDF capability evidence to skal/bør items).
+4. **Guidance materials:** SAMSIK publishes cross-cutting NIS2 vejledninger structuring measures as *skal* (must), *bør* (should, justify deviations) and *kan* (may) — a useful evidence structure for your maturity assessments (map OCDF capability evidence to skal/bør items).
 5. **Energy-sector extras** (Lov om styrket beredskab i energisektoren): expect requirements beyond this framework's Level 3 baseline — real-time 24/7 monitoring of critical installations, mandated segmentation, physical security integration, and geographic constraints on control centres. Plan DETECT and GOVERN targets at Level 3–4 accordingly.
 
 ## CDC checklist for Denmark
@@ -32,9 +31,9 @@ Denmark implemented NIS2 and CER through a **family of laws** in force since 202
 - [ ] Applicability determined per legal entity and sector (NIS 2-loven vs sector acts) — recorded in the regulatory applicability register (GOVERN)
 - [ ] Registered on virk.dk where required
 - [ ] Reporting procedure drilled against the virk.dk flow, with the 24 h early-warning clock
-- [ ] Sector authority contact list maintained; relationship established with CFCS before an incident
+- [ ] Sector authority contact list maintained; relationship established with SAMSIK before an incident
 - [ ] Datatilsynet contact and GDPR Art. 33 flow prepared (runs in parallel with NIS2 reporting)
-- [ ] SAMSIK/CFCS vejledninger mapped to your control evidence (skal/bør/kan)
+- [ ] SAMSIK vejledninger mapped to your control evidence (skal/bør/kan)
 
 ## Sources
 
