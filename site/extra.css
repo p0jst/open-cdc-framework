@@ -1,0 +1,74 @@
+/* Open CDC Framework site theme — matches the identity of the interactive tools
+   (EU blue #123a6d · paper #fbfaf7 · accent red #8a1f2d). */
+
+:root {
+  --ocdf-eu: #123a6d;
+  --ocdf-eu-dark: #0d2c54;
+  --ocdf-accent: #8a1f2d;
+  --ocdf-paper: #fbfaf7;
+}
+
+/* Primary & accent colors, both schemes */
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--ocdf-eu);
+  --md-primary-fg-color--light: #2a5490;
+  --md-primary-fg-color--dark: var(--ocdf-eu-dark);
+  --md-accent-fg-color: var(--ocdf-accent);
+  --md-typeset-a-color: var(--ocdf-eu);
+}
+
+/* Paper background and warm lines in light mode only */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: var(--ocdf-paper);
+  --md-typeset-table-color: rgba(27, 39, 51, 0.12);
+}
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #8fb3e3;
+}
+
+/* Header: the tools' signature red keel line */
+.md-header {
+  border-bottom: 3px solid var(--ocdf-accent);
+}
+
+/* Landing page hero */
+.ocdf-hero {
+  text-align: center;
+  padding: 1.6rem 0 1.2rem;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.ocdf-hero h1 {
+  color: var(--md-typeset-color);
+  font-weight: 700;
+  margin-bottom: 0.6em;
+}
+.ocdf-hero .md-button {
+  margin: 0.2rem 0.25rem;
+}
+
+/* Cards: top keel in EU blue, like the tools' step cards */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+  border-top: 3px solid var(--ocdf-eu);
+  border-radius: 0 0 0.4rem 0.4rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li {
+  border-top-color: #4a76ad;
+}
+
+/* Tables: EU-soft header row, as in the tools */
+.md-typeset table:not([class]) th {
+  background: #e8eef7;
+  color: #1b2733;
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: #26354a;
+  color: var(--md-typeset-color);
+}
+
+/* Keep long regulatory tables readable */
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}

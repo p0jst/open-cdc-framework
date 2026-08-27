@@ -6,6 +6,8 @@
 ![Status](https://img.shields.io/badge/status-v0.1--rc1-blue)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 
+**📖 Read the framework as a website: <https://p0jst.github.io/open-cdc-framework/>** — searchable docs, interactive tools, template downloads. This repository is the source; the site rebuilds automatically on every push to `main`.
+
 ---
 
 > **Scope:** this framework targets **enterprise IT environments** (endpoints, servers, identity, cloud/SaaS). It is **not** designed for OT/ICS, telco core networks, or classified environments — see [ABOUT.md](ABOUT.md) for the reasoning and the roadmap for a future OT profile.

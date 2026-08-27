@@ -6,7 +6,7 @@ Approved project name: Open CDC Framework (OCDF). "Framework" refers to the capa
 - Repository name: `open-cdc-framework`
 - Description: "Open CDC Framework (OCDF) — open source framework for building and maturing SOCs / Cyber Defence Centers in the EU. NIST CSF 2.0, CIA triad, NIS2/GDPR/DORA, maturity model, playbooks, all 27 national annexes."
 - Topics: `soc` `security-operations-center` `cyber-defence-center` `csirt` `incident-response` `nist-csf` `nis2` `dora` `gdpr` `detection-engineering` `threat-intelligence` `maturity-model` `blue-team` `eu`
-- Enable: Pages (for tools/regulatory-profile.html), Discussions, Issues.
+- Enable: Pages with source "GitHub Actions" (publishes the website incl. tools/), Discussions, Issues.
 
 ## Release sequence
 1. Fill ABOUT.md placeholders; set final repo URL in docs/19-references.md citation line.

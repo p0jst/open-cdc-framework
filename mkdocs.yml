@@ -1,0 +1,158 @@
+site_name: Open CDC Framework
+site_description: >-
+  Open source framework for building and maturing SOCs / Cyber Defence Centers
+  in the EU. NIST CSF 2.0, CIA triad, NIS2/GDPR/DORA, maturity model,
+  playbooks, all 27 national annexes.
+site_url: https://opencdc.org/
+repo_url: https://github.com/p0jst/open-cdc-framework
+repo_name: p0jst/open-cdc-framework
+edit_uri: edit/main/
+
+# Content is staged by `python site/build_site.py` (run it before mkdocs build)
+docs_dir: _site_src
+site_dir: _site_build
+
+# MkDocs excludes a top-level templates/ dir by default (reserved for theme
+# overrides); this repo uses it for document templates, so re-include it.
+exclude_docs: |
+  !/templates/
+  !/templates/**
+
+theme:
+  name: material
+  font: false            # system fonts only — no requests to Google Fonts
+  icon:
+    logo: material/shield-half-full
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+
+extra_css:
+  - assets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/p0jst/open-cdc-framework
+copyright: >-
+  Open CDC Framework · CC BY 4.0 · Not legal advice — verify regulatory
+  references against EUR-Lex and national law.
+
+nav:
+  - Home: index.md
+  - Start:
+      - Introduction & design principles: docs/00-introduction.md
+      - "Start here: the first 90 days": docs/09-start-here.md
+      - Implementation tiers: docs/10-tiers.md
+      - Reading guide: docs/README.md
+      - Design navigator (workshops): assessments/cdc-design-navigator.md
+      - Maturity self-assessment: assessments/maturity-self-assessment.md
+  - Framework:
+      - The six functions:
+          - Govern: docs/01-govern.md
+          - Identify: docs/02-identify.md
+          - Protect: docs/03-protect.md
+          - Detect: docs/04-detect.md
+          - Respond: docs/05-respond.md
+          - Recover: docs/06-recover.md
+      - Lenses:
+          - CIA triad as design lens: docs/07-cia-triad.md
+          - Maturity model: docs/08-maturity-model.md
+  - Organisation & operations:
+      - Operating models: docs/11-operating-models.md
+      - Roles & competences: docs/12-roles-and-competences.md
+      - Running the CDC: docs/13-cdc-operations.md
+      - Deep dives:
+          - Detection-as-code: docs/14-detection-as-code-deep-dive.md
+          - CTI capability: docs/15-cti-deep-dive.md
+      - CSIRT community layer: docs/16-csirt-community.md
+  - Regulatory:
+      - EU regulatory landscape: docs/17-eu-regulatory-landscape.md
+      - CIS Controls crosswalk: docs/18-cis-controls-crosswalk.md
+      - National annexes:
+          - docs/annexes/README.md
+          - Austria: docs/annexes/annex-at.md
+          - Belgium: docs/annexes/annex-be.md
+          - Bulgaria: docs/annexes/annex-bg.md
+          - Croatia: docs/annexes/annex-hr.md
+          - Cyprus: docs/annexes/annex-cy.md
+          - Czechia: docs/annexes/annex-cz.md
+          - Denmark: docs/annexes/annex-dk.md
+          - Estonia: docs/annexes/annex-ee.md
+          - Finland: docs/annexes/annex-fi.md
+          - France: docs/annexes/annex-fr.md
+          - Germany: docs/annexes/annex-de.md
+          - Greece: docs/annexes/annex-gr.md
+          - Hungary: docs/annexes/annex-hu.md
+          - Ireland: docs/annexes/annex-ie.md
+          - Italy: docs/annexes/annex-it.md
+          - Latvia: docs/annexes/annex-lv.md
+          - Lithuania: docs/annexes/annex-lt.md
+          - Luxembourg: docs/annexes/annex-lu.md
+          - Malta: docs/annexes/annex-mt.md
+          - Netherlands: docs/annexes/annex-nl.md
+          - Poland: docs/annexes/annex-pl.md
+          - Portugal: docs/annexes/annex-pt.md
+          - Romania: docs/annexes/annex-ro.md
+          - Slovakia: docs/annexes/annex-sk.md
+          - Slovenia: docs/annexes/annex-si.md
+          - Spain: docs/annexes/annex-es.md
+          - Sweden: docs/annexes/annex-se.md
+  - Tools & templates:
+      - Interactive tools: tools/README.md
+      - Templates:
+          - Overview & downloads: templates/index.md
+          - CDC charter: templates/cdc-charter-template.md
+          - Incident response plan: templates/incident-response-plan-template.md
+          - Detection use case: templates/detection-use-case-template.md
+          - Metrics & KPI catalogue: templates/metrics-kpi-template.md
+          - Job description (ECSF): templates/job-description-template.md
+          - MSSP requirements checklist: templates/mssp-requirements-checklist.md
+          - Containment action catalogue: templates/containment-action-catalogue-template.md
+          - Controls register: templates/controls-register-template.md
+          - Annual operating calendar: templates/annual-calendar-template.md
+      - Playbooks:
+          - playbooks/README.md
+          - Windows 11 laptop: playbooks/PB-W11-windows11-laptop.md
+          - macOS laptop: playbooks/PB-MAC-macos-laptop.md
+          - Linux (RHEL) server: playbooks/PB-LNX-rhel-server.md
+  - Project:
+      - About: ABOUT.md
+      - Roadmap: ROADMAP.md
+      - Contributing: CONTRIBUTING.md
+      - Changelog: CHANGELOG.md
+      - References & credits: docs/19-references.md

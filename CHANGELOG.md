@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Website**: the framework now publishes as a documentation site (MkDocs Material) via GitHub Actions — landing page, full-text search, themed to match the tools; `site/` holds the landing page, theme CSS and staging script, `mkdocs.yml` the nav, `.github/workflows/publish-site.yml` the deployment. Repo layout and all links unchanged.
+
 - **Team skill mapping** added to the Roles & Competences layer:
   - `templates/skill-self-assessment.xlsx` (+ CSV version) — 47-skill self-assessment sheet across 8 domains (six CSF functions + Platform & Automation + Professional Skills), rated 0–3 on the framework scale with a per-skill "want to grow?" flag
   - `tools/skill-matrix.html` (Tool 02) — single-file, dependency-free team skill matrix: upload returned sheets (cumulative, per-person overwrite), team heatmap with coverage/bus-factor flags, gap analysis against editable per-role targets, train/mentor/hire action view, JSON snapshot export/import
