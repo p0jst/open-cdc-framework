@@ -50,6 +50,24 @@ For each team member, record against their primary ECSF profile:
 
 Review twice yearly; gaps drive the training budget and the exercise programme. **Career paths follow profile adjacency:** Tier 1 → Tier 2 (deepening Incident Responder) → Detection Engineer (Implementer) or Threat Hunter (CTI Specialist) → Architect or Manager. Published paths are your cheapest retention tool in the EU talent market.
 
+## Team skill mapping (self-assessment → team picture)
+
+The skills matrix above is a per-person exercise. To turn it into a **team picture** — where the gaps are, who can mentor whom, and what to look for in your next hire — the framework ships a ready-made loop:
+
+1. **Distribute** the self-assessment sheet to every team member: [`templates/skill-self-assessment.xlsx`](../templates/skill-self-assessment.xlsx) (or the [CSV version](../templates/skill-self-assessment.csv) for plain-text environments). It covers **47 skills in 8 domains** — the six CSF functions plus *Platform & Automation* and *Professional Skills* — rated on the framework scale (0 none · 1 basic · 2 proficient · 3 can mentor), plus a "want to grow?" flag per skill. Filling it in takes about 15 minutes.
+2. **Collect** the returned files and upload them into [`tools/skill-matrix.html`](../tools/skill-matrix.html) — the interactive Team Skill Matrix (Tool 02). Uploads are cumulative: each file adds or **updates** one person, so re-running the exercise simply overlays the new answers on the old ones. All data stays in the manager's browser; nothing is sent anywhere.
+3. **Read** the four views the tool produces:
+   - **Team heatmap** — who can do what, per-skill coverage, *bus factor 1* flags (only one person proficient) and *nobody proficient* flags on skills the team's roles need;
+   - **Gap analysis** — each person against the **target level for their role** (defaults derived from the role table above; adjust them to your organisation in the tool);
+   - **Actions** — a train / mentor / hire triage: motivated learners below target, in-house mentor pairings (level-3 person × colleague with a gap), and skills nobody holds that should shape the next job description or MSSP contract;
+   - **Role targets** — the editable expectation matrix itself.
+
+**Cadence:** run the exercise at the twice-yearly review, after every significant team change, and before drafting a hiring plan or training budget. Export a JSON snapshot from the tool per round to track progression over time.
+
+**Ground rules that make it work:** answers are self-assessed and *developmental* — never use them for performance evaluation or ranking, say so explicitly when distributing the sheet, and let people see their own data. Under GDPR, skill records are personal data: state the purpose (competence development and staffing), keep access to the uploaded set limited to the direct manager, and delete superseded snapshots. Managers who want an independent check can validate self-ratings in the next 1:1 or through the exercise programme rather than by editing the sheets.
+
+Hiring hook: a skill flagged *nobody proficient* (or *bus factor 1* on a critical capability) goes verbatim into the key-skills section of the [job description template](../templates/job-description-template.md) — or into the [MSSP requirements checklist](../templates/mssp-requirements-checklist.md) if you buy it as a service instead.
+
 ## Hiring with ECSF
 
 1. Pick the primary profile + secondary elements from the table above.

@@ -55,10 +55,11 @@ Cross-cutting documents, in reading order:
 
 Practical assets:
 
-- [`templates/`](templates/) — charter, IR plan, detection use case, KPI catalogue, job description (ECSF), MSSP requirements checklist, containment action catalogue, controls register, annual operating calendar.
+- [`templates/`](templates/) — charter, IR plan, detection use case, KPI catalogue, job description (ECSF), MSSP requirements checklist, containment action catalogue, controls register, annual operating calendar, skill self-assessment sheet (xlsx/csv).
 - [`playbooks/`](playbooks/) — IR + digital forensics playbooks for Windows 11 laptops, macOS laptops, and Linux (RHEL-class) servers, plus Microsoft/CISA baseline references.
 - [`assessments/`](assessments/) — the Design Navigator (guiding questions per function) and the maturity self-assessment.
 - [`tools/regulatory-profile.html`](tools/regulatory-profile.html) — interactive law selector: tick the laws that apply (EU instruments + all 27 member states) and the references show/hide to match. Host via GitHub Pages or open locally.
+- [`tools/skill-matrix.html`](tools/skill-matrix.html) — team skill matrix: team members fill in the self-assessment sheet, the manager uploads the returned files and gets a skills heatmap, gap analysis against role targets, and train/mentor/hire recommendations. Host via GitHub Pages or open locally.
 - [`docs/annexes/`](docs/annexes/) — national annexes for all 27 EU member states (status verified July 2026).
 
 ## Who is this for?
