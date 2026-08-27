@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCDF — Team Skill Matrix</title>
+<style>
+  :root{
+    --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
+    --eu:#123a6d; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
+    --ok:#1f6f43; --chipbg:#f1efe8;
+    --l0:#f1efe8; --l1:#dbe5f2; --l2:#7b9cc9; --l3:#123a6d;
+    --gap1:#ecc8cd; --gap2:#8a1f2d; --meet:#f1f0ea; --exceed:#cfe3d6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.55}
+  header{background:var(--eu);color:#fff;padding:26px 28px;border-bottom:4px solid var(--accent)}
+  header h1{margin:0;font-size:1.35rem;font-weight:600;letter-spacing:.02em}
+  header p{margin:6px 0 0;max-width:78ch;color:#cfdcef;font-size:.92rem}
+  .doc-id{font-family:ui-monospace,Consolas,monospace;font-size:.75rem;color:#9db6d8;letter-spacing:.12em;text-transform:uppercase}
+  main{max-width:1240px;margin:0 auto;padding:22px 28px 70px}
+  h2{font-size:1.08rem;border-bottom:2px solid var(--eu);padding-bottom:6px;margin:30px 0 12px;font-weight:650}
+  h3{font-size:.95rem;margin:20px 0 8px}
+  button{font-family:inherit}
+  .btn{border:1px solid var(--line);background:#fff;border-radius:6px;
+    padding:7px 13px;font-size:.85rem;cursor:pointer;color:var(--ink)}
+  .btn:hover{border-color:var(--eu);color:var(--eu)}
+  .btn.primary{background:var(--eu);border-color:var(--eu);color:#fff}
+  .btn.primary:hover{background:#0d2c54;color:#fff}
+  .btn.danger:hover{border-color:var(--accent);color:var(--accent)}
+  .btn:focus-visible{outline:2px solid var(--eu);outline-offset:2px}
+  a{color:var(--eu)}
+  /* upload zone */
+  #drop{border:2px dashed var(--line);border-radius:10px;background:#fffdf8;
+    padding:22px;text-align:center;color:var(--muted);font-size:.92rem;
+    transition:border-color .15s ease, background .15s ease;cursor:pointer}
+  #drop.hot{border-color:var(--eu);background:var(--eu-soft);color:var(--eu)}
+  #drop b{color:var(--ink)}
+  #upload-log{margin:10px 0 0;font-size:.83rem}
+  #upload-log div{padding:3px 0}
+  .log-ok{color:var(--ok)} .log-warn{color:#8a6d1f} .log-err{color:var(--accent)}
+  /* onboarding steps */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0}
+  .step{border:1px solid var(--line-soft);border-top:3px solid var(--eu);border-radius:0 0 8px 8px;
+    background:#fff;padding:14px 16px;font-size:.88rem}
+  .step .num{display:inline-block;width:24px;height:24px;border-radius:50%;background:var(--eu);
+    color:#fff;text-align:center;line-height:24px;font-weight:600;font-size:.8rem;margin-bottom:8px}
+  /* tabs */
+  nav.tabs{display:flex;gap:4px;border-bottom:2px solid var(--eu);margin:26px 0 0;flex-wrap:wrap}
+  nav.tabs button{border:1px solid var(--line-soft);border-bottom:none;background:var(--chipbg);
+    padding:9px 16px;font-size:.88rem;cursor:pointer;border-radius:8px 8px 0 0;color:var(--muted)}
+  nav.tabs button[aria-selected="true"]{background:var(--eu);color:#fff;border-color:var(--eu);font-weight:600}
+  nav.tabs button:focus-visible{outline:2px solid var(--eu);outline-offset:-2px}
+  .tabpane{display:none;padding-top:18px}
+  .tabpane.active{display:block}
+  /* summary tiles */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 6px}
+  .tile{border:1px solid var(--line-soft);border-radius:8px;background:#fff;padding:12px 14px}
+  .tile .v{font-size:1.5rem;font-weight:650;color:var(--eu);line-height:1.2}
+  .tile .v.warn{color:var(--accent)}
+  .tile .k{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+  /* matrix */
+  .scrollbox{overflow-x:auto;border:1px solid var(--line-soft);border-radius:8px;background:#fff}
+  table.matrix{border-collapse:separate;border-spacing:0;font-size:.82rem;min-width:100%}
+  table.matrix th,table.matrix td{padding:4px 8px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+  table.matrix thead th{position:sticky;top:0;background:var(--eu-soft);z-index:3;
+    font-weight:600;text-align:center;border-bottom:2px solid var(--eu)}
+  table.matrix thead th.skillcol{text-align:left}
+  table.matrix th.skillcol, table.matrix td.skillname{position:sticky;left:0;background:#fff;z-index:2;
+    text-align:left;max-width:280px;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--line-soft)}
+  table.matrix thead th.skillcol{background:var(--eu-soft);z-index:4}
+  tr.domain-row td{background:var(--chipbg);font-weight:650;font-size:.74rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--eu);border-top:1px solid var(--line)}
+  table.matrix tr.domain-row td.skillname{background:var(--chipbg)}
+  .cell{display:inline-block;min-width:26px;height:22px;line-height:22px;border-radius:4px;
+    text-align:center;font-weight:600;font-size:.78rem;cursor:default}
+  .cell.lv0{background:var(--l0);color:#b8b2a4}
+  .cell.lv1{background:var(--l1);color:var(--ink)}
+  .cell.lv2{background:var(--l2);color:#0d2035}
+  .cell.lv3{background:var(--l3);color:#fff}
+  .cell.missing{background:transparent;color:#cfc9bc}
+  .cell.g-exceed{background:var(--exceed);color:#14472b}
+  .cell.g-meet{background:var(--meet);color:var(--muted)}
+  .cell.g-1{background:var(--gap1);color:#5c1620}
+  .cell.g-2{background:var(--gap2);color:#fff}
+  .cell.g-none{background:transparent;color:#d5d0c4}
+  .covbar{display:inline-block;vertical-align:middle;width:70px;height:8px;background:var(--chipbg);
+    border-radius:4px;overflow:hidden;margin-right:6px}
+  .covbar i{display:block;height:100%;background:var(--eu);border-radius:4px}
+  .flag{font-size:.72rem;font-weight:600;border-radius:3px;padding:1px 5px;white-space:nowrap}
+  .flag.spof{background:#f7e9c8;color:#7a5c12}
+  .flag.zero{background:var(--gap2);color:#fff}
+  .flag.okc{color:var(--ok)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin:10px 2px}
+  .legend .cell{cursor:default}
+  /* person header cells */
+  th.person{max-width:110px}
+  th.person .role{display:block;font-weight:400;font-size:.68rem;color:var(--muted);
+    max-width:110px;overflow:hidden;text-overflow:ellipsis}
+  /* action cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:14px 0}
+  .card{border:1px solid var(--line);border-left:4px solid var(--eu);border-radius:0 8px 8px 0;
+    background:#fff;padding:14px 18px;font-size:.88rem}
+  .card.hire{border-left-color:var(--accent)}
+  .card.mentor{border-left-color:var(--ok)}
+  .card h3{margin:0 0 4px;font-size:1rem}
+  .card p.sub{margin:0 0 10px;color:var(--muted);font-size:.8rem}
+  .card ul{margin:0;padding-left:18px}
+  .card li{margin:7px 0;line-height:1.4}
+  .card .why{color:var(--muted);font-size:.78rem;display:block}
+  .pill{display:inline-block;background:var(--eu-soft);color:var(--eu);border-radius:10px;
+    padding:0 8px;font-size:.74rem;font-weight:600;margin-left:4px}
+  .empty-note{border-left:3px solid var(--line);padding:6px 12px;background:#f4f2ec;
+    color:var(--muted);font-size:.85rem;font-style:italic;margin:10px 0}
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+  .toolbar label{font-size:.84rem;color:var(--muted)}
+  select{font-family:inherit;font-size:.85rem;padding:6px 8px;border:1px solid var(--line);
+    border-radius:6px;background:#fff;color:var(--ink)}
+  /* data tab */
+  table.people{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff}
+  table.people th{background:var(--eu-soft);text-align:left;font-weight:600}
+  table.people th,table.people td{border:1px solid var(--line-soft);padding:7px 10px}
+  .stamp{display:inline-block;font-family:ui-monospace,Consolas,monospace;font-size:.68rem;
+    letter-spacing:.06em;border:1.5px solid var(--eu);color:var(--eu);border-radius:3px;
+    padding:1px 6px;margin-left:6px;text-transform:uppercase;background:#fff;white-space:nowrap}
+  footer{max-width:1240px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);
+    font-size:.78rem;color:var(--muted)}
+  @media print{
+    header{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
+    header p,.doc-id{color:var(--muted)}
+    #uploader,nav.tabs,.toolbar,.steps,#drop,footer .noprint{display:none !important}
+    .tabpane{display:none} .tabpane.active{display:block}
+    .scrollbox{border:none;overflow:visible}
+    body{font-size:11px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="doc-id">Open CDC Framework · Tool 02</div>
+  <h1>Team Skill Matrix</h1>
+  <p>Map your team's skills, spot the gaps, and decide what to <b>train</b>, <b>mentor</b> or <b>hire</b>.
+     Each team member fills in the self-assessment sheet; you upload the returned files here.
+     Re-uploading a sheet for the same person updates their entry. Everything stays in your browser —
+     no data leaves this page.</p>
+</header>
+
+<main>
+
+<section id="uploader">
+  <div class="steps" id="steps">
+    <div class="step"><span class="num">1</span><br><b>Distribute the sheet.</b><br>
+      Send every team member the self-assessment:
+      <a href="../templates/skill-self-assessment.xlsx" download>Excel template</a> ·
+      <a href="../templates/skill-self-assessment.csv" download>CSV version</a>. It takes ~15 minutes to fill in.</div>
+    <div class="step"><span class="num">2</span><br><b>Collect &amp; upload.</b><br>
+      Drop the returned files below — several at once is fine. New sheets for the same person
+      overwrite their previous answers, so re-run the exercise any time.</div>
+    <div class="step"><span class="num">3</span><br><b>Read the picture.</b><br>
+      The heatmap shows who can do what; the gap view compares against role expectations;
+      the actions view suggests what to train, who can mentor whom, and what to hire for.</div>
+  </div>
+
+  <div id="drop" tabindex="0" role="button" aria-label="Upload filled sheets">
+    <b>Drop filled sheets here</b> or click to choose files (.xlsx or .csv)<br>
+    <span style="font-size:.8rem">You can also <a href="#" id="demo-link">load a demo team</a> to see how it works, or
+    <a href="#" id="import-link">import a saved snapshot</a>.</span>
+  </div>
+  <input type="file" id="file-input" accept=".xlsx,.csv" multiple hidden>
+  <input type="file" id="json-input" accept=".json" hidden>
+  <div id="upload-log" role="status"></div>
+</section>
+
+<div id="app" hidden>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="team" aria-selected="true">Team heatmap</button>
+    <button role="tab" data-tab="gaps" aria-selected="false">Gap analysis</button>
+    <button role="tab" data-tab="actions" aria-selected="false">Actions: train · mentor · hire</button>
+    <button role="tab" data-tab="targets" aria-selected="false">Role targets</button>
+    <button role="tab" data-tab="data" aria-selected="false">People &amp; data</button>
+  </nav>
+
+  <section class="tabpane active" id="pane-team" role="tabpanel">
+    <div class="tiles" id="tiles"></div>
+    <div class="legend">
+      <span><span class="cell lv0">0</span> none</span>
+      <span><span class="cell lv1">1</span> basic</span>
+      <span><span class="cell lv2">2</span> proficient</span>
+      <span><span class="cell lv3">3★</span> can mentor</span>
+      <span><span class="cell missing">–</span> not answered</span>
+      <span>· Coverage = share of the team at proficient or better</span>
+    </div>
+    <div class="scrollbox"><table class="matrix" id="heatmap"></table></div>
+  </section>
+
+  <section class="tabpane" id="pane-gaps" role="tabpanel">
+    <p style="font-size:.88rem;max-width:80ch">Each cell compares a person's level with the
+    <b>target for their role</b> (editable under <i>Role targets</i>). Only skills with a target
+    for that role are scored — everything else stays blank.</p>
+    <div class="legend">
+      <span><span class="cell g-exceed">+1</span> above target</span>
+      <span><span class="cell g-meet">✓</span> meets target</span>
+      <span><span class="cell g-1">−1</span> one level below</span>
+      <span><span class="cell g-2">−2</span> two or more below</span>
+    </div>
+    <div class="scrollbox"><table class="matrix" id="gapmap"></table></div>
+    <h3>Biggest team gaps</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:-4px">Total missing levels across everyone whose role targets the skill.</p>
+    <div class="scrollbox"><table class="matrix" id="gapsum"></table></div>
+  </section>
+
+  <section class="tabpane" id="pane-actions" role="tabpanel">
+    <div class="cards" id="action-cards"></div>
+  </section>
+
+  <section class="tabpane" id="pane-targets" role="tabpanel">
+    <p style="font-size:.88rem;max-width:80ch">Default expectations per CDC role
+    (from <code>docs/12-roles-and-competences.md</code>). <b>Click a cell to cycle its target</b>
+    0 → 1 → 2 → 3 → 0 and adapt them to your organisation — changes are saved in your browser.</p>
+    <div class="toolbar">
+      <button class="btn danger" id="reset-targets">Reset to framework defaults</button>
+    </div>
+    <div class="scrollbox"><table class="matrix" id="targetmap"></table></div>
+  </section>
+
+  <section class="tabpane" id="pane-data" role="tabpanel">
+    <div class="toolbar">
+      <button class="btn primary" id="export-json">Export snapshot (.json)</button>
+      <button class="btn" id="import-json2">Import snapshot</button>
+      <button class="btn" onclick="window.print()">Print / save PDF</button>
+      <button class="btn danger" id="clear-all">Remove all data</button>
+    </div>
+    <p style="font-size:.82rem;color:var(--muted)">Data lives only in this browser (localStorage).
+    Export a snapshot to archive a review round, move to another machine, or share with a co-manager.</p>
+    <table class="people" id="people-table"></table>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  Open CDC Framework · CC BY 4.0 · Skill catalogue and role targets build on docs/12-roles-and-competences.md (ENISA ECSF-aligned).
+  <span class="noprint">Single file, no dependencies — works offline and via GitHub Pages.</span>
+  Skill data is personal data under GDPR — collect it transparently, use it for development, keep access limited.
+</footer>
+
+<script>
+const CATALOG = {"version":"v1","scale":[{"level":0,"label":"None","desc":"No practical exposure"},{"level":1,"label":"Basic","desc":"Can contribute with guidance"},{"level":2,"label":"Proficient","desc":"Works independently"},{"level":3,"label":"Can mentor","desc":"Deep expertise; can teach others"}],"domains":[{"id":"GOVERN","name":"Govern — Risk & Compliance"},{"id":"IDENTIFY","name":"Identify — Assets & Threats"},{"id":"PROTECT","name":"Protect — Hardening & Prevention"},{"id":"DETECT","name":"Detect — Monitoring & Detection Engineering"},{"id":"RESPOND","name":"Respond — IR & Forensics"},{"id":"RECOVER","name":"Recover — Continuity"},{"id":"PLATFORM","name":"Platform & Automation"},{"id":"PROFESSIONAL","name":"Professional Skills"}],"skills":[{"id":"GV-01","domain":"GOVERN","name":"Risk assessment & management","desc":"Running risk assessments, maintaining a risk register, risk treatment decisions"},{"id":"GV-02","domain":"GOVERN","name":"Security governance & policy","desc":"Writing and maintaining policies, control frameworks, exceptions handling"},{"id":"GV-03","domain":"GOVERN","name":"EU regulatory knowledge","desc":"NIS2, GDPR, DORA, CRA obligations; what they require of the CDC"},{"id":"GV-04","domain":"GOVERN","name":"Audit & compliance evidence","desc":"Control testing, evidence collection, supporting internal/external audits"},{"id":"GV-05","domain":"GOVERN","name":"Security metrics & reporting","desc":"KPIs, management reporting, building meaningful dashboards"},{"id":"ID-01","domain":"IDENTIFY","name":"Asset & data inventory","desc":"CMDB, crown-jewel analysis, data flows and dependencies"},{"id":"ID-02","domain":"IDENTIFY","name":"Vulnerability management","desc":"Scanning, prioritisation (CVSS/EPSS/KEV), remediation tracking"},{"id":"ID-03","domain":"IDENTIFY","name":"Threat modelling","desc":"Attacker paths, abuse cases, design-stage security review"},{"id":"ID-04","domain":"IDENTIFY","name":"Cyber threat intelligence","desc":"Collection, analysis and dissemination; IOC/TTP handling, intel platforms"},{"id":"ID-05","domain":"IDENTIFY","name":"Attack surface management","desc":"External asset discovery, exposure monitoring, shadow IT"},{"id":"PR-01","domain":"PROTECT","name":"Identity & access management","desc":"AD/Entra ID, MFA, PAM, conditional access, least privilege"},{"id":"PR-02","domain":"PROTECT","name":"Endpoint hardening & baselines","desc":"CIS benchmarks, GPO/MDM baselines, application control"},{"id":"PR-03","domain":"PROTECT","name":"Network security & segmentation","desc":"Firewalls, zoning, zero-trust concepts, remote access"},{"id":"PR-04","domain":"PROTECT","name":"Cloud security posture","desc":"IaaS/PaaS/SaaS secure configuration, CSPM, cloud IAM"},{"id":"PR-05","domain":"PROTECT","name":"Email & collaboration security","desc":"Anti-phishing controls, DMARC/DKIM/SPF, collaboration platform security"},{"id":"PR-06","domain":"PROTECT","name":"Awareness & training delivery","desc":"Campaigns, phishing simulations, targeted role-based training"},{"id":"DE-01","domain":"DETECT","name":"SIEM search & query language","desc":"Investigating in the SIEM: query language (KQL/SPL/etc.), dashboards"},{"id":"DE-02","domain":"DETECT","name":"Log pipeline engineering","desc":"Source onboarding, parsing, normalisation, data quality"},{"id":"DE-03","domain":"DETECT","name":"Alert triage & investigation","desc":"Working the queue: validating, scoping and escalating alerts"},{"id":"DE-04","domain":"DETECT","name":"Detection engineering","desc":"Writing, testing and tuning detection rules and analytics"},{"id":"DE-05","domain":"DETECT","name":"Detection-as-code","desc":"Git workflow, CI/CD for detections, rule metadata and versioning"},{"id":"DE-06","domain":"DETECT","name":"ATT&CK mapping & coverage","desc":"Mapping detections and incidents to techniques; honest coverage assessment"},{"id":"DE-07","domain":"DETECT","name":"Threat hunting","desc":"Hypothesis-driven hunts, hunt documentation, converting findings to detections"},{"id":"DE-08","domain":"DETECT","name":"Network traffic analysis","desc":"PCAP/NetFlow analysis, IDS alerts, protocol knowledge"},{"id":"DE-09","domain":"DETECT","name":"Adversary emulation & purple teaming","desc":"Executing attack techniques safely to validate detections"},{"id":"RS-01","domain":"RESPOND","name":"Incident coordination","desc":"Running an incident: roles, case management, communication cadence"},{"id":"RS-02","domain":"RESPOND","name":"Incident analysis & scoping","desc":"Timeline building, pivoting, root-cause analysis"},{"id":"RS-03","domain":"RESPOND","name":"Malware triage & analysis","desc":"Static/dynamic triage, sandbox use, verdict and IOC extraction"},{"id":"RS-04","domain":"RESPOND","name":"Endpoint forensics","desc":"Disk and memory artefacts on Windows/macOS/Linux; evidence handling"},{"id":"RS-05","domain":"RESPOND","name":"Cloud & SaaS forensics","desc":"M365/Google/AWS audit logs, identity-centric investigations"},{"id":"RS-06","domain":"RESPOND","name":"Containment & eradication","desc":"Selecting and safely executing containment actions"},{"id":"RS-07","domain":"RESPOND","name":"Regulatory incident reporting","desc":"24h/72h notification duties, authority liaison, report writing"},{"id":"RC-01","domain":"RECOVER","name":"Backup & restore operations","desc":"Backup verification, restore testing, ransomware-resilient recovery"},{"id":"RC-02","domain":"RECOVER","name":"BC/DR planning & testing","desc":"Continuity plans, DR exercises, RTO/RPO alignment"},{"id":"RC-03","domain":"RECOVER","name":"Post-incident review","desc":"Lessons-learned facilitation, improvement tracking, feedback into detections"},{"id":"PL-01","domain":"PLATFORM","name":"EDR platform administration","desc":"Policy management, sensor health, response feature configuration"},{"id":"PL-02","domain":"PLATFORM","name":"SIEM platform administration","desc":"Health, capacity, upgrades, access control of the SIEM itself"},{"id":"PL-03","domain":"PLATFORM","name":"SOAR & workflow automation","desc":"Playbook development, enrichment automation, guardrails"},{"id":"PL-04","domain":"PLATFORM","name":"Scripting","desc":"Python/PowerShell/Bash for analysis and automation tasks"},{"id":"PL-05","domain":"PLATFORM","name":"API & integration engineering","desc":"REST APIs, webhooks, connecting security tools together"},{"id":"PL-06","domain":"PLATFORM","name":"Windows internals & administration","desc":"AD, authentication flows, logging internals, common attack surfaces"},{"id":"PL-07","domain":"PLATFORM","name":"Linux internals & administration","desc":"Services, logging (auditd/syslog), hardening, container basics"},{"id":"PF-01","domain":"PROFESSIONAL","name":"Technical writing & documentation","desc":"Investigation notes, playbooks, runbooks others can follow"},{"id":"PF-02","domain":"PROFESSIONAL","name":"Stakeholder & executive communication","desc":"Briefing management, translating risk into business language"},{"id":"PF-03","domain":"PROFESSIONAL","name":"Mentoring & knowledge transfer","desc":"Coaching juniors, structured handover, shadowing programmes"},{"id":"PF-04","domain":"PROFESSIONAL","name":"Service & project management","desc":"SLAs, planning, vendor/MSSP steering, running improvements"},{"id":"PF-05","domain":"PROFESSIONAL","name":"Exercise & tabletop facilitation","desc":"Designing and running tabletops and simulations"}],"roles":["SOC Analyst (Tier 1)","SOC Analyst (Tier 2)","Detection Engineer","Threat Hunter","CTI Analyst","DFIR Specialist","Vulnerability Analyst","Security Engineer (platform/EDR)","CDC/SOC Architect","CDC Director / SOC Manager","Compliance/Reporting Officer","Awareness/Exercise Lead","Purple/Validation Tester","Other"],"targets":{"SOC Analyst (Tier 1)":{"DE-01":2,"DE-03":2,"DE-06":1,"RS-02":1,"RS-06":1,"ID-04":1,"PL-01":1,"PL-06":1,"PL-07":1,"PF-01":2,"DE-08":1},"SOC Analyst (Tier 2)":{"DE-01":2,"DE-03":3,"DE-06":2,"DE-07":1,"RS-02":2,"RS-03":1,"RS-06":2,"ID-04":2,"PL-01":2,"PL-04":1,"PL-06":2,"PL-07":1,"PF-01":2,"PF-03":1,"DE-08":2},"Detection Engineer":{"DE-01":3,"DE-02":2,"DE-04":3,"DE-05":2,"DE-06":2,"DE-09":1,"PL-02":2,"PL-04":2,"PL-05":2,"PL-06":2,"PL-07":2,"ID-04":1,"PF-01":2},"Threat Hunter":{"DE-01":3,"DE-06":2,"DE-07":3,"DE-08":2,"ID-04":2,"RS-02":2,"PL-04":2,"PL-06":2,"PL-07":2,"DE-04":2,"PF-01":2},"CTI Analyst":{"ID-04":3,"ID-03":2,"DE-06":2,"ID-05":2,"PF-01":2,"PF-02":2,"DE-01":1,"GV-03":1},"DFIR Specialist":{"RS-01":2,"RS-02":3,"RS-03":2,"RS-04":3,"RS-05":2,"RS-06":2,"PL-06":2,"PL-07":2,"PL-04":2,"DE-08":2,"PF-01":2},"Vulnerability Analyst":{"ID-02":3,"ID-05":2,"ID-01":2,"PR-02":2,"PR-04":1,"PL-04":1,"GV-05":1,"PF-01":2},"Security Engineer (platform/EDR)":{"PL-01":3,"PL-02":2,"PL-03":2,"PL-05":2,"PR-01":2,"PR-02":2,"PR-03":2,"PR-04":2,"DE-02":2,"PL-04":2,"PL-06":2,"PL-07":2},"CDC/SOC Architect":{"GV-01":2,"GV-05":2,"ID-01":2,"ID-03":2,"PR-03":2,"PR-04":2,"DE-02":2,"DE-06":2,"PL-02":2,"PF-01":3,"PF-02":2,"PF-04":2},"CDC Director / SOC Manager":{"GV-01":2,"GV-02":2,"GV-03":2,"GV-05":3,"RS-01":2,"RS-07":2,"PF-02":3,"PF-03":2,"PF-04":3,"PF-05":1,"ID-04":1},"Compliance/Reporting Officer":{"GV-02":2,"GV-03":3,"GV-04":3,"GV-05":2,"RS-07":3,"PF-01":2,"PF-02":2},"Awareness/Exercise Lead":{"PR-06":3,"PF-05":3,"PF-01":2,"PF-02":2,"GV-03":1,"RS-01":1},"Purple/Validation Tester":{"DE-09":3,"DE-06":2,"DE-04":2,"DE-01":2,"PL-04":2,"PL-06":2,"PL-07":2,"ID-03":2,"PF-01":2},"Other":{}}};
+</script>
+<script>
+"use strict";
+/* ---------- state ---------- */
+const LS_KEY = "ocdf-skill-matrix-v1";
+const SKILLS = CATALOG.skills, DOMAINS = CATALOG.domains, ROLES = CATALOG.roles;
+const SKILL_BY_ID = Object.fromEntries(SKILLS.map(s => [s.id, s]));
+let state = { people: {}, targets: null };   // targets: null = framework defaults
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const s = JSON.parse(raw); if(s && s.people) state = s; }
+  }catch(e){}
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+function targets(){ return state.targets || CATALOG.targets; }
+function targetFor(role, skillId){
+  const t = targets()[role];
+  return t ? (t[skillId] || 0) : 0;
+}
+function peopleList(){
+  return Object.values(state.people).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+/* ---------- parsing ---------- */
+function log(msg, cls){
+  const d = document.createElement("div");
+  d.className = cls || ""; d.textContent = msg;
+  const host = document.getElementById("upload-log");
+  host.appendChild(d);
+  while(host.children.length > 8) host.removeChild(host.firstChild);
+}
+
+function parseRows(rows, filename){
+  // rows: array of arrays of raw cell values
+  let name = "", role = "", date = "", headerIdx = -1, idCol = 0, lvCol = 4, intCol = 5;
+  for(let i = 0; i < rows.length; i++){
+    const r = rows[i] || [];
+    const c0 = String(r[0] || "").trim().toLowerCase();
+    if(c0 === "name") name = String(r[1] || "").trim();
+    else if(c0 === "role") role = String(r[1] || "").trim();
+    else if(c0 === "date"){
+      date = String(r[1] || "").trim();
+      if(/^\d{4,6}(\.\d+)?$/.test(date)){   // Excel date serial
+        const d = new Date(Date.UTC(1899, 11, 30) + Number(date) * 86400000);
+        if(!isNaN(d)) date = d.toISOString().slice(0, 10);
+      }
+    }
+    const idIdx = r.findIndex(c => /^skill\s*id$/i.test(String(c||"").trim()));
+    if(idIdx >= 0){
+      headerIdx = i; idCol = idIdx;
+      const lv = r.findIndex(c => /level/i.test(String(c||"")));
+      const iv = r.findIndex(c => /grow|interest/i.test(String(c||"")));
+      if(lv >= 0) lvCol = lv;
+      if(iv >= 0) intCol = iv;
+      break;
+    }
+  }
+  if(headerIdx < 0) return { error: "no 'Skill ID' header row found — is this the OCDF sheet?" };
+  const levels = {}, interest = {};
+  let rated = 0;
+  for(let i = headerIdx + 1; i < rows.length; i++){
+    const r = rows[i] || [];
+    const id = String(r[idCol] || "").trim().toUpperCase();
+    if(!SKILL_BY_ID[id]) continue;
+    const rawLv = String(r[lvCol] == null ? "" : r[lvCol]).trim();
+    const m = rawLv.match(/[0-3]/);
+    if(m){ levels[id] = Number(m[0]); rated++; }
+    if(/^\s*y/i.test(String(r[intCol] || ""))) interest[id] = true;
+  }
+  if(!rated) return { error: "no skill ratings found in the file" };
+  if(!name) name = filename.replace(/\.(xlsx|csv)$/i, "").replace(/^skills[-_ ]*/i, "").trim() || "Unnamed";
+  if(!ROLES.includes(role)){
+    const match = ROLES.find(x => x.toLowerCase() === role.toLowerCase());
+    role = match || (role ? role : "Other");
+    if(!ROLES.includes(role)) { /* keep custom role string; treated as no targets unless edited */ }
+  }
+  return { name, role, date, levels, interest, rated };
+}
+
+function csvToRows(text){
+  const rows = []; let row = [], field = "", inQ = false;
+  for(let i = 0; i < text.length; i++){
+    const ch = text[i];
+    if(inQ){
+      if(ch === '"'){ if(text[i+1] === '"'){ field += '"'; i++; } else inQ = false; }
+      else field += ch;
+    } else if(ch === '"') inQ = true;
+    else if(ch === ',') { row.push(field); field = ""; }
+    else if(ch === '\n' || ch === '\r'){
+      if(ch === '\r' && text[i+1] === '\n') i++;
+      row.push(field); rows.push(row); row = []; field = "";
+    } else field += ch;
+  }
+  if(field !== "" || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+/* Minimal dependency-free .xlsx reader: a .xlsx is a zip of XML files.
+   Uses the browser's native DecompressionStream — no external libraries. */
+async function unzip(buf){
+  const dv = new DataView(buf), u8 = new Uint8Array(buf), td = new TextDecoder();
+  let eocd = -1;
+  for(let i = buf.byteLength - 22; i >= Math.max(0, buf.byteLength - 22 - 65557); i--){
+    if(dv.getUint32(i, true) === 0x06054b50){ eocd = i; break; }
+  }
+  if(eocd < 0) throw new Error("not a valid .xlsx file");
+  const count = dv.getUint16(eocd + 10, true);
+  let off = dv.getUint32(eocd + 16, true);
+  const files = {};
+  for(let n = 0; n < count; n++){
+    if(dv.getUint32(off, true) !== 0x02014b50) break;
+    const method = dv.getUint16(off + 10, true);
+    const csize = dv.getUint32(off + 20, true);
+    const nameLen = dv.getUint16(off + 28, true);
+    const extraLen = dv.getUint16(off + 30, true);
+    const cmtLen = dv.getUint16(off + 32, true);
+    const lho = dv.getUint32(off + 42, true);
+    files[td.decode(u8.subarray(off + 46, off + 46 + nameLen))] = { method, csize, lho };
+    off += 46 + nameLen + extraLen + cmtLen;
+  }
+  return { names: Object.keys(files), read: async name => {
+    const f = files[name]; if(!f) return null;
+    const nl = dv.getUint16(f.lho + 26, true), el = dv.getUint16(f.lho + 28, true);
+    const data = u8.subarray(f.lho + 30 + nl + el, f.lho + 30 + nl + el + f.csize);
+    if(f.method === 0) return td.decode(data);
+    const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return await new Response(stream).text();
+  }};
+}
+
+async function xlsxToSheets(buf){
+  if(typeof DecompressionStream === "undefined")
+    throw new Error("this browser cannot read .xlsx directly — please use the CSV version of the sheet");
+  const z = await unzip(buf);
+  const parser = new DOMParser();
+  const sst = [];
+  const sstXml = await z.read("xl/sharedStrings.xml");
+  if(sstXml){
+    const doc = parser.parseFromString(sstXml, "application/xml");
+    for(const si of doc.getElementsByTagName("si")){
+      let t = ""; for(const tn of si.getElementsByTagName("t")) t += tn.textContent;
+      sst.push(t);
+    }
+  }
+  const sheets = [];
+  const sheetFiles = z.names.filter(n => /^xl\/worksheets\/sheet\d+\.xml$/.test(n))
+    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
+  for(const nm of sheetFiles){
+    const doc = parser.parseFromString(await z.read(nm), "application/xml");
+    const rows = [];
+    for(const rEl of doc.getElementsByTagName("row")){
+      const ri = Number(rEl.getAttribute("r")) - 1;
+      if(!(ri >= 0)) continue;
+      const arr = rows[ri] = rows[ri] || [];
+      for(const c of rEl.getElementsByTagName("c")){
+        const letters = (c.getAttribute("r") || "").replace(/\d+/g, "");
+        let ci = 0; for(const ch of letters) ci = ci * 26 + (ch.charCodeAt(0) - 64);
+        ci = Math.max(0, ci - 1);
+        const t = c.getAttribute("t");
+        let v = "";
+        if(t === "inlineStr"){
+          for(const tn of c.getElementsByTagName("t")) v += tn.textContent;
+        } else {
+          const vEl = c.getElementsByTagName("v")[0];
+          v = vEl ? vEl.textContent : "";
+          if(t === "s") v = sst[Number(v)] ?? "";
+        }
+        arr[ci] = v;
+      }
+    }
+    for(let i = 0; i < rows.length; i++) if(!rows[i]) rows[i] = [];
+    sheets.push(rows);
+  }
+  return sheets;
+}
+
+function skillIdCount(rows){
+  let n = 0;
+  for(const r of rows) for(const c of r || [])
+    if(SKILL_BY_ID[String(c || "").trim().toUpperCase()]){ n++; break; }
+  return n;
+}
+
+async function handleFiles(files){
+  for(const f of files){
+    try{
+      let rows;
+      if(/\.csv$/i.test(f.name)){
+        rows = csvToRows(await f.text());
+      } else if(/\.xlsx$/i.test(f.name)){
+        const sheets = await xlsxToSheets(await f.arrayBuffer());
+        rows = sheets.reduce((best, s) => skillIdCount(s) > skillIdCount(best) ? s : best, sheets[0] || []);
+      } else {
+        log(`✗ ${f.name}: unsupported file type (use .xlsx or .csv)`, "log-err"); continue;
+      }
+      const p = parseRows(rows, f.name);
+      if(p.error){ log(`✗ ${f.name}: ${p.error}`, "log-err"); continue; }
+      addPerson(p, f.name);
+    }catch(e){
+      log(`✗ ${f.name}: ${e.message}`, "log-err");
+    }
+  }
+  render();
+}
+
+function addPerson(p, source){
+  const key = p.name.trim().toLowerCase();
+  const existed = !!state.people[key];
+  state.people[key] = {
+    name: p.name, role: p.role, date: p.date,
+    levels: p.levels, interest: p.interest,
+    uploadedAt: new Date().toISOString().slice(0, 10), source
+  };
+  saveState();
+  const note = p.rated < SKILLS.length ? ` (${p.rated} of ${SKILLS.length} skills rated)` : "";
+  log(`${existed ? "↻ updated" : "✓ added"} ${p.name} — ${p.role}${note}`, existed ? "log-warn" : "log-ok");
+}
+
+/* ---------- derived numbers ---------- */
+function coverage(skillId){
+  const ppl = peopleList();
+  let prof = 0, mentors = 0;
+  for(const p of ppl){
+    const lv = p.levels[skillId];
+    if(lv >= 2) prof++;
+    if(lv >= 3) mentors++;
+  }
+  return { prof, mentors, n: ppl.length };
+}
+function teamNeeds(skillId){          // does any present role target this skill >=2?
+  const rolesPresent = [...new Set(peopleList().map(p => p.role))];
+  return rolesPresent.some(r => targetFor(r, skillId) >= 2);
+}
+
+/* ---------- rendering ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function levelCell(lv, title){
+  if(lv == null) return `<span class="cell missing" title="${esc(title)}: not answered">–</span>`;
+  const star = lv === 3 ? "★" : "";
+  return `<span class="cell lv${lv}" title="${esc(title)}: ${lv} — ${CATALOG.scale[lv].label}">${lv}${star}</span>`;
+}
+
+function renderTiles(){
+  const ppl = peopleList();
+  let spof = 0, zero = 0, mentorSkills = 0, answered = 0, asked = 0;
+  for(const s of SKILLS){
+    const c = coverage(s.id);
+    if(c.mentors > 0) mentorSkills++;
+    if(teamNeeds(s.id)){
+      if(c.prof === 1) spof++;
+      if(c.prof === 0) zero++;
+    }
+  }
+  for(const p of ppl){ answered += Object.keys(p.levels).length; asked += SKILLS.length; }
+  const compl = asked ? Math.round(100 * answered / asked) : 0;
+  document.getElementById("tiles").innerHTML = `
+    <div class="tile"><div class="v">${ppl.length}</div><div class="k">People mapped</div></div>
+    <div class="tile"><div class="v">${mentorSkills}</div><div class="k">Skills with a mentor</div></div>
+    <div class="tile"><div class="v${spof ? " warn" : ""}">${spof}</div><div class="k">One-person skills</div></div>
+    <div class="tile"><div class="v${zero ? " warn" : ""}">${zero}</div><div class="k">Needed, nobody proficient</div></div>
+    <div class="tile"><div class="v">${compl}%</div><div class="k">Sheet completion</div></div>`;
+}
+
+function matrixHead(ppl, extra){
+  return `<thead><tr><th class="skillcol">Skill</th>${
+    ppl.map(p => `<th class="person">${esc(p.name)}<span class="role">${esc(p.role)}</span></th>`).join("")
+  }${extra || ""}</tr></thead>`;
+}
+
+function renderHeatmap(){
+  const ppl = peopleList();
+  let html = matrixHead(ppl, `<th>Coverage</th><th></th>`);
+  html += "<tbody>";
+  for(const d of DOMAINS){
+    html += `<tr class="domain-row"><td class="skillname">${esc(d.name)}</td><td colspan="${ppl.length + 2}"></td></tr>`;
+    for(const s of SKILLS.filter(x => x.domain === d.id)){
+      const c = coverage(s.id);
+      const pct = c.n ? Math.round(100 * c.prof / c.n) : 0;
+      let flag = "";
+      if(teamNeeds(s.id) && c.prof === 0) flag = `<span class="flag zero">nobody proficient</span>`;
+      else if(teamNeeds(s.id) && c.prof === 1) flag = `<span class="flag spof">bus factor 1</span>`;
+      else if(c.mentors > 0) flag = `<span class="flag okc">★ mentor available</span>`;
+      html += `<tr><td class="skillname" title="${esc(s.desc)}"><b>${s.id}</b> ${esc(s.name)}</td>${
+        ppl.map(p => `<td style="text-align:center">${levelCell(p.levels[s.id], p.name)}</td>`).join("")
+      }<td><span class="covbar"><i style="width:${pct}%"></i></span>${c.prof}/${c.n}</td><td>${flag}</td></tr>`;
+    }
+  }
+  html += "</tbody>";
+  document.getElementById("heatmap").innerHTML = html;
+}
+
+function gapCell(p, skillId){
+  const t = targetFor(p.role, skillId);
+  if(!t) return `<td style="text-align:center"><span class="cell g-none">·</span></td>`;
+  const lv = p.levels[skillId] ?? 0;
+  const d = lv - t;
+  const tip = `${esc(p.name)}: level ${lv} vs target ${t}`;
+  let cls, txt;
+  if(d > 0){ cls = "g-exceed"; txt = "+" + d; }
+  else if(d === 0){ cls = "g-meet"; txt = "✓"; }
+  else if(d === -1){ cls = "g-1"; txt = "−1"; }
+  else { cls = "g-2"; txt = "−" + (-d); }
+  return `<td style="text-align:center"><span class="cell ${cls}" title="${tip}">${txt}</span></td>`;
+}
+
+function renderGaps(){
+  const ppl = peopleList();
+  let html = matrixHead(ppl);
+  html += "<tbody>";
+  for(const d of DOMAINS){
+    const skills = SKILLS.filter(x => x.domain === d.id)
+      .filter(s => ppl.some(p => targetFor(p.role, s.id) > 0));
+    if(!skills.length) continue;
+    html += `<tr class="domain-row"><td class="skillname">${esc(d.name)}</td><td colspan="${ppl.length}"></td></tr>`;
+    for(const s of skills){
+      html += `<tr><td class="skillname" title="${esc(s.desc)}"><b>${s.id}</b> ${esc(s.name)}</td>${
+        ppl.map(p => gapCell(p, s.id)).join("")}</tr>`;
+    }
+  }
+  html += "</tbody>";
+  document.getElementById("gapmap").innerHTML = html;
+
+  // team gap summary
+  const sums = SKILLS.map(s => {
+    let short = 0, affected = 0;
+    for(const p of ppl){
+      const t = targetFor(p.role, s.id);
+      if(!t) continue;
+      const d = t - (p.levels[s.id] ?? 0);
+      if(d > 0){ short += d; affected++; }
+    }
+    return { s, short, affected };
+  }).filter(x => x.short > 0).sort((a,b) => b.short - a.short).slice(0, 12);
+  const maxShort = sums.length ? sums[0].short : 1;
+  let sh = `<thead><tr><th class="skillcol">Skill</th><th style="text-align:left">Missing levels</th><th style="text-align:left">People below target</th></tr></thead><tbody>`;
+  for(const x of sums){
+    sh += `<tr><td class="skillname"><b>${x.s.id}</b> ${esc(x.s.name)}</td>
+      <td><span class="covbar" style="width:110px"><i style="width:${Math.round(100*x.short/maxShort)}%;background:var(--accent)"></i></span>${x.short}</td>
+      <td>${x.affected}</td></tr>`;
+  }
+  sh += "</tbody>";
+  document.getElementById("gapsum").innerHTML = sums.length ? sh :
+    `<tbody><tr><td style="padding:10px" class="skillname">No gaps against the current targets — either a strong team, or targets set too low.</td></tr></tbody>`;
+}
+
+function renderActions(){
+  const ppl = peopleList();
+  const train = [], mentor = [], hire = [];
+  // per-person training priorities: gap + interest first, then plain gaps
+  for(const s of SKILLS){
+    const c = coverage(s.id);
+    const mentors = ppl.filter(p => (p.levels[s.id] ?? 0) >= 3);
+    for(const p of ppl){
+      const t = targetFor(p.role, s.id);
+      if(!t) continue;
+      const lv = p.levels[s.id] ?? 0;
+      const d = t - lv;
+      if(d <= 0) continue;
+      const wants = !!p.interest[s.id];
+      train.push({ p, s, d, wants, t, lv });
+      if(mentors.length && mentors[0].name !== p.name){
+        mentor.push({ learner: p, s, coach: mentors[0], wants });
+      }
+    }
+    if(teamNeeds(s.id) && c.prof === 0){
+      const interested = ppl.filter(p => p.interest[s.id] && (p.levels[s.id] ?? 0) >= 1);
+      hire.push({ s, interested, maxLv: Math.max(0, ...ppl.map(p => p.levels[s.id] ?? 0)) });
+    }
+  }
+  train.sort((a,b) => (b.wants - a.wants) || (b.d - a.d));
+  mentor.sort((a,b) => (b.wants - a.wants));
+  const fmt = n => n.split(" ")[0];
+  const trainHtml = train.slice(0, 10).map(x =>
+    `<li><b>${esc(x.p.name)}</b> — ${esc(x.s.name)} <span class="pill">${x.lv} → ${x.t}</span>${x.wants ? ' <span class="pill" style="background:#e7f2ea;color:var(--ok)">wants to grow</span>' : ""}
+     <span class="why">${x.wants ? "Below role target and motivated — highest training ROI." : "Below the target for " + esc(x.p.role) + "."}</span></li>`).join("");
+  const mentorHtml = mentor.slice(0, 8).map(x =>
+    `<li><b>${esc(fmt(x.coach.name))}</b> coaches <b>${esc(fmt(x.learner.name))}</b> — ${esc(x.s.name)}${x.wants ? ' <span class="pill" style="background:#e7f2ea;color:var(--ok)">wants to grow</span>' : ""}
+     <span class="why">In-house mentor at level 3 — cheaper and stickier than external training.</span></li>`).join("");
+  const hireHtml = hire.slice(0, 8).map(x => {
+    const canGrow = x.interested.length;
+    return `<li><b>${esc(x.s.name)}</b> <span class="pill">team max: ${x.maxLv}</span>
+     <span class="why">${canGrow
+        ? "Nobody proficient, but " + x.interested.map(p => esc(fmt(p.name))).join(", ") + " could be skilled up — consider training before hiring."
+        : "Nobody proficient and no basis to grow from — look for this skill in your next hire or buy it as a service."}</span></li>`;
+  }).join("");
+  document.getElementById("action-cards").innerHTML = `
+    <div class="card"><h3>Skill up</h3><p class="sub">People below their role target — motivated learners first</p>
+      ${trainHtml ? `<ul>${trainHtml}</ul>` : `<div class="empty-note">Nobody is below target. Raise the bar in Role targets, or celebrate.</div>`}</div>
+    <div class="card mentor"><h3>Mentor pairings</h3><p class="sub">Close gaps with the expertise you already have</p>
+      ${mentorHtml ? `<ul>${mentorHtml}</ul>` : `<div class="empty-note">No internal mentor matches the current gaps.</div>`}</div>
+    <div class="card hire"><h3>Hire or buy</h3><p class="sub">Needed by the team, nobody proficient</p>
+      ${hireHtml ? `<ul>${hireHtml}</ul>` : `<div class="empty-note">Every needed skill has at least one proficient person. Watch the bus-factor-1 flags on the heatmap.</div>`}</div>`;
+}
+
+function renderTargets(){
+  const roles = ROLES.filter(r => r !== "Other");
+  let html = `<thead><tr><th class="skillcol">Skill</th>${roles.map(r =>
+    `<th class="person" title="${esc(r)}">${esc(r.replace(" (platform/EDR)", "").replace("CDC Director / SOC Manager", "Director/Mgr"))}</th>`).join("")}</tr></thead><tbody>`;
+  for(const d of DOMAINS){
+    html += `<tr class="domain-row"><td class="skillname">${esc(d.name)}</td><td colspan="${roles.length}"></td></tr>`;
+    for(const s of SKILLS.filter(x => x.domain === d.id)){
+      html += `<tr><td class="skillname" title="${esc(s.desc)}"><b>${s.id}</b> ${esc(s.name)}</td>${
+        roles.map(r => {
+          const t = targetFor(r, s.id);
+          return `<td style="text-align:center"><span class="cell ${t ? "lv" + t : "g-none"}" data-role="${esc(r)}" data-skill="${s.id}" style="cursor:pointer" title="${esc(r)} · click to change">${t || "·"}</span></td>`;
+        }).join("")}</tr>`;
+    }
+  }
+  html += "</tbody>";
+  const el = document.getElementById("targetmap");
+  el.innerHTML = html;
+  el.querySelectorAll("[data-role]").forEach(cell => {
+    cell.addEventListener("click", () => {
+      if(!state.targets) state.targets = JSON.parse(JSON.stringify(CATALOG.targets));
+      const r = cell.dataset.role, id = cell.dataset.skill;
+      if(!state.targets[r]) state.targets[r] = {};
+      const cur = state.targets[r][id] || 0;
+      const nxt = (cur + 1) % 4;
+      if(nxt === 0) delete state.targets[r][id]; else state.targets[r][id] = nxt;
+      saveState(); render();
+    });
+  });
+}
+
+function renderPeople(){
+  const ppl = peopleList();
+  let html = `<tr><th>Name</th><th>Role</th><th>Assessment date</th><th>Uploaded</th><th>Skills rated</th><th>Source file</th><th></th></tr>`;
+  for(const p of ppl){
+    html += `<tr><td><b>${esc(p.name)}</b></td><td>${esc(p.role)}</td><td>${esc(p.date || "—")}</td>
+      <td>${esc(p.uploadedAt || "—")}</td><td>${Object.keys(p.levels).length} / ${SKILLS.length}</td>
+      <td style="color:var(--muted)">${esc(p.source || "—")}</td>
+      <td><button class="btn danger" data-remove="${esc(p.name.trim().toLowerCase())}">Remove</button></td></tr>`;
+  }
+  const el = document.getElementById("people-table");
+  el.innerHTML = html;
+  el.querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => {
+    delete state.people[b.dataset.remove]; saveState(); render();
+  }));
+}
+
+function render(){
+  const has = peopleList().length > 0;
+  document.getElementById("app").hidden = !has;
+  document.getElementById("steps").style.display = has ? "none" : "";
+  if(!has) return;
+  renderTiles(); renderHeatmap(); renderGaps(); renderActions(); renderTargets(); renderPeople();
+}
+
+/* ---------- demo data ---------- */
+function demoTeam(){
+  const mk = (name, role, date, lv, wish) => {
+    const levels = {}, interest = {};
+    for(const s of SKILLS) levels[s.id] = lv[s.id] != null ? lv[s.id] : 0;
+    for(const id of wish) interest[id] = true;
+    return { name, role, date, levels, interest, rated: SKILLS.length };
+  };
+  const demos = [
+    mk("Anna Larsen", "SOC Analyst (Tier 2)", "2026-08-20",
+      {"DE-01":3,"DE-03":3,"DE-06":2,"DE-07":1,"DE-08":2,"RS-02":2,"RS-03":1,"RS-06":2,"ID-04":2,"PL-01":2,"PL-04":1,"PL-06":2,"PL-07":1,"PF-01":2,"PF-03":2,"GV-05":1,"RS-07":1},
+      ["DE-04","DE-07","RS-04"]),
+    mk("Bo Kristensen", "SOC Analyst (Tier 1)", "2026-08-21",
+      {"DE-01":1,"DE-03":2,"DE-06":1,"RS-02":1,"RS-06":1,"ID-04":1,"PL-01":1,"PL-06":1,"PF-01":1,"DE-08":1,"PL-07":0},
+      ["DE-01","DE-08","PL-04"]),
+    mk("Clara Mikkelsen", "Detection Engineer", "2026-08-19",
+      {"DE-01":3,"DE-02":2,"DE-04":2,"DE-05":1,"DE-06":2,"PL-02":2,"PL-04":3,"PL-05":2,"PL-06":2,"PL-07":2,"ID-04":1,"PF-01":2,"DE-03":2,"DE-09":1,"PL-03":1},
+      ["DE-05","DE-09","PL-03"]),
+    mk("David Holm", "Security Engineer (platform/EDR)", "2026-08-22",
+      {"PL-01":3,"PL-02":2,"PL-03":1,"PL-05":2,"PR-01":2,"PR-02":2,"PR-03":2,"PR-04":1,"DE-02":2,"PL-04":2,"PL-06":3,"PL-07":2,"PR-05":2,"DE-01":1,"RC-01":2},
+      ["PR-04","PL-03"]),
+    mk("Eva Sørensen", "CDC Director / SOC Manager", "2026-08-18",
+      {"GV-01":2,"GV-02":2,"GV-03":2,"GV-04":1,"GV-05":2,"RS-01":2,"RS-07":2,"PF-02":3,"PF-03":2,"PF-04":2,"PF-05":1,"ID-04":1,"ID-01":1,"PF-01":2,"DE-03":1},
+      ["GV-05","PF-05"])
+  ];
+  for(const d of demos) addPerson(d, "demo data");
+  render();
+}
+
+/* ---------- wiring ---------- */
+const drop = document.getElementById("drop");
+const fileInput = document.getElementById("file-input");
+drop.addEventListener("click", e => { if(e.target.tagName !== "A") fileInput.click(); });
+drop.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " ") fileInput.click(); });
+fileInput.addEventListener("change", () => { handleFiles([...fileInput.files]); fileInput.value = ""; });
+["dragover","dragenter"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("hot"); }));
+["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("hot"); }));
+drop.addEventListener("drop", e => handleFiles([...e.dataTransfer.files]));
+document.getElementById("demo-link").addEventListener("click", e => { e.preventDefault(); demoTeam(); });
+
+const jsonInput = document.getElementById("json-input");
+function importSnapshot(){ jsonInput.click(); }
+document.getElementById("import-link").addEventListener("click", e => { e.preventDefault(); importSnapshot(); });
+jsonInput.addEventListener("change", async () => {
+  const f = jsonInput.files[0]; jsonInput.value = "";
+  if(!f) return;
+  try{
+    const s = JSON.parse(await f.text());
+    if(!s.people) throw new Error("not a skill-matrix snapshot");
+    state = s; saveState(); render();
+    log(`✓ imported snapshot with ${Object.keys(s.people).length} people`, "log-ok");
+  }catch(e){ log(`✗ ${f.name}: ${e.message}`, "log-err"); }
+});
+
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll(".tabpane").forEach(p => p.classList.toggle("active", p.id === "pane-" + b.dataset.tab));
+}));
+
+document.getElementById("export-json").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "ocdf-skill-matrix-" + new Date().toISOString().slice(0,10) + ".json";
+  a.click(); URL.revokeObjectURL(a.href);
+});
+document.getElementById("import-json2").addEventListener("click", importSnapshot);
+document.getElementById("clear-all").addEventListener("click", () => {
+  state = { people: {}, targets: state.targets };
+  saveState(); document.getElementById("upload-log").innerHTML = ""; render();
+});
+document.getElementById("reset-targets").addEventListener("click", () => {
+  state.targets = null; saveState(); render();
+});
+
+loadState();
+render();
+</script>
+</body>
+</html>
