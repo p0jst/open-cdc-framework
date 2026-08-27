@@ -1,46 +1,5 @@
 # Tools
 
-## skill-matrix.html — team skill matrix (Tool 02)
-
-A single-file, dependency-free page for **mapping the skills of a CDC/SOC team**.
-Team members each fill in the self-assessment sheet
-([`templates/skill-self-assessment.xlsx`](../templates/skill-self-assessment.xlsx)
-or the [CSV version](../templates/skill-self-assessment.csv)) and send it back;
-the manager drops the returned files onto the page and gets:
-
-- a **team heatmap** (people × 47 skills in 8 domains) with per-skill coverage,
-  *bus factor 1* and *nobody proficient* flags, and mentor markers;
-- a **gap analysis** against editable per-role target levels (defaults derived
-  from [`docs/12-roles-and-competences.md`](../docs/12-roles-and-competences.md));
-- an **actions view**: whom to train (gap + motivation first), which in-house
-  mentor pairings close gaps for free, and which skills to hire or buy;
-- **snapshot export/import** (JSON) to archive review rounds.
-
-Uploads are cumulative and keyed by the person's name: re-uploading a sheet for
-the same person **overwrites their previous answers**, so the picture always
-reflects the latest round. All data stays in the manager's browser
-(localStorage) — nothing leaves the page. Skill data is personal data under
-GDPR: collect it transparently, use it for development only, keep access limited.
-
-### File format (for contributors)
-
-The tool reads `.xlsx` natively (zip + XML via the browser's built-in
-`DecompressionStream` — no libraries) and `.csv`. Parsing is positional-free:
-it locates the header row containing `Skill ID`, then matches rows by skill ID
-(`GV-01` … `PF-05`), takes the first digit 0–3 found in the level column, and
-reads `Name` / `Role` / `Date` from labelled rows above the table. Keep the
-skill IDs and the `Skill ID` header intact when translating or re-styling the
-sheet; everything else (column order, extra columns, formatting) is free.
-The catalogue and default role targets live in one JSON blob at the top of the
-page's script — edit there to localise or extend (bump the version marker in
-both the sheet and the tool if you change skill IDs).
-
-### Hosting
-- Works locally: just open the file in a browser (no internet needed).
-- For teams: enable **GitHub Pages** — the tool is then available at
-  `https://<org>.github.io/<repo>/tools/skill-matrix.html`, and the download
-  links to the templates resolve automatically.
-
 ## regulatory-profile.html — interactive law selector
 
 A single-file, dependency-free page where users **tick the laws that apply to
