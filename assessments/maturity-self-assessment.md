@@ -1,5 +1,7 @@
 # CDC Maturity Self-Assessment Checklist
 
+> **Fill this out interactively:** [tools/maturity-assessment.html](../tools/maturity-assessment.html) — real checkboxes, automatic staged scoring, a score chart against your target profile, and a JSON snapshot you can export and keep in version control. This document is the reference copy of the same criteria (useful to read offline, print, or copy into your own system).
+
 > Scoring rules: see [../docs/08-maturity-model.md](../docs/08-maturity-model.md). A level is achieved only when **all** its boxes and all lower-level boxes are checked, **with evidence recorded**. Copy this file, date it, and keep assessments in version control to track the trend.
 
 **Assessment date:** | **Assessor(s):** | **Evidence repository:**

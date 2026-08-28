@@ -69,3 +69,38 @@ Two layers keep the framework filterable:
 `nis2` `gdpr` `dora` `cra` `cer` — EU-wide ·
 `dk-nis2` `dk-energi` `dk-tele` `dk-cer` `dk-fin` — Denmark ·
 National contributions: use `<iso2>-<shortname>` (e.g. `de-bsig`, `fr-lpm`).
+
+## maturity-assessment.html — interactive maturity self-assessment (Tool 03)
+
+A single-file, dependency-free page that turns
+[`assessments/maturity-self-assessment.md`](../assessments/maturity-self-assessment.md)
+into something you actually fill out, instead of a markdown checklist whose
+`- [ ]` boxes render as inert text on the website. All 60 criteria across the
+six CSF functions are real checkboxes with an optional evidence field each.
+
+- **Staged auto-scoring**, exactly as the maturity model defines it: a function
+  reaches Level *N* only when every criterion at *N* and every level below it is
+  checked — no averaging up.
+- **Target profiles** from [`docs/08-maturity-model.md`](../docs/08-maturity-model.md)'s
+  target-setting table (SME, NIS2 important/essential, critical infrastructure)
+  pre-fill a target per function, individually adjustable.
+- **Score chart** — current level vs. target, per function — plus a Result table
+  listing exactly which unchecked criteria are blocking the next level.
+- **Snapshot export/import** (JSON) so you can date and keep assessments in
+  version control to track the trend, per the reassessment cadence in the
+  maturity model doc.
+
+All data stays in the browser (localStorage) — nothing is sent anywhere.
+
+### Hosting
+- Works locally: just open the file in a browser (no internet needed).
+- For teams: enable **GitHub Pages** — the tool is then available at
+  `https://<org>.github.io/<repo>/tools/maturity-assessment.html`.
+
+### File format (for contributors)
+
+Criteria are embedded as one JSON blob at the top of the page's script, in the
+same order as `assessments/maturity-self-assessment.md`. If you edit the
+criteria text in that document, mirror the change in the tool's embedded data
+(and vice versa) — the two are meant to read identically; there is currently no
+build step that generates one from the other.

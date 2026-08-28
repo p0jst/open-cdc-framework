@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Interactive maturity self-assessment** (Tool 03): `tools/maturity-assessment.html` — the maturity checklist filled out in the browser instead of as inert markdown checkboxes. Real checkboxes with evidence fields for all 60 criteria, staged auto-scoring per the maturity model's rules, target-profile presets from `docs/08-maturity-model.md`, a score-vs-target chart, a Result table naming exactly which criteria block the next level, and JSON snapshot export/import for tracking the trend. `assessments/maturity-self-assessment.md` now links to it at the top; landing page's "Assess your maturity" button points to it directly.
+
 - **Website**: the framework now publishes as a documentation site (MkDocs Material) via GitHub Actions — landing page, full-text search, themed to match the tools; `site/` holds the landing page, theme CSS and staging script, `mkdocs.yml` the nav, `.github/workflows/publish-site.yml` the deployment. Repo layout and all links unchanged.
 
 - **Team skill mapping** added to the Roles & Competences layer:

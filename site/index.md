@@ -16,7 +16,7 @@ anchored in the CIA triad, and mapped to NIS2, GDPR, DORA and the laws of all
 
 [Read the framework](docs/00-introduction.md){ .md-button .md-button--primary }
 [Start here: first 90 days](docs/09-start-here.md){ .md-button }
-[Assess your maturity](assessments/maturity-self-assessment.md){ .md-button }
+[Assess your maturity](tools/maturity-assessment.html){ .md-button }
 
 </div>
 

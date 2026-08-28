@@ -62,6 +62,7 @@ Practical assets:
 - [`assessments/`](assessments/) — the Design Navigator (guiding questions per function) and the maturity self-assessment.
 - [`tools/regulatory-profile.html`](tools/regulatory-profile.html) — interactive law selector: tick the laws that apply (EU instruments + all 27 member states) and the references show/hide to match. Host via GitHub Pages or open locally.
 - [`tools/skill-matrix.html`](tools/skill-matrix.html) — team skill matrix: team members fill in the self-assessment sheet, the manager uploads the returned files and gets a skills heatmap, gap analysis against role targets, and train/mentor/hire recommendations. Host via GitHub Pages or open locally.
+- [`tools/maturity-assessment.html`](tools/maturity-assessment.html) — interactive maturity self-assessment: check off criteria for each CSF function, get automatic staged scoring, a score-vs-target chart, and an exportable snapshot to track the trend over time. Host via GitHub Pages or open locally.
 - [`docs/annexes/`](docs/annexes/) — national annexes for all 27 EU member states (status verified July 2026).
 
 ## Who is this for?
@@ -75,7 +76,7 @@ Practical assets:
 
 1. **Read** [docs/00-introduction.md](docs/00-introduction.md), then [docs/09-start-here.md](docs/09-start-here.md) for the order of work, and pick your tier in [docs/10-tiers.md](docs/10-tiers.md).
 2. **Navigate** the design questions in [assessments/cdc-design-navigator.md](assessments/cdc-design-navigator.md) — six workshops that surface your gaps.
-3. **Assess** your current state with [assessments/maturity-self-assessment.md](assessments/maturity-self-assessment.md).
+3. **Assess** your current state with [tools/maturity-assessment.html](tools/maturity-assessment.html) (or the printable [assessments/maturity-self-assessment.md](assessments/maturity-self-assessment.md)).
 4. **Plan** using the per-function documents: each contains capabilities, CIA mapping, maturity criteria, and EU regulatory hooks.
 5. **Operationalise** with the templates and playbooks; pick your country annex and set your legal profile in the selector tool.
 6. **Reassess** every 6–12 months and track progress with the KPI template.

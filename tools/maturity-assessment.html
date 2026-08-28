@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCDF — Maturity Self-Assessment</title>
+<style>
+  :root{
+    --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
+    --eu:#123a6d; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
+    --ok:#1f6f43; --chipbg:#f1efe8; --barbg:#eeecE4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.55}
+  header{background:var(--eu);color:#fff;padding:26px 28px;border-bottom:4px solid var(--accent)}
+  header h1{margin:0;font-size:1.35rem;font-weight:600;letter-spacing:.02em}
+  header p{margin:6px 0 0;max-width:78ch;color:#cfdcef;font-size:.92rem}
+  header p a{color:#fff;text-decoration:underline}
+  .doc-id{font-family:ui-monospace,Consolas,monospace;font-size:.75rem;color:#9db6d8;letter-spacing:.12em;text-transform:uppercase}
+  main{max-width:1080px;margin:0 auto;padding:22px 28px 70px}
+  h2{font-size:1.08rem;border-bottom:2px solid var(--eu);padding-bottom:6px;margin:30px 0 12px;font-weight:650}
+  h3{font-size:.95rem;margin:0}
+  a{color:var(--eu)}
+  .btn{border:1px solid var(--line);background:#fff;border-radius:6px;
+    padding:7px 13px;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:inherit}
+  .btn:hover{border-color:var(--eu);color:var(--eu)}
+  .btn.danger:hover{border-color:var(--accent);color:var(--accent)}
+  .btn:focus-visible{outline:2px solid var(--eu);outline-offset:2px}
+  select,input[type=text]{font-family:inherit;font-size:.85rem;padding:6px 8px;border:1px solid var(--line);
+    border-radius:6px;background:#fff;color:var(--ink)}
+
+  /* meta fields */
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0 6px;
+    background:#fff;border:1px solid var(--line-soft);border-radius:8px;padding:14px 16px}
+  .meta label{display:block;font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+  .meta input,.meta select{width:100%}
+
+  /* tiles */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+  .tile{border:1px solid var(--line-soft);border-radius:8px;background:#fff;padding:12px 14px}
+  .tile .v{font-size:1.5rem;font-weight:650;color:var(--eu);line-height:1.2}
+  .tile .k{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+
+  /* function cards */
+  .func{border:1px solid var(--line);border-left:4px solid var(--eu);border-radius:0 8px 8px 0;
+    background:#fff;margin:14px 0}
+  .func-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 16px;cursor:pointer}
+  .func-head:hover{background:#f9f8f4}
+  .func-head h3{color:var(--eu)}
+  .func-badge{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted)}
+  .lvl-pill{display:inline-block;min-width:34px;text-align:center;border-radius:12px;padding:2px 10px;
+    font-weight:650;font-size:.82rem;background:var(--eu);color:#fff}
+  .lvl-pill.l1{background:var(--barbg);color:var(--muted)}
+  .func-body{display:none;padding:0 16px 16px}
+  .func.open .func-body{display:block}
+  .func.open .chevron{transform:rotate(90deg)}
+  .chevron{display:inline-block;transition:transform .15s ease;color:var(--muted)}
+  .level-block{margin:12px 0}
+  .level-block h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+  .crit{display:flex;align-items:flex-start;gap:9px;padding:5px 4px;border-radius:6px}
+  .crit:hover{background:#f9f8f4}
+  .crit input[type=checkbox]{margin-top:3px;width:16px;height:16px;accent-color:var(--eu);flex:none}
+  .crit label{font-size:.88rem;cursor:pointer}
+  .crit input[type=text]{margin-top:4px;width:100%;font-size:.8rem;padding:4px 7px}
+  .crit .ev-wrap{flex:1;min-width:0}
+  .target-row{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-size:.82rem;color:var(--muted)}
+
+  /* chart */
+  .chartwrap{background:#fff;border:1px solid var(--line-soft);border-radius:8px;padding:16px 20px;margin:14px 0}
+  .barrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:.86rem}
+  .barrow .lbl{width:92px;flex:none;font-weight:600}
+  .bartrack{position:relative;flex:1;height:20px;background:var(--barbg);border-radius:4px;overflow:visible}
+  .barfill{position:absolute;left:0;top:0;height:100%;background:var(--eu);border-radius:4px;
+    transition:width .2s ease}
+  .bartick{position:absolute;top:-3px;width:2px;height:26px;background:var(--accent)}
+  .barval{width:46px;flex:none;text-align:right;color:var(--muted);font-size:.8rem}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:12px}
+  .legend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+
+  table.result{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff;margin:10px 0}
+  table.result th{background:var(--eu-soft);text-align:left;font-weight:600}
+  table.result th,table.result td{border:1px solid var(--line-soft);padding:7px 10px;vertical-align:top}
+  .gap-note{color:var(--accent)} .met-note{color:var(--ok)}
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+  footer{max-width:1080px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);
+    font-size:.78rem;color:var(--muted)}
+  @media print{
+    .toolbar,#reset-all,.func-head .chevron{display:none !important}
+    .func-body{display:block !important}
+    body{font-size:11px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="doc-id">Open CDC Framework · Tool 03</div>
+  <h1>Maturity Self-Assessment</h1>
+  <p>Score each of the six CSF functions against the framework's four-level maturity model, right here in the
+     browser. A level counts only when <b>every</b> box at that level and every level below it is checked —
+     staged scoring, no averaging up. See <a href="../docs/08-maturity-model.md">the maturity model</a> for the
+     full method. Answers are saved only in this browser.</p>
+</header>
+
+<main>
+
+<div class="meta">
+  <div><label for="f-name">Assessor(s)</label><input type="text" id="f-name" placeholder="Names"></div>
+  <div><label for="f-date">Assessment date</label><input type="text" id="f-date" placeholder="YYYY-MM-DD"></div>
+  <div><label for="f-evrepo">Evidence repository</label><input type="text" id="f-evrepo" placeholder="Where evidence is filed"></div>
+  <div><label for="f-profile">Target profile</label>
+    <select id="f-profile"><option value="">— pick a preset, or set targets per function below —</option></select>
+  </div>
+</div>
+
+<div class="toolbar">
+  <button class="btn" id="export-json">Export snapshot (.json)</button>
+  <button class="btn" id="import-json">Import snapshot</button>
+  <button class="btn" onclick="window.print()">Print / save PDF</button>
+  <button class="btn danger" id="reset-all">Clear all answers</button>
+</div>
+<input type="file" id="json-input" accept=".json" hidden>
+
+<div class="tiles" id="tiles"></div>
+
+<h2>Score by function</h2>
+<div class="chartwrap">
+  <div id="chart"></div>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--eu)"></span>Current score</span>
+    <span><span class="sw" style="background:var(--accent);width:3px"></span>Target</span>
+  </div>
+</div>
+
+<h2>Checklist</h2>
+<div id="functions"></div>
+
+<h2>Result</h2>
+<div class="scrollbox"><table class="result" id="result-table"></table></div>
+<p style="font-size:.82rem;color:var(--muted)">Reassess annually or after major change; review open gap actions
+  quarterly. Export a snapshot each round and keep it in version control to track the trend — see
+  <a href="../docs/08-maturity-model.md">reassessment cadence</a>.</p>
+
+</main>
+
+<footer>
+  Open CDC Framework · CC BY 4.0 · Criteria mirror <code>assessments/maturity-self-assessment.md</code> — orientation
+  only, evidence-free self-assessment inflates scores by roughly one level.
+</footer>
+
+<script>
+const CATALOG = {"functions":[{"id":"GOVERN","name":"Govern","levels":{"2":["Signed CDC charter defining mission, scope and authority","Security policies approved and reviewed within last 12 months","RACI for security roles exists"],"3":["Cyber risk items appear in the enterprise risk register with owners","Quarterly (or better) reporting to executive management","Supplier contracts include security requirements; supplier register maintained","Multi-year budget/staffing plan approved"],"4":["Management completed cybersecurity training and participated in an exercise in last 12 months","Resource decisions demonstrably driven by risk/maturity data"]}},{"id":"IDENTIFY","name":"Identify","levels":{"2":["Automated asset discovery on core networks","Vulnerability scanning at least quarterly on core estate","Subscribed to national CSIRT / ENISA advisories","Crown-jewel services listed with owners"],"3":["Inventory accuracy measured, > 90%","Documented threat profile mapped to MITRE ATT&CK, reviewed annually","Risk-based remediation SLAs defined and tracked","Annual risk assessment feeds budget/backlog"],"4":["Continuous attack-surface monitoring incl. cloud/SaaS","Threat intel demonstrably drives hunts and new detections (traceable)"]}},{"id":"PROTECT","name":"Protect","levels":{"2":["MFA enforced for all remote and administrative access","Hardening baselines defined for main platforms","Patching SLA for critical vulnerabilities defined and measured","Backup restore tested within last 12 months"],"3":["Phishing-resistant MFA for privileged accounts; PAM operational","Network segmentation isolates crown-jewel zones","Offline/immutable backup copy for critical data","Control coverage measured (e.g., % endpoints with EDR ≥ 95%)"],"4":["Continuous/periodic technical control validation (attack simulation)","Security requirements embedded in procurement and SDLC with verification"]}},{"id":"DETECT","name":"Detect","levels":{"2":["Central log platform; identity, endpoint and email sources onboarded","≥ 20 documented use cases mapped to ATT&CK","Triage runbook with severity matrix","Defined coverage hours with on-call arrangement"],"3":["Detection lifecycle with version control and testing","Coverage measured against ATT&CK and crown jewels; gaps drive backlog","24/7 monitoring (in-house or hybrid)","MTTD measured per confirmed incident","Threat hunting performed on a schedule"],"4":["All production detections validated (fired in test) within 12 months","Detection-as-code with CI/CD pipeline","FP rates and coverage trended, demonstrably driving engineering"]}},{"id":"RESPOND","name":"Respond","levels":{"2":["Approved IR plan with severity classification and roles","Playbooks for top scenarios incl. ransomware and data breach","Statutory reporting contacts and templates prepared (NIS2/GDPR/DORA as applicable)","Tabletop exercise within last 12 months"],"3":["Containment authority pre-agreed in charter; isolation technically tested","Forensic capability in-house or via retainer, with chain-of-custody procedure","Reporting drill executed against statutory deadlines","Post-incident reviews with tracked actions for all P1/P2"],"4":["MTTC trended; containment steps automated with approval gates","Cross-functional crisis exercise incl. management and comms within 12 months"]}},{"id":"RECOVER","name":"Recover","levels":{"2":["Recovery plans with RTO/RPO for crown-jewel services","Restore tests annually","Post-incident review process defined"],"3":["Rebuild-from-known-good procedure; integrity verification before reconnection","Credential rotation standard in recovery runbooks","Joint BCM/CDC exercise within 12 months","Lessons-learned actions tracked to closure"],"4":["Ransomware-scale recovery exercised; measured recovery vs. RTO","Demonstrable control/detection changes originating from incidents"]}}],"profiles":{"SME, low regulatory exposure":{"GOVERN":2,"IDENTIFY":2,"PROTECT":2,"DETECT":2,"RESPOND":2,"RECOVER":2},"NIS2 important entity":{"GOVERN":2,"IDENTIFY":2,"PROTECT":2,"DETECT":2,"RESPOND":3,"RECOVER":2},"NIS2 essential entity / DORA financial entity":{"GOVERN":3,"IDENTIFY":3,"PROTECT":3,"DETECT":3,"RESPOND":3,"RECOVER":3},"Critical infrastructure, high-threat sectors":{"GOVERN":3,"IDENTIFY":3,"PROTECT":3,"DETECT":4,"RESPOND":4,"RECOVER":3}}}
+;
+</script>
+<script>
+"use strict";
+const LS_KEY = "ocdf-maturity-assessment-v1";
+const FUNCS = CATALOG.functions;
+const LEVEL_NAMES = {1:"Initial",2:"Managed",3:"Established",4:"Optimising"};
+let state = { meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{} };
+
+function loadState(){
+  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const s = JSON.parse(raw); if(s) state = {...state, ...s}; } }catch(e){}
+}
+function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function critKey(fid, lvl, idx){ return fid+"|"+lvl+"|"+idx; }
+
+function functionScore(f){
+  // Staged: level L achieved only if ALL criteria at L and every level below (2..L) are checked.
+  let score = 1;
+  for(const lvl of [2,3,4]){
+    const items = f.levels[lvl] || [];
+    const allChecked = items.every((_, i) => state.checks[critKey(f.id, lvl, i)]);
+    if(allChecked && items.length) score = lvl; else break;
+  }
+  return score;
+}
+function totalCounts(f){
+  let total = 0, checked = 0;
+  for(const lvl of [2,3,4]) for(let i=0;i<(f.levels[lvl]||[]).length;i++){
+    total++; if(state.checks[critKey(f.id,lvl,i)]) checked++;
+  }
+  return {total, checked};
+}
+function nextGapItems(f, score){
+  // Criteria still needed to reach the next level.
+  const next = score + 1;
+  if(next > 4) return [];
+  const items = f.levels[next] || [];
+  return items.filter((_, i) => !state.checks[critKey(f.id, next, i)]);
+}
+
+function renderMeta(){
+  document.getElementById("f-name").value = state.meta.name || "";
+  document.getElementById("f-date").value = state.meta.date || "";
+  document.getElementById("f-evrepo").value = state.meta.evrepo || "";
+  const sel = document.getElementById("f-profile");
+  if(!sel.options.length || sel.options.length === 1){
+    sel.innerHTML = '<option value="">— pick a preset, or set targets per function below —</option>' +
+      Object.keys(CATALOG.profiles).map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join("");
+  }
+  sel.value = state.meta.profile || "";
+}
+
+function renderTiles(){
+  let totalChecked = 0, totalItems = 0, atOrAboveTarget = 0, functionsWithTarget = 0;
+  for(const f of FUNCS){
+    const c = totalCounts(f); totalChecked += c.checked; totalItems += c.total;
+    const score = functionScore(f);
+    const t = state.targets[f.id];
+    if(t){ functionsWithTarget++; if(score >= t) atOrAboveTarget++; }
+  }
+  const avg = FUNCS.reduce((s,f) => s + functionScore(f), 0) / FUNCS.length;
+  document.getElementById("tiles").innerHTML = `
+    <div class="tile"><div class="v">${avg.toFixed(1)}</div><div class="k">Average function level</div></div>
+    <div class="tile"><div class="v">${totalChecked}/${totalItems}</div><div class="k">Criteria checked</div></div>
+    <div class="tile"><div class="v${functionsWithTarget && atOrAboveTarget < functionsWithTarget ? " " : ""}">${atOrAboveTarget}/${functionsWithTarget || "–"}</div><div class="k">Functions at/above target</div></div>`;
+}
+
+function renderChart(){
+  const maxW = 100;
+  let html = "";
+  for(const f of FUNCS){
+    const score = functionScore(f);
+    const t = state.targets[f.id];
+    const pct = ((score - 1) / 3) * 100;
+    const tpct = t ? ((t - 1) / 3) * 100 : null;
+    html += `<div class="barrow" title="${esc(f.name)}: level ${score} (${LEVEL_NAMES[score]})${t ? " · target " + t : ""}">
+      <div class="lbl">${esc(f.name)}</div>
+      <div class="bartrack"><div class="barfill" style="width:${pct}%"></div>${tpct!=null ? `<div class="bartick" style="left:calc(${tpct}% - 1px)"></div>` : ""}</div>
+      <div class="barval">L${score}</div>
+    </div>`;
+  }
+  document.getElementById("chart").innerHTML = html;
+}
+
+function renderFunctions(){
+  const host = document.getElementById("functions");
+  const openState = {};
+  host.querySelectorAll(".func").forEach(el => openState[el.dataset.fid] = el.classList.contains("open"));
+  let html = "";
+  for(const f of FUNCS){
+    const score = functionScore(f);
+    const isOpen = openState[f.id] ?? false;
+    html += `<div class="func${isOpen ? " open" : ""}" data-fid="${f.id}">
+      <div class="func-head" data-toggle="${f.id}">
+        <h3><span class="chevron">▸</span> ${esc(f.name)}</h3>
+        <span class="func-badge">
+          <select data-target="${f.id}" title="Target level for ${esc(f.name)}">
+            <option value="">no target</option>
+            ${[1,2,3,4].map(l => `<option value="${l}"${state.targets[f.id]===l?" selected":""}>target L${l}</option>`).join("")}
+          </select>
+          <span class="lvl-pill${score===1?" l1":""}">L${score} · ${LEVEL_NAMES[score]}</span>
+        </span>
+      </div>
+      <div class="func-body">`;
+    for(const lvl of [2,3,4]){
+      const items = f.levels[lvl] || [];
+      html += `<div class="level-block"><h4>Level ${lvl} — ${LEVEL_NAMES[lvl]}</h4>`;
+      items.forEach((text, i) => {
+        const key = critKey(f.id, lvl, i);
+        const checked = !!state.checks[key];
+        const ev = state.evidence[key] || "";
+        html += `<div class="crit">
+          <input type="checkbox" id="chk-${key}" data-key="${key}" ${checked ? "checked" : ""}>
+          <div class="ev-wrap">
+            <label for="chk-${key}">${esc(text)}</label>
+            <input type="text" data-ev="${key}" value="${esc(ev)}" placeholder="Evidence (optional) — document, screenshot, metric export…">
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div></div>`;
+  }
+  host.innerHTML = html;
+
+  host.querySelectorAll("[data-toggle]").forEach(el => el.addEventListener("click", e => {
+    if(e.target.tagName === "SELECT") return;
+    el.closest(".func").classList.toggle("open");
+  }));
+  host.querySelectorAll("input[type=checkbox][data-key]").forEach(cb => cb.addEventListener("change", () => {
+    state.checks[cb.dataset.key] = cb.checked; saveState(); renderAll(true);
+  }));
+  host.querySelectorAll("input[type=text][data-ev]").forEach(inp => inp.addEventListener("input", () => {
+    state.evidence[inp.dataset.ev] = inp.value; saveState();
+  }));
+  host.querySelectorAll("select[data-target]").forEach(sel => sel.addEventListener("change", () => {
+    const v = sel.value ? Number(sel.value) : null;
+    if(v) state.targets[sel.dataset.target] = v; else delete state.targets[sel.dataset.target];
+    state.meta.profile = ""; saveState(); renderAll(true);
+  }));
+}
+
+function renderResult(){
+  let html = `<thead><tr><th>Function</th><th>Score</th><th>Target</th><th>Gap</th><th>Next steps to close it</th></tr></thead><tbody>`;
+  for(const f of FUNCS){
+    const score = functionScore(f);
+    const t = state.targets[f.id];
+    let gapCell = "—";
+    if(t != null){
+      const d = t - score;
+      gapCell = d <= 0 ? `<span class="met-note">at/above target</span>` : `<span class="gap-note">${d} level${d>1?"s":""} short</span>`;
+    }
+    const gapItems = nextGapItems(f, score);
+    const nextTxt = score >= 4 ? "—" : (gapItems.length
+      ? `${gapItems.length} item${gapItems.length>1?"s":""} to reach L${score+1}: ${esc(gapItems.slice(0,2).join("; "))}${gapItems.length>2?"…":""}`
+      : "—");
+    html += `<tr><td><b>${esc(f.name)}</b></td><td>L${score} · ${LEVEL_NAMES[score]}</td>
+      <td>${t ? "L"+t : "—"}</td><td>${gapCell}</td><td style="font-size:.82rem">${nextTxt}</td></tr>`;
+  }
+  html += "</tbody>";
+  document.getElementById("result-table").innerHTML = html;
+}
+
+function renderAll(skipFunctions){
+  renderMeta(); renderTiles(); renderChart(); renderResult();
+  if(!skipFunctions) renderFunctions(); else renderFunctionBadgesOnly();
+}
+function renderFunctionBadgesOnly(){
+  for(const f of FUNCS){
+    const pill = document.querySelector(`.func[data-fid="${f.id}"] .lvl-pill`);
+    if(pill){
+      const score = functionScore(f);
+      pill.textContent = `L${score} · ${LEVEL_NAMES[score]}`;
+      pill.classList.toggle("l1", score === 1);
+    }
+    const sel = document.querySelector(`.func[data-fid="${f.id}"] select[data-target]`);
+    if(sel) sel.value = state.targets[f.id] || "";
+  }
+}
+
+["f-name","f-date","f-evrepo"].forEach(id => document.getElementById(id).addEventListener("input", e => {
+  const map = {"f-name":"name","f-date":"date","f-evrepo":"evrepo"};
+  state.meta[map[id]] = e.target.value; saveState();
+}));
+document.getElementById("f-profile").addEventListener("change", e => {
+  const p = e.target.value;
+  state.meta.profile = p;
+  if(p && CATALOG.profiles[p]) state.targets = {...CATALOG.profiles[p]};
+  saveState(); renderAll(true);
+});
+
+document.getElementById("export-json").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  const d = state.meta.date || new Date().toISOString().slice(0,10);
+  a.download = "ocdf-maturity-assessment-" + d + ".json";
+  a.click(); URL.revokeObjectURL(a.href);
+});
+const jsonInput = document.getElementById("json-input");
+document.getElementById("import-json").addEventListener("click", () => jsonInput.click());
+jsonInput.addEventListener("change", async () => {
+  const f = jsonInput.files[0]; jsonInput.value = "";
+  if(!f) return;
+  try{
+    const s = JSON.parse(await f.text());
+    if(!s.checks) throw new Error("not a maturity-assessment snapshot");
+    state = {meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{}, ...s};
+    saveState(); renderAll();
+  }catch(e){ alert("Could not import: " + e.message); }
+});
+document.getElementById("reset-all").addEventListener("click", () => {
+  state = { meta: state.meta, checks:{}, evidence:{}, targets: state.targets };
+  saveState(); renderAll();
+});
+
+loadState();
+renderAll();
+</script>
+</body>
+</html>
