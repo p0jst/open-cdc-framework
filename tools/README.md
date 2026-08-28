@@ -41,7 +41,7 @@ both the sheet and the tool if you change skill IDs).
   `https://<org>.github.io/<repo>/tools/skill-matrix.html`, and the download
   links to the templates resolve automatically.
 
-## regulatory-profile.html — interactive law selector
+## regulatory-profile.html — interactive law selector (Tool 01)
 
 A single-file, dependency-free page where users **tick the laws that apply to
 them** (NIS2, GDPR, DORA, CRA, CER, and national acts such as Denmark's
@@ -68,7 +68,10 @@ Two layers keep the framework filterable:
 ### Law IDs
 `nis2` `gdpr` `dora` `cra` `cer` — EU-wide ·
 `dk-nis2` `dk-energi` `dk-tele` `dk-cer` `dk-fin` — Denmark ·
-National contributions: use `<iso2>-<shortname>` (e.g. `de-bsig`, `fr-lpm`).
+National implementations use `<iso2>-nat` (e.g. `de-nat`, `fr-nat`) — one tag per member state.
+Denmark is tagged per act (`dk-nis2`, `dk-energi`, `dk-tele`, `dk-cer`, `dk-fin`) as the
+reference example; contributors adding the same granularity for another country should
+follow that pattern (`<iso2>-<shortname>`).
 
 ## maturity-assessment.html — interactive maturity self-assessment (Tool 03)
 

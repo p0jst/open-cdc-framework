@@ -21,7 +21,7 @@ This framework is written for **enterprise IT** security operations. OT/ICS envi
 2. **CIA as the design lens.** Every capability in this framework states which leg(s) of the CIA triad it primarily protects. If you cannot articulate what a control does for Confidentiality, Integrity or Availability, question whether you need it.
 3. **EU-regulation aware.** Each function document contains an "EU regulatory hooks" section mapping capabilities to NIS2, DORA, GDPR and related obligations. The framework helps demonstrate compliance; it is not legal advice.
 4. **People > Process > Technology, in that order.** Most SOC failures are organisational, not technical. Governance and staffing come before tooling in every build sequence.
-5. **Maturity is incremental.** The framework defines four maturity levels (see [08-maturity-model.md](08-maturity-model.md)). Level 1 is achievable by a small team in months, not years.
+5. **Maturity is incremental.** The framework defines four maturity levels (see [08-maturity-model.md](08-maturity-model.md)). Level 2 is achievable by a small team in months, not years.
 6. **Vendor-neutral and open.** No product names in normative text. Community contributions of tooling examples belong in non-normative appendices.
 
 ## The build sequence (greenfield)

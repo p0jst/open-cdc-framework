@@ -17,7 +17,7 @@ This framework synthesises and builds upon the following publicly available work
 ## MITRE
 
 - **MITRE ATT&CK®**. https://attack.mitre.org — © The MITRE Corporation. ATT&CK is used under MITRE's Terms of Use permitting use with attribution. ATT&CK® is a registered trademark of The MITRE Corporation.
-- C. Zimmerman et al., *11 Strategies of a World-Class Cybersecurity Operations Center*, 2nd edition, MITRE. https://www.mitre.org/news-insights/publication/11-strategies-world-class-cybersecurity-operations-center
+- K. Knerler, I. Parker, C. Zimmerman, *11 Strategies of a World-Class Cybersecurity Operations Center*, 2nd edition, MITRE. https://www.mitre.org/news-insights/publication/11-strategies-world-class-cybersecurity-operations-center
 
 ## EU legislation (EUR-Lex; © European Union, reuse permitted under Commission Decision 2011/833/EU)
 

@@ -88,7 +88,7 @@ The traditional split — infrastructure maintains the server and OS, the CDC ma
 
 - NIST CSF 2.0 (CSWP 29), DETECT function. https://doi.org/10.6028/NIST.CSWP.29
 - MITRE ATT&CK®. https://attack.mitre.org
-- MITRE, *11 Strategies of a World-Class Cybersecurity Operations Center* (Zimmerman et al., 2nd ed.). https://www.mitre.org/news-insights/publication/11-strategies-world-class-cybersecurity-operations-center
+- MITRE, *11 Strategies of a World-Class Cybersecurity Operations Center* (Knerler, Parker & Zimmerman, 2nd ed.). https://www.mitre.org/news-insights/publication/11-strategies-world-class-cybersecurity-operations-center
 - NIST SP 800-92, *Guide to Computer Security Log Management*.
 - Directive (EU) 2022/2555 (NIS2) Art. 21, 23; GDPR Art. 33; DORA Art. 10.
 

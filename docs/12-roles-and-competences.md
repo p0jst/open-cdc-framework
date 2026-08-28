@@ -31,7 +31,7 @@ A CDC job title rarely equals exactly one ECSF profile — most operational role
 | CDC Director / SOC Manager | **CISO (scaled)** + Cybersecurity Risk Manager | Educator | GV-1..7 |
 | Compliance/Reporting Officer | **Cyber Legal, Policy & Compliance Officer** | Risk Manager | GV-3, RS-5, annexes |
 | Awareness/Exercise Lead | **Cybersecurity Educator** | — | PR-2, RS-7 |
-| Purple/Validation Tester | **Penetration Tester** | Implementer | DE-6, P8 |
+| Purple/Validation Tester | **Penetration Tester** | Implementer | DE-6, PR-8 |
 
 **Service-management layer (S/A-tier and shared CDCs):** where the CDC runs as a formal service — especially Model D shared CDCs — add a thin service-management layer distinct from the analyst line: a *service owner* (budget, P&L, prioritisation), a *technical lead* (delivery quality, SLA adherence, root causes of service degradation) and a *service architect* (roadmap, documentation, change). These compose from ECSF CISO/Risk Manager/Architect elements and prevent the classic failure where senior analysts absorb service management informally until both suffer.
 

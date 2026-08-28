@@ -13,7 +13,7 @@ with corrections.
 | Croatia | In force | [annex-hr.md](annex-hr.md) |
 | Cyprus | Adopted — verify completeness | [annex-cy.md](annex-cy.md) |
 | Czechia | In force | [annex-cz.md](annex-cz.md) |
-| 🇩🇰 Denmark | In force | [annex-dk.md](annex-dk.md) |
+| Denmark | In force | [annex-dk.md](annex-dk.md) |
 | Estonia | Adopted — verify | [annex-ee.md](annex-ee.md) |
 | Finland | In force | [annex-fi.md](annex-fi.md) |
 | France | Pending — in legislative process | [annex-fr.md](annex-fr.md) |

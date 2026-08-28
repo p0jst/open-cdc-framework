@@ -1,6 +1,6 @@
 # 14 — Deep Dive: Detection-as-Code and ATT&CK Mapping (Advanced tier)
 
-> Doc 15 states the principles; this document is the engineering manual. Audience: detection engineers and technical leads in S/A-tier CDCs (or teams demanding this of an MSSP). Everything below is vendor-neutral; Sigma is used as the authoring format because it is open and convertible to most platforms.
+> Doc 13 §2 states the principles; this document is the engineering manual. Audience: detection engineers and technical leads in S/A-tier CDCs (or teams demanding this of an MSSP). Everything below is vendor-neutral; Sigma is used as the authoring format because it is open and convertible to most platforms.
 
 ## 1. Repository layout
 
@@ -39,7 +39,7 @@ Original example — detect addition to a privileged directory group:
 
 ```yaml
 title: Addition To Privileged Group
-id: 3f2a9c1e-7b4d-4e8a-9c21-example-uuid    # stable UUID, never reused
+id: 3f2a9c1e-7b4d-4e8a-9c21-5d8e4b2a7f60    # stable UUID, never reused
 status: production                           # experimental | test | production | retired
 description: >
   Detects a user being added to a highly privileged directory group.

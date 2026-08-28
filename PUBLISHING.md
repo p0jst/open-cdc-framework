@@ -9,7 +9,7 @@ Approved project name: Open CDC Framework (OCDF). "Framework" refers to the capa
 - Enable: Pages with source "GitHub Actions" (publishes the website incl. tools/), Discussions, Issues.
 
 ## Release sequence
-1. Fill ABOUT.md placeholders; set final repo URL in docs/19-references.md citation line.
+1. ~~Fill ABOUT.md placeholders; set final repo URL in docs/19-references.md citation line.~~ (done)
 2. Push, tag `v0.1-rc1`, verify Pages renders the selector.
 3. Own read-through; legal review of reporting-deadline tables; re-verify pending annexes (FR/IE/LU/ES/PL/NL).
 4. Tag `v0.1`, announce (community channels before broadcast channels).

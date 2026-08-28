@@ -22,7 +22,7 @@ Thank you for helping European teams defend better. Contributions of all sizes a
 
 1. Open an **issue** describing the change (use the templates).
 2. For text changes: fork → branch (`docs/<topic>` or `fix/<topic>`) → pull request referencing the issue.
-3. One logical change per PR; keep the document structure (Objective / Capabilities / CIA mapping / Maturity / EU hooks / External dependencies / Sources) intact for function docs.
+3. One logical change per PR; keep the document structure (Objective / Capabilities / CIA mapping / Roles & staffing / Maturity / EU hooks / External dependencies / Sources) intact for function docs.
 4. A maintainer will review for accuracy, neutrality, and attribution before merging.
 
 ## Licensing of contributions

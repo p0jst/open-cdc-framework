@@ -16,7 +16,7 @@ The ordering below deliberately mirrors the logic of the CIS Critical Security C
 
 | Week | Do | Framework |
 |------|----|-----------|
-| 1–2 | Run the GOVERN navigator workshop; draft the charter incl. containment authority (§4) | navigator G1–G10, charter template |
+| 1–2 | Run the GOVERN navigator workshop; draft the charter incl. containment authority (§4) | navigator G1–G11, charter template |
 | 1–4 | Regulatory applicability register: which laws, which entities, which countries; register with authorities where overdue | 09 + your national annex, selector tool |
 | 2–6 | **Decide the operating model** (MSSP / tiered / capability-based) with the scored criteria | 11-operating-models.md |
 | 3–8 | Crown-jewel workshop with the business (I1); C/I/A impact rating per service | ID-3, 07-cia-triad |
@@ -31,11 +31,11 @@ The ordering below deliberately mirrors the logic of the CIS Critical Security C
 
 ## Months 4–12
 
-- Detection: reach ~20+ ATT&CK-mapped use cases; establish the tuning loop and triage SLAs (14-cdc-operations.md)
+- Detection: reach ~20+ ATT&CK-mapped use cases; establish the tuning loop and triage SLAs (13-cdc-operations.md)
 - Response: containment technically tested; tabletop with management; DFIR retainer if not in-house
 - Recover: RTO/RPO agreed for crown jewels; rebuild-from-known-good procedure drafted
 - Govern: quarterly executive reporting running; supplier security clauses in new contracts
-- Reassess maturity at month 12; set year-2 targets per function (aim: balanced Level 2, RESPOND at 3 if NIS2 essential)
+- Reassess maturity at month 12; set year-2 targets per function (aim: balanced Level 2, RESPOND at 3 if NIS2 important; Level 3 across all functions if NIS2 essential)
 
 ## Anti-priorities (deliberately NOT first-year work)
 

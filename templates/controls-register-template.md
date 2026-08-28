@@ -12,7 +12,7 @@
 | C-06 | Service & SLA description matches reality | Charter §3 | O-5/O-7 | Semi-annual | | | | |
 | C-07 | Community memberships recorded; regulator notified of changes where required | 16 §2 | O-9 | Yearly | | | | |
 | C-08 | Maturity self-assessment executed; gaps in roadmap | assessments/ | P-8 | Yearly | | | | |
-| C-09 | Skills matrix reviews held for all staff | docs/11 | H-3/H-4 | Semi-annual | | | | |
+| C-09 | Skills matrix reviews held for all staff | docs/12 | H-3/H-4 | Semi-annual | | | | |
 | C-10 | Detection validation coverage (% rules fired in test) | DE-6 | — | Quarterly | | | | |
 
 ---

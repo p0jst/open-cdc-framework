@@ -32,7 +32,7 @@
 |---|----------|-----|------------------|
 | 1 | **Memory (RAM)** | Capture with a memory acquisition tool run from external media/EDR live response | Capture **before** shutdown. Memory integrity/VBS features can interfere with some tools — test your tool on your standard image *in advance*. |
 | 2 | **Volatile system state** | Live response: network connections, processes, logged-on users, ARP/DNS cache, open handles | Prefer EDR live response over interactive console use (less footprint). |
-| 3 | **Disk image** | Full physical image, or targeted triage collection if scoped | **BitLocker:** image while the volume is unlocked, or ensure the recovery key is in hand. Disable Fast Startup consideration: `hiberfil.sys` may contain a memory snapshot — collect it. |
+| 3 | **Disk image** | Full physical image, or targeted triage collection if scoped | **BitLocker:** image while the volume is unlocked, or ensure the recovery key is in hand. Fast Startup: if enabled, `hiberfil.sys` may contain a memory snapshot — collect it. |
 | 4 | **Cloud/remote artefacts** | Export identity sign-in logs, MDM/Intune device record, OneDrive/SharePoint audit for the user | Often more complete than the device itself; not lost if the device is wiped. |
 
 **Key Windows 11 disk artefacts for the analyst:**

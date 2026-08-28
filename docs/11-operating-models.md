@@ -1,6 +1,6 @@
 # 11 — Choosing Your Operating Model
 
-> **This is a decision document.** Before designing anything in DETECT or RESPOND, the organisation must choose how 24/7/365 monitoring and alerting will be operated. There are three archetypes — each with real trade-offs. Related: GOVERN GV-5, navigator question G6, charter template §3/§6.
+> **This is a decision document.** Before designing anything in DETECT or RESPOND, the organisation must choose how 24/7/365 monitoring and alerting will be operated. There are three core archetypes plus a shared/community variant — each with real trade-offs. Related: GOVERN GV-5, navigator question G6, charter template §3/§6.
 
 ## The three archetypes
 

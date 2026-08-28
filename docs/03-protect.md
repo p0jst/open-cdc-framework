@@ -58,7 +58,7 @@ Ownership follows the SIEM pattern (doc 04): platform teams operate the mechanis
 
 ## EU regulatory hooks
 
-- **NIS2 Art. 21(2)** — explicitly requires, among others: (f) policies for cryptography and encryption; (g) HR security and access control; (h) MFA/continuous authentication where appropriate; (j) basic cyber hygiene and training.
+- **NIS2 Art. 21(2)** — explicitly requires, among others: (g) basic cyber hygiene practices and cybersecurity training; (h) policies and procedures on the use of cryptography and, where appropriate, encryption; (i) human resources security, access control policies and asset management; (j) MFA or continuous authentication solutions, where appropriate.
 - **Commission Implementing Regulation (EU) 2024/2690** — technical requirements detailing NIS2 Art. 21 measures for digital infrastructure entities; useful as a control checklist even outside its formal scope.
 - **GDPR Art. 32** — encryption and pseudonymisation named as example measures.
 - **DORA Art. 9** — protection and prevention measures for financial entities.

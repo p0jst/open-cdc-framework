@@ -21,7 +21,7 @@ Not every organisation needs every capability. Instead of maintaining three edit
 | PROTECT | PR-1 MFA/least-priv · PR-2 awareness · PR-5 patching · PR-7 tested offline backups · PR-9 email/web basics (DMARC, DNS filtering) · script control & blocking execution from user-writable paths | PR-3 data security · PR-4 hardening baselines incl. server allowlisting · PR-6 segmentation | PR-8 secure SDLC · continuous control validation · workstation allowlisting |
 | DETECT | DE-1 sources 1–3 · DE-3 triage runbook (or MSSP equivalent with transparency) | DE-2 use-case lifecycle · DE-4 coverage measurement · DE-7 integrity monitoring · network/NDR telemetry where unmanaged devices or flat segments exist | DE-5 hunting · DE-6 systematic validation · detection-as-code (doc 14) · CTI programme (doc 15) |
 | RESPOND | RS-1 IR plan · RS-2 top-3 playbooks · RS-5 reporting machinery | RS-3 forensics (retainer ok) · RS-4 pre-authorised containment · RS-7 annual exercises | RS-6 crisis integration · automated containment with gates |
-| RECOVER | RC-1 recovery plans+RTO/RPO · RC-5 post-incident reviews | RC-2 trusted restoration · RC-3 verified execution · RC-6 BCM integration | Ransomware-scale recovery exercises; measured RTO attainment |
+| RECOVER | RC-1 recovery plans+RTO/RPO · RC-4 recovery communication · RC-5 post-incident reviews | RC-2 trusted restoration · RC-3 verified execution · RC-6 BCM integration | Ransomware-scale recovery exercises; measured RTO attainment |
 
 ## How to use tiers
 
