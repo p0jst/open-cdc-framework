@@ -139,6 +139,11 @@
 .ocdf-hero > * {
   position: relative;
 }
+/* toc.permalink appends a ¶ anchor to every heading — useful in the body
+   documents, meaningless on a hero whose page hides its table of contents */
+.md-typeset .ocdf-hero .headerlink {
+  display: none;
+}
 .ocdf-hero .ocdf-eyebrow {
   display: inline-block;
   font-family: var(--md-code-font-family, ui-monospace, Consolas, monospace);
