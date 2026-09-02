@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Continue-reading navigation made visible.** The documents are numbered and meant to be read in order, so the previous/next links are a primary control — but Material renders them small and low-contrast inside the dark footer, where they are easy to miss entirely. They now sit on the page ground as cards matching the rest of the site, with the direction label in the accent red and a hover lift. On narrow screens the two cards stack and both stay labelled (Material hides the previous title by default, which with card styling left an empty box holding one arrow).
+
 - **Link previews**: `assets/social-preview.png` — a 2560x1280 card in the site's own palette, typography and blueprint texture — plus Open Graph and Twitter card tags via a small theme override (`overrides/main.html`), so a link to opencdc.org shared into Slack, LinkedIn or a chat renders as a card rather than a bare URL. The same file is what should be uploaded as the repository's GitHub social preview.
 
 - **Heading permalinks turned off** (`toc.permalink: false`): the paragraph-mark anchor that appeared beside every heading on hover read as a stray glyph rather than an affordance. Heading ids are still generated, so every section stays linkable — the table of contents links to each one and puts the anchor in the address bar.

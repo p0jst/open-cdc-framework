@@ -488,13 +488,119 @@
   background: color-mix(in srgb, var(--ocdf-eu-soft) 45%, transparent);
 }
 
+/* ------------------------------------------------- continue reading nav */
+
+/* The documents are numbered and meant to be read in order, so prev/next is a
+   primary control rather than chrome. Material renders it small and low
+   contrast inside the dark footer, where it is easy to miss — lift it onto the
+   page ground and give it the same card treatment as the rest of the site. */
+.md-footer {
+  background-color: transparent;
+  color: var(--md-default-fg-color);
+}
+.md-footer__inner {
+  display: flex;
+  gap: 0.9rem;
+  padding: 1.5rem 0.8rem 2rem;
+  margin: 0 auto;
+  border-top: 1px solid var(--ocdf-rule);
+  opacity: 1;
+}
+.md-footer__link {
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.8rem 1rem;
+  background: var(--ocdf-card-bg);
+  border: 1px solid var(--ocdf-rule);
+  border-top: 3px solid var(--ocdf-eu);
+  border-radius: 0 0 6px 6px;
+  opacity: 1;
+  transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.md-footer__link:hover {
+  transform: translateY(-2px);
+  border-top-color: var(--ocdf-accent);
+  box-shadow: 0 4px 14px rgba(18, 58, 109, 0.08);
+}
+[data-md-color-scheme="slate"] .md-footer__link {
+  border-top-color: #4a76ad;
+}
+/* Material positions the direction label absolutely above the title */
+.md-footer__direction {
+  position: static;
+  margin: 0 0 0.15rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ocdf-accent);
+  opacity: 1;
+}
+[data-md-color-scheme="slate"] .md-footer__direction {
+  color: #d98a94;
+}
+.md-footer__title {
+  padding: 0;
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 640;
+  line-height: 1.35;
+  white-space: normal;
+}
+.md-footer__button {
+  flex: none;
+  margin: 0;
+  padding: 0;
+  color: var(--ocdf-eu);
+}
+[data-md-color-scheme="slate"] .md-footer__button {
+  color: #8fb3e3;
+}
+/* A lone "next" — the landing page — reads better left-aligned than pushed to
+   the right edge of a card with nothing opposite it. */
+.md-footer__link--next:only-child {
+  margin-left: 0;
+  max-width: 26rem;
+}
+.md-footer__link--next:only-child .md-footer__title,
+.md-footer__link--next:only-child .md-footer__direction {
+  text-align: left;
+}
+
+/* On narrow screens Material hides the previous link's title, which with card
+   styling leaves an empty box holding one arrow. Stack them and keep both
+   labelled instead. */
+@media screen and (max-width: 44.9375em) {
+  .md-footer__inner {
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+  }
+  .md-footer__link {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+  .md-footer__link--prev .md-footer__title {
+    display: block;
+  }
+  .md-footer__link--next .md-footer__title,
+  .md-footer__link--next .md-footer__direction {
+    text-align: left;
+  }
+  .md-footer__link--next {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+}
+
 /* -------------------------------------------------------------- footer */
 
 .md-footer-meta {
   background-color: var(--ocdf-eu-dark);
-}
-.md-footer {
-  background-color: #1b2733;
 }
 
 /* --------------------------------------------------------- responsive */
