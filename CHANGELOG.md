@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Heading permalinks turned off** (`toc.permalink: false`): the paragraph-mark anchor that appeared beside every heading on hover read as a stray glyph rather than an affordance. Heading ids are still generated, so every section stays linkable — the table of contents links to each one and puts the anchor in the address bar.
+
 - **RESPOND gains "the first hour of a major incident"** — the estate-wide moves that sit above any single playbook and are most often skipped under pressure: do not power systems off; cut external connectivity with a perimeter deny-all *including* VPN, site-to-site, RDP/VDI gateways and vendor/out-of-band paths; verify and then isolate backups; extend snapshot retention before defaults roll it off; and stand up emergency log collection where there is no aggregator. Plus a **counsel and insurance** subsection: cyber policies commonly mandate notification windows and pre-approved responder panels (using your own first can reduce cover), and legal privilege over investigation reports is not uniform across member states — settle both before an incident, not during one.
 - **RECOVER** notes that the recovery path is decided during response: pre-intrusion snapshots are often the cleanest restore point and expire on schedule regardless of the open incident.
 - **Containment action catalogue** gains five estate-level rows (CON-11 to CON-15): perimeter deny-all, remote-access disable, backup isolation, snapshot-retention extension and emergency log collection — the actions whose authority most needs pre-agreeing.

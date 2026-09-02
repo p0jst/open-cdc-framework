@@ -55,7 +55,9 @@ markdown_extensions:
   - md_in_html
   - tables
   - toc:
-      permalink: true
+      # No paragraph-mark anchors beside headings. Heading ids are still
+      # generated, so every section remains linkable via the table of contents.
+      permalink: false
   - pymdownx.superfences
   # Renders "- [ ]" as a real (non-clickable) checkbox rather than literal
   # "[ ]" text. The reference checklists are meant to be printed or copied;
