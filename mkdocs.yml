@@ -6,6 +6,10 @@ site_description: >-
 site_url: https://opencdc.org/
 repo_url: https://github.com/p0jst/open-cdc-framework
 repo_name: p0jst/open-cdc-framework
+# Unused while content.action.edit is off; kept so the repo link resolves and
+# so re-enabling the edit action is a one-line change. Note that if it is ever
+# re-enabled, index.md and templates/index.md are staged from site/ and need
+# their edit_uri repointed (see git history for site/hooks.py).
 edit_uri: edit/main/
 
 # Content is staged by `python site/build_site.py` (run it before mkdocs build)
@@ -45,7 +49,6 @@ theme:
     - toc.follow
     - search.suggest
     - search.highlight
-    - content.action.edit
 
 extra_css:
   - assets/extra.css
@@ -76,9 +79,6 @@ markdown_extensions:
 
 plugins:
   - search
-
-hooks:
-  - site/hooks.py
 
 extra:
   social:
