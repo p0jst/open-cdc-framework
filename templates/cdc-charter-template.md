@@ -31,12 +31,14 @@ The Cyber Defence Center protects the confidentiality, integrity and availabilit
 > The most important section. Without pre-agreed authority, response stalls.
 
 The CDC is authorised, without prior approval, to:
+
 - [ ] Isolate endpoints and servers up to tier [X] criticality
 - [ ] Disable user and service accounts on confirmed compromise
 - [ ] Block network indicators (IP/domain/hash) at security controls
 - [ ] Access logs and forensic data on any in-scope system, subject to the data-handling rules in §7
 
 Actions requiring approval from [ROLE]:
+
 - [ ] Isolation of tier-1 (crown jewel) production services
 - [ ] External statutory notifications (approval: legal/DPO; execution: CDC)
 - [ ] Engagement of external DFIR retainer

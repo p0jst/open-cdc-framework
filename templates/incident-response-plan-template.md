@@ -24,12 +24,14 @@
 | Legal / DPO | | Breach assessment, notification decisions |
 | Communications | | Internal & external messaging |
 | Executive sponsor | | Crisis escalation, major trade-off approval |
+| External counsel | | Privilege position per jurisdiction; regulatory and contractual exposure |
+| Cyber insurance contact | | Carrier notification within the policy window; which responder and counsel panels the policy permits |
 
 ## 3. Process (lifecycle)
 
 1. **Detection & reporting** — sources: monitoring, users ([report channel]), third parties, national CSIRT.
 2. **Triage & classification** — severity per §1; open incident record; start timeline log.
-3. **Containment** — per playbook; authority per CDC charter §4. Record every action with timestamp (evidential integrity).
+3. **Containment** — per playbook; authority per CDC charter §4. Record every action with timestamp (evidential integrity). For a major incident, run the estate-wide first-hour actions in [RESPOND](../docs/05-respond.md) alongside the scenario playbook: do not power systems off, cut external connectivity and remote access, isolate backups, extend snapshot retention, and notify counsel and the insurer.
 4. **Eradication & investigation** — root cause; preserve evidence (hashing, chain of custody form: [link]).
 5. **Recovery** — integrity verification before reconnection; credential rotation; see recovery plans.
 6. **Post-incident** — blameless review within [10] working days for P1/P2; actions tracked in [system].
@@ -51,7 +53,7 @@
 
 ## 6. Playbook index
 
-> `PB-01`…`PB-06` below are placeholder IDs for **your own** scenario playbooks — rename them to your scheme. The framework ships *platform* playbooks with different IDs (`PB-W11`, `PB-MAC`, `PB-LNX` — see the [playbook index](../playbooks/README.md)); scenario playbooks are on the roadmap for v0.2.
+> `PB-01`…`PB-06` below are placeholder IDs for **your own** scenario playbooks — rename them to your scheme. The framework ships *platform* playbooks with different IDs (`PB-W11`, `PB-MAC`, `PB-WSV`, `PB-LNX` — see the [playbook index](../playbooks/README.md)); scenario playbooks are on the roadmap for v0.2.
 
 | Scenario | Playbook | Last exercised |
 |----------|----------|----------------|

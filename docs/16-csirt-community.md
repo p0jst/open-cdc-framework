@@ -49,6 +49,7 @@ OCDF and SIM3 are complementary: OCDF says *what to build*, SIM3 audits *whether
 The difference between documentation that passes an audit and documentation that rots is a simple mechanism: **every key document/section gets a verification control** — an owner, a review frequency, and an **approver from outside the CDC** (compliance, internal audit) who confirms the review happened. Templates: [controls register](../templates/controls-register-template.md).
 
 Three review layers work well together:
+
 1. **Self-assessment** — yearly, using this framework's maturity assessment and/or ENISA's CSIRT maturity (SIM3-based) self-assessment tooling; gaps feed the roadmap.
 2. **Recurring controls** — quarterly/semi-annual verification of the high-churn artefacts (containment mandate, contact details, severity scheme, reporting process).
 3. **Independent audit** — internal audit or external assessor, yearly, from a separate reporting line.

@@ -78,8 +78,8 @@ states.
 
     [Ready-to-copy templates](templates/index.md) — charter, IR plan, detection
     use cases, KPIs, job descriptions — and
-    [IR & forensics playbooks](playbooks/README.md) for Windows 11, macOS and
-    Linux servers.
+    [IR & forensics playbooks](playbooks/README.md) for Windows 11, macOS,
+    Windows Server and Linux servers.
 
 -   :material-source-branch:{ .lg .middle } **Open and community-maintained**
 

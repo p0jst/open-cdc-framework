@@ -7,6 +7,7 @@
 Untuned detection rots: alert volume grows, true-positive rate falls, analysts numb out, and the one real alert drowns. Tuning is a **workflow with governance**, not an occasional cleanup.
 
 **The loop (weekly cadence):**
+
 1. **Measure per use case:** alerts/week, true-positive rate, time-to-triage. The use-case template's metrics block is the record.
 2. **Triage feedback channel:** every closed alert carries a disposition (TP / FP-tunable / FP-accepted / benign-true-positive). Analysts flag tuning candidates in one click — friction here kills the loop.
 3. **Weekly tuning review (30–60 min):** detection engineer + senior analyst walk the worst offenders (top noise, zero-fire rules, missed-detection post-mortems).

@@ -88,7 +88,7 @@ both the sheet and the tool if you change skill IDs).
 
 Turns [`assessments/maturity-self-assessment.md`](../assessments/maturity-self-assessment.md)
 into something you actually fill out, instead of a markdown checklist whose
-`- [ ]` boxes render as inert text on the website. All 60 criteria across the
+boxes cannot be ticked in the browser. All 60 criteria across the
 six CSF functions get a status of their own and an optional evidence field.
 
 - **Five-point status per criterion** — not considered / planned / partially in

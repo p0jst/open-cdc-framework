@@ -42,11 +42,12 @@
 | 5 | Cloud artefacts | IdP logs, MDM record, iCloud/Drive/SaaS audit as applicable | Survives device wipe. |
 
 **Key macOS artefacts:**
-- Persistence: `/Library/LaunchDaemons`, `/Library/LaunchAgents`, `~/Library/LaunchAgents`, login items (`BackgroundItems-v*.btm`), configuration profiles, cron/periodic
-- Execution & provenance: quarantine database (`com.apple.LaunchServices.QuarantineEventsV2`), Gatekeeper/XProtect logs, `ExecPolicy`/CoreAnalytics
-- User activity: `KnowledgeC.db`, Spotlight shortcuts, shell history (`~/.zsh_history`), Recent items, browser data
-- Filesystem: FSEvents (`/System/Volumes/Data/.fseventsd`), APFS snapshots
-- Security state: TCC.db (what had which permissions), sudo log entries in unified log
+
+- **Persistence**: `/Library/LaunchDaemons`, `/Library/LaunchAgents`, `~/Library/LaunchAgents`, login items (`BackgroundItems-v*.btm`), configuration profiles, cron/periodic
+- **Execution & provenance**: quarantine database (`com.apple.LaunchServices.QuarantineEventsV2`), Gatekeeper/XProtect logs, `ExecPolicy`/CoreAnalytics
+- **User activity**: `KnowledgeC.db`, Spotlight shortcuts, shell history (`~/.zsh_history`), Recent items, browser data
+- **Filesystem**: FSEvents (`/System/Volumes/Data/.fseventsd`), APFS snapshots
+- **Security state**: TCC.db (what had which permissions), sudo log entries in unified log
 
 ## 5. Analysis pointers
 

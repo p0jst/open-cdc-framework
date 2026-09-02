@@ -14,6 +14,11 @@
 | CON-08 | Revoke sessions & refresh tokens | IdP / cloud | ☐ | ☐ | ☐ | |
 | CON-09 | Block mail sender / recall mail | Mail gateway / mail platform | ☐ | ☐ | ☐ | |
 | CON-10 | Disable service account / rotate secret | Secrets mgmt / directory | ☐ | ☐ | ☑ typically | Coordinate with service owner |
+| CON-11 | Cut external connectivity — deny-all at the perimeter | Perimeter firewall | ☐ | ☐ | ☑ typically | Estate- or site-wide Availability impact; approval per charter §4. Drill it — deciding this at 03:00 without a mandate is how hours are lost |
+| CON-12 | Disable remote access (client VPN, site-to-site, RDP/VDI gateways, vendor and OOB management) | VPN / gateway / firewall | ☐ | ☐ | ☑ typically | Partial isolation is not isolation — enumerate every inbound path, including supplier and management ones, before you need the list |
+| CON-13 | Isolate backup infrastructure | Backup platform / storage / network | ☐ | ☐ | ☑ typically | Confirm recent restore points are readable *first*. Backup systems are a primary ransomware target and the credentials to reach them are often already held |
+| CON-14 | Extend snapshot retention / export snapshots | SAN / hypervisor / storage | ☐ | ☐ | ☐ | Defaults roll off in days and take evidence and recovery points with them — a first-hour action, not a recovery-phase one |
+| CON-15 | Stand up emergency log collection | Firewall, directory, hypervisor, mail, remote access | ☐ | ☐ | ☐ | For estates without central logging: pull logs somewhere the adversary cannot reach, before they rotate |
 | … | | | | | | |
 
 **Governance:** owner: [role] · review frequency: [semi-annual] · approver (outside CDC): [function] · last reviewed: [date]

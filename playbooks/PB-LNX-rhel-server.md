@@ -38,12 +38,13 @@
 | 5 | Platform/cloud | Hypervisor/cloud audit logs, config management history (what *should* the host look like), backup catalogues | Config management (Ansible/Satellite) diffs are gold for spotting unauthorised change. |
 
 **Key Linux artefacts:**
-- Accounts & access: `/etc/passwd|shadow|group`, sudoers(+.d), `~/.ssh/authorized_keys` (all users), last/btmp/wtmp/lastlog, PAM configs
-- Persistence: cron (all crontabs + /etc/cron.*), **systemd units & timers** (incl. user units `~/.config/systemd/user`), rc.local, `/etc/ld.so.preload` & LD_PRELOAD, shell profiles/rc files, udev rules, malicious PAM modules, SSH forced commands
-- Execution/history: shell histories (all users incl. root; note gaps/`HISTFILE` tampering), `/tmp`,`/dev/shm`,`/var/tmp` contents, auditd execve records
-- Package integrity: `rpm -Va` against a trusted rpmdb (flags modified binaries — classic rootkit tell)
-- Web tier: webroot diff vs deployment source (webshells), access logs around first-touch
-- Containers: `podman/docker ps -a`, images, overlay diffs, container logs — a "clean host" may have a dirty container
+
+- **Accounts & access**: `/etc/passwd|shadow|group`, sudoers(+.d), `~/.ssh/authorized_keys` (all users), last/btmp/wtmp/lastlog, PAM configs
+- **Persistence**: cron (all crontabs + /etc/cron.*), **systemd units & timers** (incl. user units `~/.config/systemd/user`), rc.local, `/etc/ld.so.preload` & LD_PRELOAD, shell profiles/rc files, udev rules, malicious PAM modules, SSH forced commands
+- **Execution/history**: shell histories (all users incl. root; note gaps/`HISTFILE` tampering), `/tmp`,`/dev/shm`,`/var/tmp` contents, auditd execve records
+- **Package integrity**: `rpm -Va` against a trusted rpmdb (flags modified binaries — classic rootkit tell)
+- **Web tier**: webroot diff vs deployment source (webshells), access logs around first-touch
+- **Containers**: `podman/docker ps -a`, images, overlay diffs, container logs — a "clean host" may have a dirty container
 
 ## 4. Analysis pointers
 

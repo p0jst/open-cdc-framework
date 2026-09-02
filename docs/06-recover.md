@@ -15,6 +15,13 @@ Restore affected services in a trustworthy state, communicate honestly during re
 | RC-5 | Lessons learned & improvement loop | Blameless post-incident reviews with tracked actions; findings feed the improvement backlog (CSF 2.0 ID.IM) and update playbooks, detections and controls. |
 | RC-6 | Business continuity integration | CDC recovery plans aligned with enterprise BCM/DR; joint exercises. |
 
+> **The recovery path is decided during response, not during recovery.** Snapshot and backup
+> retention defaults are measured in days: the SAN, hypervisor or filesystem snapshot taken before
+> the intrusion is often the cleanest recovery point available, and it expires on schedule whether
+> or not there is an incident open. Extending retention and isolating backup infrastructure belong
+> in the first hour of response ([05-respond.md](05-respond.md)) — by the time this function starts,
+> the options have already narrowed to whatever survived.
+
 ## CIA mapping
 
 | Capability | C | I | A | Rationale |

@@ -16,6 +16,51 @@ Contain, eradicate, and communicate during incidents — including meeting EU st
 | RS-6 | Crisis management interface | Escalation path from security incident to organisational crisis; link to business continuity structures. |
 | RS-7 | Exercises | Tabletop and technical exercises at least annually, including management (NIS2 training obligation) and statutory-reporting drills. |
 
+## The first hour of a major incident
+
+Playbooks handle the specific scenario. These are the estate-wide moves that apply to almost any
+major compromise, and the ones most often skipped under pressure — pre-agree them in the charter
+(§4) so they are decisions to *execute*, not decisions to *have*.
+
+- **Do not shut systems down.** Powering off destroys memory evidence, and on a compromised host
+  nobody knows what is configured to run at boot. Isolate instead: network containment preserves
+  both the machine and the evidence inside it.
+- **Cut external connectivity for affected sites.** A deny-all rule at the top of the perimeter
+  ruleset, and remote access disabled with it — client VPN, site-to-site tunnels, remote desktop
+  and VDI gateways, vendor and out-of-band management paths. Partial isolation that leaves one
+  tunnel up is not isolation. The Availability impact is severe, which is exactly why the authority
+  has to exist before the night it is needed.
+- **Protect the backups before anything else touches them.** Confirm recent restore points exist and
+  are readable, then isolate the backup infrastructure. Backup systems are a primary target in
+  ransomware operations, and the credentials to reach them are often already held.
+- **Freeze anything that expires.** SAN, hypervisor and filesystem snapshots roll off on default
+  retention schedules — frequently within days — taking recovery points and evidence with them.
+  Extend retention or export copies in the first hour, not the first week.
+- **If there is no central logging, start collecting now.** Firewall, directory, hypervisor,
+  endpoint, mail and remote-access logs, pulled somewhere the adversary cannot reach. A log not
+  collected on day one is not available on day five.
+- **Engage counsel, and the insurer if there is a policy** — see below, and do it before the
+  technical picture is complete rather than after.
+
+### Counsel and insurance
+
+Involve legal counsel when an incident looks *material*, not when it looks *notifiable*. Two
+practical traps, both hard to fix retrospectively:
+
+- **Insurance conditions bind early.** Cyber policies commonly require notification within a short
+  window and mandate pre-approved DFIR, negotiation and legal panels. Bringing in your own responder
+  first can reduce or void cover. Establish before the incident whether a policy exists, who
+  notifies the carrier, within what window, and which vendors it permits — then record it in the IR
+  plan alongside the DFIR retainer.
+- **Privilege is not uniform across the EU.** Some jurisdictions extend legal professional privilege
+  to material prepared for or by external counsel; several member states do not extend it to
+  in-house lawyers at all, and the treatment of technical investigation reports differs again. Do
+  not assume a report is protected because counsel commissioned it — settle the position per
+  jurisdiction *before* the first report is written.
+
+Firms specialising in incident response can coordinate carriers, responders and notifications while
+the CDC keeps working the incident. Identify one alongside the DFIR retainer, not during a P1.
+
 ## EU statutory reporting timelines (build these into playbooks)
 
 | Regime | Trigger | Deadline | Recipient |
@@ -44,7 +89,7 @@ Standardise how every case closes — it is the foundation of honest metrics, tu
 - **Incident manager/commander** — coordinates; distinct from technical lead in larger incidents.
 - **Technical responders** — often the same analysts as DETECT.
 - **Legal/DPO and communications** — mandatory members of the extended IR team.
-- **Retainers** — consider external DFIR retainer at Level 2+ if in-house forensics is not viable.
+- **Retainers** — consider an external DFIR retainer at Level 2+ if in-house forensics is not viable, and identify external counsel on the same basis.
 
 ## Maturity criteria
 
@@ -72,6 +117,10 @@ Standardise how every case closes — it is the foundation of honest metrics, tu
 | External statements and customer communication | Communications | [HARD] | Holding statements ready; single spokesperson rule |
 | Insider-related cases | HR + legal | [GATE] | Process agreed before the first case, incl. evidence handling |
 | Forensics beyond in-house capability | External DFIR retainer | [HARD] | Retainer signed, response time, onboarding pack ready |
+| Cyber insurance notification and approved vendors | Insurer via risk/finance | [GATE] | Whether a policy exists, who notifies, within what window, which responder and counsel panels it permits — engaging outside the panel can reduce cover |
+| Legal privilege position and external counsel | Legal, external where required | [GATE] | Settled per jurisdiction before the first investigation report is written |
+| Estate-wide network containment (perimeter deny-all, remote access off) | Network/IT operations + executive per charter §4 | [GATE] | Who may order it, who executes it out of hours, and how long it can stand |
+| Backup isolation and snapshot retention extension | Backup/storage owner | [HARD] | Reachable 24/7; defaults roll off in days |
 
 ## Sources
 

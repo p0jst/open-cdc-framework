@@ -19,6 +19,7 @@ Express risk appetite separately per objective and per service, e.g.: *"Customer
 
 ### 2. Impact classification per asset (IDENTIFY)
 Rate each crown-jewel service C/I/A impact as Low/Moderate/High (the FIPS 199 approach). This drives:
+
 - log source priority (DETECT),
 - containment authority (RESPOND),
 - restoration order and RTO/RPO (RECOVER).

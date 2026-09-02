@@ -214,6 +214,9 @@
 .md-typeset code {
   border-radius: 3px;
   font-size: 0.85em;
+  /* tighter than Material's default: these documents set paths and registry
+     keys inside parentheses, where the stock padding leaves visible gaps */
+  padding: 0 0.22em;
 }
 
 /* Blockquotes read as margin notes rather than boxes */

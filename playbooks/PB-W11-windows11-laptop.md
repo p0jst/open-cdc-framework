@@ -36,11 +36,12 @@
 | 4 | **Cloud/remote artefacts** | Export identity sign-in logs, MDM/Intune device record, OneDrive/SharePoint audit for the user | Often more complete than the device itself; not lost if the device is wiped. |
 
 **Key Windows 11 disk artefacts for the analyst:**
-- Event logs (`C:\Windows\System32\winevt\Logs`): Security, System, PowerShell/Operational, Sysmon if deployed, WDAC/Defender logs
-- Execution evidence: Prefetch, Amcache.hve, ShimCache (SYSTEM hive), SRUM (`SRUDB.dat`), UserAssist
-- Persistence: Run keys, Scheduled Tasks, Services, WMI subscriptions, Startup folders
-- File activity: `$MFT`, USN Journal (`$J`), LNK files & Jump Lists, Recycle Bin
-- User context: NTUSER.DAT, browser history/downloads, PowerShell history (`ConsoleHost_history.txt`)
+
+- **Event logs** (`C:\Windows\System32\winevt\Logs`): Security, System, PowerShell/Operational, Sysmon if deployed, WDAC/Defender logs
+- **Execution evidence**: Prefetch, Amcache.hve, ShimCache (SYSTEM hive), SRUM (`SRUDB.dat`), UserAssist
+- **Persistence**: Run keys, Scheduled Tasks, Services, WMI subscriptions, Startup folders
+- **File activity**: `$MFT`, USN Journal (`$J`), LNK files & Jump Lists, Recycle Bin
+- **User context**: NTUSER.DAT, browser history/downloads, PowerShell history (`ConsoleHost_history.txt`)
 
 ## 4. Analysis pointers
 

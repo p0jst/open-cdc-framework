@@ -7,6 +7,7 @@ All are vendor-neutral; open source tooling examples are non-normative.
 |----|----------|------|
 | PB-W11 | Windows 11 laptop | PB-W11-windows11-laptop.md |
 | PB-MAC | macOS laptop (Intel & Apple Silicon) | PB-MAC-macos-laptop.md |
+| PB-WSV | Windows Server (incl. domain controllers) | PB-WSV-windows-server.md |
 | PB-LNX | Linux enterprise server (RHEL-class) | PB-LNX-rhel-server.md |
 
 **Scope: enterprise IT only** — these playbooks must not be applied to OT/ICS or telco core systems unadapted (isolation and live-response actions can be unsafe there).
