@@ -6,7 +6,7 @@
 ![Status](https://img.shields.io/badge/status-v0.1--rc1-blue)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 
-**📖 Read the framework as a website: <https://opencdc.org/>** — searchable docs, interactive tools, template downloads. This repository is the source; the site rebuilds automatically on every push to `main`.
+**📖 Read the framework as a website: <https://opencdc.org/>** — searchable docs, interactive tools, template downloads.
 
 ---
 
