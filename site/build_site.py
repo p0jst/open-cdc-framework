@@ -8,6 +8,7 @@ every internal link keeps working, and adds the website-only landing page and CS
 Run from the repository root:  python site/build_site.py
 Then:                          mkdocs build
 """
+import re
 import shutil
 from pathlib import Path
 
@@ -15,7 +16,36 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "_site_src"
 
 COPY_DIRS = ["docs", "assessments", "playbooks", "templates", "tools"]
+
+# "# 11 — Choosing Your Operating Model"
+DOC_HEADING = re.compile(r"^# (\d{2}) — (.+)$", re.MULTILINE)
 COPY_FILES = ["ABOUT.md", "CONTRIBUTING.md", "ROADMAP.md", "CHANGELOG.md", "LICENSE"]
+
+def lift_document_numbers():
+    """Move the leading document number out of each doc's H1.
+
+    The docs are numbered so the files sort in reading order and so they can be
+    cited from each other ("see doc 14" appears 56 times across the framework).
+    In the repository that number belongs at the front of the heading. On the
+    website a reader arrives from the navigation, where the number is the first
+    thing they see and has nothing to be eleventh of — so lift it into a small
+    kicker above the title instead, linked to the reading guide so the number
+    leads somewhere: click it and you see the order it belongs to. Still on the
+    page, still searchable, no longer pretending to be part of the title.
+
+    Only the staged copy is rewritten; the repository markdown keeps its
+    numbered headings.
+    """
+    for path in sorted((SRC / "docs").glob("[0-9][0-9]-*.md")):
+        text = path.read_text(encoding="utf-8")
+        new, n = DOC_HEADING.subn(
+            lambda m: (f'<p class="ocdf-docnum">'
+                       f'<a href="../" title="Reading guide: where this sits in the order">'
+                       f'Document {m.group(1)}</a></p>\n\n# {m.group(2)}'),
+            text, count=1)
+        if n:
+            path.write_text(new, encoding="utf-8")
+
 
 def main():
     if SRC.exists():
@@ -27,6 +57,7 @@ def main():
         p = ROOT / f
         if p.exists():
             shutil.copy2(p, SRC / f)
+    lift_document_numbers()
     # website-only files
     shutil.copy2(ROOT / "site" / "index.md", SRC / "index.md")
     shutil.copy2(ROOT / "site" / "templates-index.md", SRC / "templates" / "index.md")
