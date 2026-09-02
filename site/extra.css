@@ -5,7 +5,97 @@
    one red used sparingly as a "keel" line, generous type. No shadows-as-decor,
    no gradients beyond a single soft hero wash. */
 
+/* IBM Plex, self-hosted — no third-party font requests. OFL-1.1;
+   see assets/fonts/LICENSE-IBM-Plex.txt. Variable weight axis 100-700.
+   Subsets cover the Greek, Cyrillic and Latin-extended text in the
+   national annexes; anything outside them falls back to the system stack. */
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-latin-wght-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-latin-ext-wght-normal.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-greek-wght-normal.woff2) format("woff2");
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-cyrillic-wght-normal.woff2) format("woff2");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-latin-wght-italic.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(fonts/ibm-plex-sans-latin-ext-wght-italic.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-latin-ext-400-normal.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-latin-600-normal.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-latin-ext-600-normal.woff2) format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
 :root {
+  /* Material composes --md-text-font-family from --md-text-font plus its own
+     system fallback stack, so setting these keeps the fallbacks intact. */
+  --md-text-font: "IBM Plex Sans";
+  --md-code-font: "IBM Plex Mono";
+
   --ocdf-eu: #123a6d;
   --ocdf-eu-mid: #2a5490;
   --ocdf-eu-dark: #0d2c54;
@@ -93,13 +183,32 @@
 .md-typeset h3 {
   font-weight: 640;
 }
+/* Links carry a persistent underline. The navy reads at 10.9:1 against the
+   paper but only 1.85:1 against the body text, so colour alone is not a
+   reliable signal that something is a link — WCAG 1.4.1 wants 3:1 for that.
+   The underline does the work; the palette stays as it is. */
 .md-typeset a {
-  text-underline-offset: 0.16em;
-  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
-}
-.md-typeset a:hover {
   text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: text-decoration-color 0.12s ease, color 0.12s ease;
+}
+.md-typeset a:hover,
+.md-typeset a:focus-visible {
   text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+/* Chrome elements, cards' heading links and buttons are already unmistakable
+   as controls — underlining them would just add noise. */
+.md-typeset .md-button,
+.md-typeset .headerlink,
+.md-typeset .grid.cards > ul > li > p:first-child a,
+.md-nav a,
+.md-tabs a,
+.md-header a,
+.md-footer a {
+  text-decoration: none;
 }
 
 .md-typeset code {

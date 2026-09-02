@@ -38,6 +38,6 @@ with corrections.
 Naming convention: `annex-<ISO 3166-1 alpha-2>.md`. Denmark is the reference
 annex (most detailed); help us bring your country's annex to the same depth.
 
-Cross-EU context and reporting deadline tables: see
-[../17-eu-regulatory-landscape.md](../17-eu-regulatory-landscape.md) and the
-interactive selector in [`../../tools/regulatory-profile.html`](../../tools/regulatory-profile.html).
+Cross-EU context and reporting deadline tables: see the
+[EU regulatory landscape](../17-eu-regulatory-landscape.md) and the
+[interactive regulatory profile selector](../../tools/regulatory-profile.html).

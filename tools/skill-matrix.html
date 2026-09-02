@@ -5,6 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OCDF — Team Skill Matrix</title>
 <style>
+  /* IBM Plex, self-hosted — no third-party font requests. OFL-1.1;
+     see assets/fonts/LICENSE-IBM-Plex.txt. Variable weight axis 100-700.
+     Subsets cover the Greek, Cyrillic and Latin-extended text in the
+     national annexes; anything outside them falls back to the system stack. */
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-latin-wght-normal.woff2) format("woff2");
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-latin-ext-wght-normal.woff2) format("woff2");
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-greek-wght-normal.woff2) format("woff2");
+    unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-cyrillic-wght-normal.woff2) format("woff2");
+    unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: italic;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-latin-wght-italic.woff2) format("woff2");
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: italic;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-sans-latin-ext-wght-italic.woff2) format("woff2");
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-mono-latin-ext-400-normal.woff2) format("woff2");
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-mono-latin-600-normal.woff2) format("woff2");
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(../assets/fonts/ibm-plex-mono-latin-ext-600-normal.woff2) format("woff2");
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
   :root{
     --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
     --eu:#123a6d; --eu-dark:#0d2c54; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
@@ -23,12 +107,12 @@
   .sitenav .here{color:#9db6d8}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    font-family:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
     font-size:15px;line-height:1.55}
   header{background:var(--eu);color:#fff;padding:26px 28px;border-bottom:4px solid var(--accent)}
   header h1{margin:0;font-size:1.35rem;font-weight:600;letter-spacing:.02em}
   header p{margin:6px 0 0;max-width:78ch;color:#cfdcef;font-size:.92rem}
-  .doc-id{font-family:ui-monospace,Consolas,monospace;font-size:.75rem;color:#9db6d8;letter-spacing:.12em;text-transform:uppercase}
+  .doc-id{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.75rem;color:#9db6d8;letter-spacing:.12em;text-transform:uppercase}
   main{max-width:1240px;margin:0 auto;padding:22px 28px 70px}
   h2{font-size:1.08rem;border-bottom:2px solid var(--eu);padding-bottom:6px;margin:30px 0 12px;font-weight:650}
   h3{font-size:.95rem;margin:20px 0 8px}
@@ -131,7 +215,7 @@
   table.people{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff}
   table.people th{background:var(--eu-soft);text-align:left;font-weight:600}
   table.people th,table.people td{border:1px solid var(--line-soft);padding:7px 10px}
-  .stamp{display:inline-block;font-family:ui-monospace,Consolas,monospace;font-size:.68rem;
+  .stamp{display:inline-block;font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.68rem;
     letter-spacing:.06em;border:1.5px solid var(--eu);color:var(--eu);border-radius:3px;
     padding:1px 6px;margin-left:6px;text-transform:uppercase;background:#fff;white-space:nowrap}
   footer{max-width:1240px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);

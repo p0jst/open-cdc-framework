@@ -5,7 +5,7 @@
 This framework's role definitions, job descriptions and career paths are anchored in the **European Cybersecurity Skills Framework (ECSF)** — ENISA's set of **12 cybersecurity professional role profiles**, each defined with a mission, tasks, deliverables, key skills, key knowledge, and e-CF competences linked to EQF learning levels. Using ECSF gives a European CDC three concrete advantages:
 
 1. **A common language** with HR, recruiters, training providers and certification bodies across the EU — many certifications and university programmes are already mapped to ECSF profiles.
-2. **Ready-made building blocks** for job descriptions (see [../templates/job-description-template.md](../templates/job-description-template.md)).
+2. **Ready-made building blocks** for job descriptions (see the [ECSF job description template](../templates/job-description-template.md)).
 3. **Regulatory alignment:** ENISA positions the ECSF as the reference for NIS2-aligned workforce planning; using it makes your staffing evidence legible to authorities.
 
 > **Note:** ENISA is revising the ECSF (adding proficiency levels and alignment with newer EU regulation). Check the ENISA ECSF page for the current version before publishing job descriptions; this document follows the structure of the 2022 release.

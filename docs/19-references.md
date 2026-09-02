@@ -77,6 +77,7 @@ This framework synthesises and builds upon the following publicly available work
 - CISA, Known Exploited Vulnerabilities catalog. https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 - MISP Project. https://www.misp-project.org
 - ISO/IEC 27000-series, *Information security management systems* (vocabulary, ISMS requirements, controls). https://www.iso.org — ISO standards are paywalled; this framework references concepts only.
+- **IBM Plex Sans / IBM Plex Mono** — the typefaces used by this website and its interactive tools. © 2019 IBM Corp., licensed under the SIL Open Font License 1.1. Self-hosted from `assets/fonts/` so that no visitor request reaches a third-party font CDN; licence text in `assets/fonts/LICENSE-IBM-Plex.txt`. https://github.com/IBM/plex
 - Donn B. Parker, *Fighting Computer Crime: A New Framework for Protecting Information*, Wiley, 1998 (Parkerian Hexad).
 
 ## How to cite this framework

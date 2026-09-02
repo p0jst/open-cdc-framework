@@ -32,6 +32,10 @@ def main():
     shutil.copy2(ROOT / "site" / "templates-index.md", SRC / "templates" / "index.md")
     (SRC / "assets").mkdir()
     shutil.copy2(ROOT / "site" / "extra.css", SRC / "assets" / "extra.css")
+    # Self-hosted IBM Plex. Staged under assets/ so that the same relative path
+    # (../assets/fonts/) resolves both on the website and when a tool in tools/
+    # is opened straight from a clone of the repository.
+    shutil.copytree(ROOT / "assets" / "fonts", SRC / "assets" / "fonts")
     # Custom domain: GitHub Pages (Actions source) needs a CNAME file inside the
     # published artifact on every deploy — it does not persist this on its own.
     cname = ROOT / "site" / "CNAME"

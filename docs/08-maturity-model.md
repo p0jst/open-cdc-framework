@@ -23,7 +23,7 @@ Tier ([10-tiers.md](10-tiers.md)) selects *which* capabilities apply; maturity m
 
 ## Scoring method
 
-1. For each function, review the maturity criteria table and the self-assessment checklist ([../assessments/maturity-self-assessment.md](../assessments/maturity-self-assessment.md)).
+1. For each function, review the maturity criteria table and the [self-assessment checklist](../assessments/maturity-self-assessment.md).
 2. Score each criterion on the five-point status scale below rather than as a yes/no tick.
 3. A level is achieved only when **all** criteria of that level and the levels below are met ("staged" scoring — no averaging up).
 4. Record evidence for each criterion (documents, screenshots, metric exports). Evidence-free self-assessment inflates scores by roughly one level.
