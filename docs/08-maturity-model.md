@@ -19,7 +19,7 @@ Per-function criteria live in each function document (sections "Maturity criteri
 
 ## Relationship to tiers
 
-Tier ([10-tiers.md](10-tiers.md)) selects *which* capabilities apply; maturity measures *how well* you run the selected set. Score only capabilities at or below your tier; mark the rest "above tier".
+Tier (see [implementation tiers](10-tiers.md)) selects *which* capabilities apply; maturity measures *how well* you run the selected set. Score only capabilities at or below your tier; mark the rest "above tier".
 
 ## Scoring method
 
@@ -93,4 +93,4 @@ Targets are risk decisions — set them in GOVERN, with executive sign-off.
 - Open CSIRT Foundation, *SIM3 — Security Incident Management Maturity Model*. https://opencsirt.org
 - CMMI Institute, *Capability Maturity Model Integration*.
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

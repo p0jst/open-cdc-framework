@@ -49,4 +49,4 @@ The triad is a floor, not a ceiling. Where useful, extend with **authenticity, n
 - Directive (EU) 2022/2555 (NIS2), Art. 6 definitions.
 - Donn B. Parker, *Fighting Computer Crime* (Parkerian Hexad concept), 1998.
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

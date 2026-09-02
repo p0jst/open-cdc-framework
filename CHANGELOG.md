@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- **Persistent previous/next bar.** A slim bar slides in once you are past the first screenful of a page and hides again when the footer cards come into view, so the two never compete; it also steps aside for the mobile drawer and the search overlay. Built from MkDocs' own page order in `overrides/main.html` rather than scraped from the DOM.
+- **More filename links rewritten as prose.** The earlier sweep only matched paths beginning `../`, so same-directory references such as `[10-tiers.md](10-tiers.md)` survived in body text. Twenty-one more rewritten, including the shared "Credits" footer across the ten numbered documents. Filenames are kept where the filename is the point: the README's document tables and the annex index's file column.
+
 - **"Edit this page" action removed** (`content.action.edit`): the pencil beside each page heading read as interface clutter. `site/hooks.py`, which existed only to repoint that action for the two website-only pages, goes with it; `edit_uri` stays in `mkdocs.yml` with a note, so re-enabling is a one-line change.
 
 - **Continue-reading navigation made visible.** The documents are numbered and meant to be read in order, so the previous/next links are a primary control — but Material renders them small and low-contrast inside the dark footer, where they are easy to miss entirely. They now sit on the page ground as cards matching the rest of the site, with the direction label in the accent red and a hover lift. On narrow screens the two cards stack and both stay labelled (Material hides the previous title by default, which with card styling left an empty box holding one arrow).

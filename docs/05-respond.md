@@ -132,4 +132,4 @@ Standardise how every case closes — it is the foundation of honest metrics, tu
 - Microsoft incident response playbooks (baseline runbooks; adapt to your environment). https://learn.microsoft.com/security/operations/incident-response-playbooks
 - CISA, *Federal Government Cybersecurity Incident and Vulnerability Response Playbooks* (2021). https://www.cisa.gov
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

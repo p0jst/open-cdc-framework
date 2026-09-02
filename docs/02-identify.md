@@ -12,7 +12,7 @@ Understand what you are defending and what threatens it. Every downstream capabi
 | ID-2 | Data classification | Data mapped and classified (e.g., public / internal / confidential / special-category personal data) with owners assigned. |
 | ID-3 | Crown-jewel analysis | Identification of business-critical services and the assets they depend on; drives detection and recovery priority. |
 | ID-4 | Vulnerability management (identification) | Regular authenticated scanning, cloud posture assessment, and external attack-surface monitoring. |
-| ID-5 | Threat landscape & intelligence | A documented threat profile: which actors, sectors, and techniques (MITRE ATT&CK) are relevant to *your* organisation. Consume national CSIRT and ENISA advisories. A-tier deep dive on building a full CTI capability: [15-cti-deep-dive.md](15-cti-deep-dive.md). |
+| ID-5 | Threat landscape & intelligence | A documented threat profile: which actors, sectors, and techniques (MITRE ATT&CK) are relevant to *your* organisation. Consume national CSIRT and ENISA advisories. A-tier deep dive on building a full CTI capability: [Deep dive: CTI capability](15-cti-deep-dive.md). |
 | ID-6 | Risk assessment | Periodic risk assessments combining assets, threats, and vulnerabilities; results feed GOVERN. |
 | ID-7 | Improvement identification | Lessons from assessments, audits, exercises and incidents are captured as improvement actions (CSF 2.0 ID.IM). |
 
@@ -68,4 +68,4 @@ Understand what you are defending and what threatens it. Every downstream capabi
 - ENISA, *ENISA Threat Landscape* report series. https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
 - Directive (EU) 2022/2555 (NIS2); Regulation (EU) 2022/2554 (DORA); Regulation (EU) 2024/2847 (CRA).
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

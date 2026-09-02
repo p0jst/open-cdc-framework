@@ -82,4 +82,4 @@ Ownership follows the SIEM pattern (doc 04): platform teams operate the mechanis
 - CIS, *CIS Critical Security Controls* (esp. Controls 1–2 incl. software allowlisting safeguards 2.5–2.7) and *CIS Benchmarks*. https://www.cisecurity.org
 - Directive (EU) 2022/2555 (NIS2), Art. 21; Implementing Regulation (EU) 2024/2690; GDPR Art. 32; DORA Art. 9.
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

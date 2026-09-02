@@ -31,13 +31,13 @@ Treat detections like software, because they are.
 | Metadata as code | ATT&CK mapping, CIA objective, owner, severity, references live in the rule file (the use-case template fields, machine-readable) |
 | Runbook next to rule | Triage steps versioned alongside the detection they serve |
 
-Full engineering manual — repo layout, rule YAML anatomy, pipeline stages and ATT&CK coverage scoring: [14-detection-as-code-deep-dive.md](14-detection-as-code-deep-dive.md).
+Full engineering manual — repo layout, rule YAML anatomy, pipeline stages and ATT&CK coverage scoring: [Deep dive: detection-as-code](14-detection-as-code-deep-dive.md).
 
 **Adoption path:** (S) rules in git + peer review + quarterly manual validation → (A) full CI/CD with automated tests and drift detection. Even the S step alone ends the "who changed this rule" archaeology.
 
 ## 3. Developing the team (the third loop)
 
-Roles, skills matrices and career paths live in [12-roles-and-competences.md](12-roles-and-competences.md); this section is the operating cadence that keeps them real:
+Roles, skills matrices and career paths live in [Roles & competences](12-roles-and-competences.md); this section is the operating cadence that keeps them real:
 
 - **Onboarding runway:** a new analyst gets a named mentor, a 30/60/90-day plan tied to ECSF skills, and shadow-shifts before solo shifts. Throwing juniors at a live queue on day 3 is how you train your competitors' future staff.
 - **Continuous practice:** monthly internal purple-team hour (validation doubles as training) · every post-incident review names a teaching point · rotate analysts through detection engineering weeks to break queue monotony.

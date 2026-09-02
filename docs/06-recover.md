@@ -19,7 +19,7 @@ Restore affected services in a trustworthy state, communicate honestly during re
 > retention defaults are measured in days: the SAN, hypervisor or filesystem snapshot taken before
 > the intrusion is often the cleanest recovery point available, and it expires on schedule whether
 > or not there is an incident open. Extending retention and isolating backup infrastructure belong
-> in the first hour of response ([05-respond.md](05-respond.md)) — by the time this function starts,
+> in the first hour of response (see [RESPOND](05-respond.md)) — by the time this function starts,
 > the options have already narrowed to whatever survived.
 
 ## CIA mapping
@@ -68,4 +68,4 @@ Restore affected services in a trustworthy state, communicate honestly during re
 - NIST SP 800-34 Rev. 1, *Contingency Planning Guide for Federal Information Systems*.
 - Directive (EU) 2022/2555 (NIS2) Art. 21(2)(c), 23; Regulation (EU) 2022/2554 (DORA) Art. 11–12; GDPR Art. 32.
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

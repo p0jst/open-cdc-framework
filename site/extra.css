@@ -597,6 +597,110 @@
   }
 }
 
+/* ----------------------------------------------------------- quick nav */
+
+/* A slim previous/next bar that slides in once you are past the first screen
+   and hides again when the footer cards appear, so the two never compete.
+   Markup and the show/hide logic live in overrides/main.html. */
+.ocdf-quicknav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  background: var(--ocdf-card-bg);
+  border-top: 1px solid var(--ocdf-rule);
+  box-shadow: 0 -2px 10px rgba(18, 58, 109, 0.06);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.ocdf-quicknav[hidden] {
+  display: block !important;      /* animate out rather than vanish */
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.ocdf-quicknav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 61rem;
+  margin: 0 auto;
+  padding: 0.32rem 0.9rem;
+}
+.ocdf-quicknav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.25rem 0.35rem;
+  border-radius: 5px;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: color 0.12s ease, background-color 0.12s ease;
+}
+.ocdf-quicknav__link:hover {
+  color: var(--ocdf-eu);
+  background: var(--ocdf-eu-soft);
+}
+[data-md-color-scheme="slate"] .ocdf-quicknav__link:hover {
+  color: #8fb3e3;
+}
+.ocdf-quicknav__link svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  fill: var(--ocdf-eu);
+}
+[data-md-color-scheme="slate"] .ocdf-quicknav__link svg {
+  fill: #8fb3e3;
+}
+.ocdf-quicknav__text {
+  min-width: 0;
+}
+.ocdf-quicknav__link--next .ocdf-quicknav__text {
+  text-align: right;
+}
+.ocdf-quicknav__dir {
+  display: block;
+  font-family: var(--md-code-font-family);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ocdf-ink-soft);
+  line-height: 1.4;
+}
+.ocdf-quicknav__title {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 620;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 22ch;
+}
+@media screen and (max-width: 44.9375em) {
+  .ocdf-quicknav__title { max-width: 11ch; }
+  .ocdf-quicknav__inner { padding: 0.3rem 0.6rem; }
+}
+/* The mobile drawer and the search overlay own the screen while open.
+   The bar renders inside .md-container, so the toggles are an ancestor's
+   sibling rather than its own. */
+#__drawer:checked ~ .md-container .ocdf-quicknav,
+#__search:checked ~ .md-container .ocdf-quicknav {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+@media print {
+  .ocdf-quicknav { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ocdf-quicknav { transition: none; }
+}
+
 /* -------------------------------------------------------------- footer */
 
 .md-footer-meta {

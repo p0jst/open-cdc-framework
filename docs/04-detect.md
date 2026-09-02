@@ -92,4 +92,4 @@ The traditional split — infrastructure maintains the server and OS, the CDC ma
 - NIST SP 800-92, *Guide to Computer Security Log Management*.
 - Directive (EU) 2022/2555 (NIS2) Art. 21, 23; GDPR Art. 33; DORA Art. 10.
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*

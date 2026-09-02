@@ -61,4 +61,4 @@ ENISA's permanent mandate and the EU cybersecurity certification framework (e.g.
 - Regulation (EU) 2019/881 (Cybersecurity Act): https://eur-lex.europa.eu/eli/reg/2019/881/oj
 - ENISA: https://www.enisa.europa.eu
 
-*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [19-references.md](19-references.md).*
+*Open CDC Framework (OCDF) — CC BY 4.0. Credits: [References & credits](19-references.md).*
