@@ -7,6 +7,8 @@ Approved project name: Open CDC Framework (OCDF). "Framework" refers to the capa
 - Description: "Open CDC Framework (OCDF) — open source framework for building and maturing SOCs / Cyber Defence Centers in the EU. NIST CSF 2.0, CIA triad, NIS2/GDPR/DORA, maturity model, playbooks, all 27 national annexes."
 - Topics: `soc` `security-operations-center` `cyber-defence-center` `csirt` `incident-response` `nist-csf` `nis2` `dora` `gdpr` `detection-engineering` `threat-intelligence` `maturity-model` `blue-team` `eu`
 - Enable: Pages with source "GitHub Actions" (publishes the website incl. tools/), Discussions, Issues.
+  Discussions matter: `CONTRIBUTING.md` tells contributors to open one for field feedback on the maturity criteria.
+- Social preview: upload `assets/social-preview.png` under **Settings → General → Social preview**. There is no API for this, so it has to be done in the web UI; the same image is served at `https://opencdc.org/assets/social-preview.png` and is referenced by the site's Open Graph tags (`overrides/main.html`). Regenerate it if the stat counts change.
 
 ## Release sequence
 1. ~~Fill ABOUT.md placeholders; set final repo URL in docs/19-references.md citation line.~~ (done)

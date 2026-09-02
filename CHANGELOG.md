@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Link previews**: `assets/social-preview.png` — a 2560x1280 card in the site's own palette, typography and blueprint texture — plus Open Graph and Twitter card tags via a small theme override (`overrides/main.html`), so a link to opencdc.org shared into Slack, LinkedIn or a chat renders as a card rather than a bare URL. The same file is what should be uploaded as the repository's GitHub social preview.
+
 - **Heading permalinks turned off** (`toc.permalink: false`): the paragraph-mark anchor that appeared beside every heading on hover read as a stray glyph rather than an affordance. Heading ids are still generated, so every section stays linkable — the table of contents links to each one and puts the anchor in the address bar.
 
 - **RESPOND gains "the first hour of a major incident"** — the estate-wide moves that sit above any single playbook and are most often skipped under pressure: do not power systems off; cut external connectivity with a perimeter deny-all *including* VPN, site-to-site, RDP/VDI gateways and vendor/out-of-band paths; verify and then isolate backups; extend snapshot retention before defaults roll it off; and stand up emergency log collection where there is no aggregator. Plus a **counsel and insurance** subsection: cyber policies commonly mandate notification windows and pre-approved responder panels (using your own first can reduce cover), and legal privilege over investigation reports is not uniform across member states — settle both before an incident, not during one.
