@@ -6,7 +6,7 @@
 ![Status](https://img.shields.io/badge/status-v0.1--rc1-blue)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 
-**📖 Read the framework as a website: <https://p0jst.github.io/open-cdc-framework/>** — searchable docs, interactive tools, template downloads. This repository is the source; the site rebuilds automatically on every push to `main`.
+**📖 Read the framework as a website: <https://opencdc.org/>** — searchable docs, interactive tools, template downloads. This repository is the source; the site rebuilds automatically on every push to `main`.
 
 ---
 
@@ -29,13 +29,13 @@ The framework is organised around the **six functions of NIST CSF 2.0**, each ma
 
 | # | Function | Question it answers | Doc |
 |---|----------|--------------------|-----|
-| 0 | Introduction & Design Principles | How do I use this framework? | [docs/00-introduction.md](docs/00-introduction.md) |
-| 1 | **GOVERN** | Who owns cyber risk, and how are decisions made? | [docs/01-govern.md](docs/01-govern.md) |
-| 2 | **IDENTIFY** | What are we defending, and what threatens it? | [docs/02-identify.md](docs/02-identify.md) |
-| 3 | **PROTECT** | How do we reduce the likelihood and impact of incidents? | [docs/03-protect.md](docs/03-protect.md) |
-| 4 | **DETECT** | How do we find adversary activity quickly? | [docs/04-detect.md](docs/04-detect.md) |
-| 5 | **RESPOND** | How do we contain and eradicate threats? | [docs/05-respond.md](docs/05-respond.md) |
-| 6 | **RECOVER** | How do we restore services and learn? | [docs/06-recover.md](docs/06-recover.md) |
+| 00 | Introduction & Design Principles | How do I use this framework? | [docs/00-introduction.md](docs/00-introduction.md) |
+| 01 | **GOVERN** | Who owns cyber risk, and how are decisions made? | [docs/01-govern.md](docs/01-govern.md) |
+| 02 | **IDENTIFY** | What are we defending, and what threatens it? | [docs/02-identify.md](docs/02-identify.md) |
+| 03 | **PROTECT** | How do we reduce the likelihood and impact of incidents? | [docs/03-protect.md](docs/03-protect.md) |
+| 04 | **DETECT** | How do we find adversary activity quickly? | [docs/04-detect.md](docs/04-detect.md) |
+| 05 | **RESPOND** | How do we contain and eradicate threats? | [docs/05-respond.md](docs/05-respond.md) |
+| 06 | **RECOVER** | How do we restore services and learn? | [docs/06-recover.md](docs/06-recover.md) |
 
 Cross-cutting documents, in reading order:
 
@@ -62,7 +62,7 @@ Practical assets:
 - [`assessments/`](assessments/) — the Design Navigator (guiding questions per function) and the maturity self-assessment.
 - [`tools/regulatory-profile.html`](tools/regulatory-profile.html) — interactive law selector: tick the laws that apply (EU instruments + all 27 member states) and the references show/hide to match. Host via GitHub Pages or open locally.
 - [`tools/skill-matrix.html`](tools/skill-matrix.html) — team skill matrix: team members fill in the self-assessment sheet, the manager uploads the returned files and gets a skills heatmap, gap analysis against role targets, and train/mentor/hire recommendations. Host via GitHub Pages or open locally.
-- [`tools/maturity-assessment.html`](tools/maturity-assessment.html) — interactive maturity self-assessment: check off criteria for each CSF function, get automatic staged scoring, a score-vs-target chart, and an exportable snapshot to track the trend over time. Host via GitHub Pages or open locally.
+- [`tools/maturity-assessment.html`](tools/maturity-assessment.html) — interactive maturity self-assessment: score every criterion on a five-point status scale, get automatic staged scoring, a score-vs-target chart, a resume link that restores your progress on any device, and an exportable snapshot to track the trend over time. Host via GitHub Pages or open locally.
 - [`docs/annexes/`](docs/annexes/) — national annexes for all 27 EU member states (status verified July 2026).
 
 ## Who is this for?
@@ -79,7 +79,7 @@ Practical assets:
 3. **Assess** your current state with [tools/maturity-assessment.html](tools/maturity-assessment.html) (or the printable [assessments/maturity-self-assessment.md](assessments/maturity-self-assessment.md)).
 4. **Plan** using the per-function documents: each contains capabilities, CIA mapping, maturity criteria, and EU regulatory hooks.
 5. **Operationalise** with the templates and playbooks; pick your country annex and set your legal profile in the selector tool.
-6. **Reassess** every 6–12 months and track progress with the KPI template.
+6. **Reassess** annually, or after major organisational change, and review open gap actions quarterly — track progress with the KPI template.
 
 ## About the author & project
 

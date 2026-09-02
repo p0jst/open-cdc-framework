@@ -7,7 +7,7 @@ hide:
 
 <div class="ocdf-hero" markdown>
 
-<p class="ocdf-eyebrow">Open source · CC BY 4.0 · Vendor-neutral · Built for the EU</p>
+<p class="ocdf-eyebrow"><span>Open source</span> · <span>CC BY 4.0</span> · <span>Vendor-neutral</span> · <span>Built for the EU</span></p>
 
 # Build and mature your Cyber Defence Center
 
@@ -35,7 +35,7 @@ states.
 
 <div class="grid cards" markdown>
 
--   :material-compass-outline:{ .lg .middle } **New to this? Start guided.**
+-   :material-compass-outline:{ .lg .middle } **New to this? Start guided**
 
     ---
 
@@ -119,8 +119,8 @@ states.
 
     Follow [Start here](docs/09-start-here.md), adopt the
     [charter](templates/cdc-charter-template.md) and
-    [IR plan](templates/incident-response-plan-template.md) templates, and
-    reassess after the first quarter.
+    [IR plan](templates/incident-response-plan-template.md) templates, then
+    review your open gap actions at the end of the first quarter.
 
 </div>
 

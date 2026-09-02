@@ -24,9 +24,40 @@ Tier ([10-tiers.md](10-tiers.md)) selects *which* capabilities apply; maturity m
 ## Scoring method
 
 1. For each function, review the maturity criteria table and the self-assessment checklist ([../assessments/maturity-self-assessment.md](../assessments/maturity-self-assessment.md)).
-2. A level is achieved only when **all** criteria of that level and the levels below are met ("staged" scoring — no averaging up).
-3. Record evidence for each criterion (documents, screenshots, metric exports). Evidence-free self-assessment inflates scores by roughly one level.
-4. Plot the six function scores as a radar/spider profile. **A balanced Level 2 beats a spiky profile with Level 4 detection and Level 1 governance** — attackers exploit the weakest function.
+2. Score each criterion on the five-point status scale below rather than as a yes/no tick.
+3. A level is achieved only when **all** criteria of that level and the levels below are met ("staged" scoring — no averaging up).
+4. Record evidence for each criterion (documents, screenshots, metric exports). Evidence-free self-assessment inflates scores by roughly one level.
+5. Plot the six function scores as a radar/spider profile. **A balanced Level 2 beats a spiky profile with Level 4 detection and Level 1 governance** — attackers exploit the weakest function.
+
+### Criterion status scale
+
+A binary tick answers "is this done?" and nothing else — it cannot tell a
+capability nobody has considered from one that is three weeks from delivery,
+and both look identical in a board report. Score each criterion on five states
+instead:
+
+| Status | Meaning | Counts towards the level? |
+|--------|---------|---------------------------|
+| **Not considered** | Not looked at; no decision taken either way. | No |
+| **Planned** | Agreed and scheduled, not yet started. | No |
+| **Partially in place** | In place for part of the estate, or done informally / inconsistently. | No |
+| **Implemented** | In place and operating across the intended scope. | **Yes** |
+| **Implemented & evidenced** | Implemented, with evidence recorded — and, where the criterion says so, signed off or reviewed within the stated period. | **Yes** |
+
+The three lower states never move the score. They exist so that progress is
+visible between assessments: a function sitting at Level 2 with four Level 3
+criteria *planned* is in a different position from one at Level 2 with four
+*not considered*, and the improvement backlog should say so. Resist the urge to
+average them into a percentage — partial credit is exactly how a spiky profile
+gets reported as a healthy one. Report them as counts ("three of five Level 3
+criteria met, one partly in place"), never as a weighted score.
+
+**Evidence-based scoring.** Counting only *implemented & evidenced* is the
+stricter reading, and the one to use when the assessment will be shown to an
+auditor, a regulator or a board. Expect it to knock roughly a level off a first
+self-assessment; that gap is the point, not a failure of the method. The
+[interactive tool](../tools/maturity-assessment.html) has a toggle for both
+readings, and a criterion's status travels with its evidence note.
 
 ## Target-setting guidance
 

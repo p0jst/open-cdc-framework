@@ -7,9 +7,18 @@
 <style>
   :root{
     --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
-    --eu:#123a6d; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
+    --eu:#123a6d; --eu-dark:#0d2c54; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
     --ok:#1f6f43; --chipbg:#f1efe8; --barbg:#eeecE4;
   }
+  /* site nav — the tools are standalone pages outside the MkDocs theme,
+     so they carry their own way back to the framework */
+  .sitenav{background:var(--eu-dark);color:#cfdcef;font-size:.78rem;
+    padding:8px 28px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .sitenav a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+  .sitenav a:hover{text-decoration:underline}
+  .sitenav a.home{font-weight:600}
+  .sitenav .sep{opacity:.45}
+  .sitenav .here{color:#9db6d8}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
     font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
@@ -60,12 +69,36 @@
   .chevron{display:inline-block;transition:transform .15s ease;color:var(--muted)}
   .level-block{margin:12px 0}
   .level-block h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
-  .crit{display:flex;align-items:flex-start;gap:9px;padding:5px 4px;border-radius:6px}
+  .crit{display:flex;align-items:flex-start;gap:10px;padding:6px 4px;border-radius:6px;
+    border-left:3px solid transparent}
   .crit:hover{background:#f9f8f4}
-  .crit input[type=checkbox]{margin-top:3px;width:16px;height:16px;accent-color:var(--eu);flex:none}
-  .crit label{font-size:.88rem;cursor:pointer}
+  .crit label{font-size:.88rem;display:block}
   .crit input[type=text]{margin-top:4px;width:100%;font-size:.8rem;padding:4px 7px}
   .crit .ev-wrap{flex:1;min-width:0}
+  /* five-state status control */
+  .crit select.state{flex:none;width:212px;margin-top:1px;font-size:.78rem;padding:5px 7px;
+    border-left-width:4px}
+  .crit[data-state="0"]{border-left-color:transparent}
+  .crit[data-state="1"]{border-left-color:#9aa7b4}
+  .crit[data-state="2"]{border-left-color:#c98a1e}
+  .crit[data-state="3"]{border-left-color:var(--eu)}
+  .crit[data-state="4"]{border-left-color:var(--ok)}
+  .crit[data-state="0"] select.state{border-left-color:var(--line);color:var(--muted)}
+  .crit[data-state="1"] select.state{border-left-color:#9aa7b4}
+  .crit[data-state="2"] select.state{border-left-color:#c98a1e}
+  .crit[data-state="3"] select.state{border-left-color:var(--eu)}
+  .crit[data-state="4"] select.state{border-left-color:var(--ok)}
+  .crit[data-state="3"] label,.crit[data-state="4"] label{color:var(--ink)}
+  .crit[data-state="0"] label{color:#55606c}
+  .scale-key{display:flex;gap:14px;flex-wrap:wrap;font-size:.76rem;color:var(--muted);margin:6px 0 0}
+  .scale-key span{display:inline-flex;align-items:center;gap:6px}
+  .scale-key i{width:10px;height:10px;border-radius:2px;display:inline-block;font-style:normal}
+  .strict{display:flex;align-items:center;gap:8px;font-size:.82rem;margin:12px 0 0}
+  .strict input{width:15px;height:15px;accent-color:var(--eu)}
+  @media (max-width:640px){
+    .crit{flex-wrap:wrap}
+    .crit select.state{width:100%}
+  }
   .target-row{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-size:.82rem;color:var(--muted)}
 
   /* chart */
@@ -75,6 +108,10 @@
   .bartrack{position:relative;flex:1;height:20px;background:var(--barbg);border-radius:4px;overflow:visible}
   .barfill{position:absolute;left:0;top:0;height:100%;background:var(--eu);border-radius:4px;
     transition:width .2s ease}
+  /* hatched extension: how far into the NEXT level the function has got */
+  .barprog{position:absolute;top:0;height:100%;border-radius:0 4px 4px 0;
+    background:repeating-linear-gradient(135deg,#9db6d8 0 5px,#c3d3e9 5px 10px);
+    transition:width .2s ease,left .2s ease}
   .bartick{position:absolute;top:-3px;width:2px;height:26px;background:var(--accent)}
   .barval{width:46px;flex:none;text-align:right;color:var(--muted);font-size:.8rem}
   .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:12px}
@@ -110,8 +147,12 @@
   footer{max-width:1080px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);
     font-size:.78rem;color:var(--muted)}
   @media print{
-    .toolbar,#reset-all,.func-head .chevron,.resume-row,.resume-note,.resume-warn{display:none !important}
-    .resume{background:#fff;border-left-color:var(--line)}
+    .sitenav{display:none !important}
+    /* the resume panel is about the live page — it means nothing on paper */
+    .toolbar,#reset-all,.func-head .chevron,.resume,.strict{display:none !important}
+    header{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
+    header p,.doc-id{color:var(--muted)}
+    header p a{color:var(--ink)}
     .func-body{display:block !important}
     body{font-size:11px}
   }
@@ -119,12 +160,22 @@
 </head>
 <body>
 
+<nav class="sitenav">
+  <a class="home" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"
+     aria-hidden="true"><path d="M12 2 4 5v6.1c0 5 3.4 9.7 8 10.9 4.6-1.2 8-5.9 8-10.9V5l-8-3zm0 2.2 6 2.2v4.7c0 4-2.5 7.7-6 8.8V4.2z"/></svg>Open
+     CDC Framework</a>
+  <span class="sep">/</span><a href="./">Tools</a>
+  <span class="sep">/</span><span class="here">Maturity self-assessment</span>
+</nav>
+
+
 <header>
   <div class="doc-id">Open CDC Framework · Tool 03</div>
   <h1>Maturity Self-Assessment</h1>
   <p>Score each of the six CSF functions against the framework's four-level maturity model, right here in the
-     browser. A level counts only when <b>every</b> box at that level and every level below it is checked —
-     staged scoring, no averaging up. See <a href="../docs/08-maturity-model/">the maturity model</a> for the
+     browser. Every criterion is rated on a five-point scale from <i>not considered</i> to
+     <i>implemented &amp; evidenced</i>; a level counts only when <b>every</b> criterion at that level and every
+     level below it is implemented — staged scoring, no averaging up. See <a href="../docs/08-maturity-model/">the maturity model</a> for the
      full method. Nothing is sent anywhere: your answers live in this browser and in your own
      resume link.</p>
 </header>
@@ -175,12 +226,28 @@
 <div class="chartwrap">
   <div id="chart"></div>
   <div class="legend">
-    <span><span class="sw" style="background:var(--eu)"></span>Current score</span>
+    <span><span class="sw" style="background:var(--eu)"></span>Achieved level</span>
+    <span><span class="sw" style="background:repeating-linear-gradient(135deg,#9db6d8 0 3px,#c3d3e9 3px 6px)"></span>Progress into the next level</span>
     <span><span class="sw" style="background:var(--accent);width:3px"></span>Target</span>
   </div>
 </div>
 
 <h2>Checklist</h2>
+<p style="font-size:.86rem;max-width:88ch;margin:0 0 4px">Each criterion is scored on a five-point
+  scale. <b>Only “implemented” and “implemented &amp; evidenced” count towards a level</b> — the three
+  states below them record work in flight without moving the score, because the maturity model is
+  staged and does not average up. See <a href="../docs/08-maturity-model/">the scoring method</a>.</p>
+<div class="scale-key">
+  <span><i style="background:var(--line)"></i>Not considered</span>
+  <span><i style="background:#9aa7b4"></i>Planned</span>
+  <span><i style="background:#c98a1e"></i>Partially in place</span>
+  <span><i style="background:var(--eu)"></i>Implemented</span>
+  <span><i style="background:var(--ok)"></i>Implemented &amp; evidenced</span>
+</div>
+<label class="strict"><input type="checkbox" id="strict-evidence">
+  <span>Evidence-based scoring — count a criterion only when it is <b>implemented &amp; evidenced</b>.
+  Stricter, and closer to how an auditor would read it: evidence-free self-assessment inflates
+  scores by roughly one level.</span></label>
 <div id="functions"></div>
 
 <h2>Result</h2>
@@ -205,7 +272,22 @@ const CATALOG = {"functions":[{"id":"GOVERN","name":"Govern","levels":{"2":["Sig
 const LS_KEY = "ocdf-maturity-assessment-v1";
 const FUNCS = CATALOG.functions;
 const LEVEL_NAMES = {1:"Initial",2:"Managed",3:"Established",4:"Optimising"};
-let state = { meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{} };
+/* Five-point status scale.  0–2 record work in flight; only 3 and 4 count
+   towards a level, so the staged "no averaging up" rule is untouched.  With
+   evidence-based scoring on, only 4 counts. */
+const STATES = [
+  {v:0, label:"Not considered",             short:"not considered"},
+  {v:1, label:"Planned",                    short:"planned"},
+  {v:2, label:"Partially in place",         short:"partially in place"},
+  {v:3, label:"Implemented",                short:"implemented"},
+  {v:4, label:"Implemented & evidenced",    short:"implemented & evidenced"}
+];
+function blankState(){
+  return { meta:{name:"",date:"",evrepo:"",profile:""}, states:{}, evidence:{}, targets:{}, strict:false };
+}
+let state = blankState();
+function statusOf(key){ return state.states[key] || 0; }
+function countsAsMet(key){ const s = statusOf(key); return state.strict ? s === 4 : s >= 3; }
 
 /* ------------------------------------------------------------------ *
  * Resume links.  The whole assessment is encoded into the URL fragment
@@ -232,34 +314,64 @@ function b64uDecode(str){
   return out;
 }
 
+/* v2 packs one status nibble per criterion.  v1 links (binary checkboxes)
+   still open: a ticked box becomes "implemented". */
 function encodeState(){
   const keys = critList();
-  const bytes = new Uint8Array(Math.ceil(keys.length / 8));
-  keys.forEach((k, i) => { if(state.checks[k]) bytes[i >> 3] |= 1 << (7 - (i & 7)); });
+  const bytes = new Uint8Array(Math.ceil(keys.length / 2));
+  keys.forEach((k, i) => {
+    const v = statusOf(k) & 0xf;
+    if(i % 2 === 0) bytes[i >> 1] |= v << 4; else bytes[i >> 1] |= v;
+  });
   const ev = {};
   keys.forEach((k, i) => { const v = state.evidence[k]; if(v) ev[i] = v; });
   const payload = {
-    v: 1,
+    v: 2,
     m: [state.meta.name||"", state.meta.date||"", state.meta.evrepo||"", state.meta.profile||""],
-    c: b64uEncode(bytes),
+    s: b64uEncode(bytes),
     t: FUNCS.map(f => state.targets[f.id] || 0).join("")
   };
+  if(state.strict) payload.x = 1;
   if(Object.keys(ev).length) payload.e = ev;
   return b64uEncode(new TextEncoder().encode(JSON.stringify(payload)));
 }
 
 function decodeState(token){
   const p = JSON.parse(new TextDecoder().decode(b64uDecode(token)));
-  if(!p || p.v !== 1) throw new Error("unrecognised link version");
+  if(!p || (p.v !== 1 && p.v !== 2)) throw new Error("unrecognised link version");
   const keys = critList();
-  const bytes = b64uDecode(p.c || "");
-  const s = { meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{} };
+  const s = blankState();
   const m = p.m || [];
   s.meta = { name:m[0]||"", date:m[1]||"", evrepo:m[2]||"", profile:m[3]||"" };
-  keys.forEach((k, i) => { if((bytes[i >> 3] >> (7 - (i & 7))) & 1) s.checks[k] = true; });
+  if(p.v === 2){
+    const bytes = b64uDecode(p.s || "");
+    keys.forEach((k, i) => {
+      const b = bytes[i >> 1] || 0;
+      const v = (i % 2 === 0) ? (b >> 4) & 0xf : b & 0xf;
+      if(v) s.states[k] = Math.min(v, 4);
+    });
+    s.strict = !!p.x;
+  }else{
+    const bytes = b64uDecode(p.c || "");
+    keys.forEach((k, i) => { if((bytes[i >> 3] >> (7 - (i & 7))) & 1) s.states[k] = 3; });
+  }
   (p.t || "").split("").forEach((d, i) => { const n = Number(d); if(n && FUNCS[i]) s.targets[FUNCS[i].id] = n; });
   for(const [i, txt] of Object.entries(p.e || {})) if(keys[i]) s.evidence[keys[i]] = txt;
   return s;
+}
+
+/* Snapshots and browser copies written before the status scale existed stored
+   {checks:{key:true}}; carry them forward rather than dropping the work. */
+function migrate(s){
+  if(!s) return blankState();
+  const out = {...blankState(), ...s};
+  if(!out.states) out.states = {};
+  if(s.checks){
+    for(const [k, v] of Object.entries(s.checks)) if(v && !out.states[k]) out.states[k] = 3;
+    delete out.checks;
+  }
+  out.strict = !!out.strict;
+  return out;
 }
 
 let shareUrl = "";
@@ -280,7 +392,7 @@ function loadState(){
     try{ state = decodeState(hash.slice(HASH_PREFIX.length)); saveState(); return; }
     catch(e){ alert("That resume link could not be read (" + e.message + "). Starting from what this browser has saved."); }
   }
-  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const s = JSON.parse(raw); if(s) state = {...state, ...s}; } }catch(e){}
+  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const s = JSON.parse(raw); if(s) state = migrate({...state, ...s}); } }catch(e){}
 }
 function saveState(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
@@ -291,28 +403,51 @@ function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt
 function critKey(fid, lvl, idx){ return fid+"|"+lvl+"|"+idx; }
 
 function functionScore(f){
-  // Staged: level L achieved only if ALL criteria at L and every level below (2..L) are checked.
+  // Staged: level L achieved only if ALL criteria at L and every level below (2..L) are met.
   let score = 1;
   for(const lvl of [2,3,4]){
     const items = f.levels[lvl] || [];
-    const allChecked = items.every((_, i) => state.checks[critKey(f.id, lvl, i)]);
-    if(allChecked && items.length) score = lvl; else break;
+    const allMet = items.every((_, i) => countsAsMet(critKey(f.id, lvl, i)));
+    if(allMet && items.length) score = lvl; else break;
   }
   return score;
 }
 function totalCounts(f){
-  let total = 0, checked = 0;
+  let total = 0, met = 0, inFlight = 0;
   for(const lvl of [2,3,4]) for(let i=0;i<(f.levels[lvl]||[]).length;i++){
-    total++; if(state.checks[critKey(f.id,lvl,i)]) checked++;
+    const k = critKey(f.id, lvl, i);
+    total++;
+    if(countsAsMet(k)) met++;
+    else if(statusOf(k) >= 1) inFlight++;   // planned or partially in place
   }
-  return {total, checked};
+  return {total, met, inFlight};
 }
 function nextGapItems(f, score){
   // Criteria still needed to reach the next level.
   const next = score + 1;
   if(next > 4) return [];
   const items = f.levels[next] || [];
-  return items.filter((_, i) => !state.checks[critKey(f.id, next, i)]);
+  return items.filter((_, i) => !countsAsMet(critKey(f.id, next, i)));
+}
+/* How far into the next level a function has come — drives the hatched bar
+   segment and the Result table, without ever moving the achieved level. */
+function nextLevelProgress(f, score){
+  const next = score + 1;
+  if(next > 4) return null;
+  const items = f.levels[next] || [];
+  let met = 0, partial = 0, planned = 0;
+  items.forEach((_, i) => {
+    const k = critKey(f.id, next, i);
+    if(countsAsMet(k)) met++;
+    else if(statusOf(k) === 2) partial++;
+    else if(statusOf(k) === 1) planned++;
+  });
+  // The hatched bar counts only criteria that are actually met at the next
+  // level. Partial and planned are reported as text instead — giving them
+  // fractional weight here would be the averaging the maturity model warns
+  // against, just drawn rather than written.
+  return { next, total: items.length, met, partial, planned,
+           fraction: items.length ? met / items.length : 0 };
 }
 
 function renderMeta(){
@@ -325,12 +460,13 @@ function renderMeta(){
       Object.keys(CATALOG.profiles).map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join("");
   }
   sel.value = state.meta.profile || "";
+  document.getElementById("strict-evidence").checked = !!state.strict;
 }
 
 function renderTiles(){
-  let totalChecked = 0, totalItems = 0, atOrAboveTarget = 0, functionsWithTarget = 0;
+  let totalMet = 0, totalItems = 0, totalInFlight = 0, atOrAboveTarget = 0, functionsWithTarget = 0;
   for(const f of FUNCS){
-    const c = totalCounts(f); totalChecked += c.checked; totalItems += c.total;
+    const c = totalCounts(f); totalMet += c.met; totalItems += c.total; totalInFlight += c.inFlight;
     const score = functionScore(f);
     const t = state.targets[f.id];
     if(t){ functionsWithTarget++; if(score >= t) atOrAboveTarget++; }
@@ -338,8 +474,9 @@ function renderTiles(){
   const avg = FUNCS.reduce((s,f) => s + functionScore(f), 0) / FUNCS.length;
   document.getElementById("tiles").innerHTML = `
     <div class="tile"><div class="v">${avg.toFixed(1)}</div><div class="k">Average function level</div></div>
-    <div class="tile"><div class="v">${totalChecked}/${totalItems}</div><div class="k">Criteria checked</div></div>
-    <div class="tile"><div class="v${functionsWithTarget && atOrAboveTarget < functionsWithTarget ? " " : ""}">${atOrAboveTarget}/${functionsWithTarget || "–"}</div><div class="k">Functions at/above target</div></div>`;
+    <div class="tile"><div class="v">${totalMet}/${totalItems}</div><div class="k">Criteria met</div></div>
+    <div class="tile"><div class="v">${totalInFlight}</div><div class="k">Planned or partly in place</div></div>
+    <div class="tile"><div class="v">${atOrAboveTarget}/${functionsWithTarget || "–"}</div><div class="k">Functions at/above target</div></div>`;
 }
 
 function renderChart(){
@@ -350,9 +487,15 @@ function renderChart(){
     const t = state.targets[f.id];
     const pct = ((score - 1) / 3) * 100;
     const tpct = t ? ((t - 1) / 3) * 100 : null;
-    html += `<div class="barrow" title="${esc(f.name)}: level ${score} (${LEVEL_NAMES[score]})${t ? " · target " + t : ""}">
+    const prog = nextLevelProgress(f, score);
+    const progW = prog ? (prog.fraction / 3) * 100 : 0;
+    const progTitle = prog ? ` · ${prog.met}/${prog.total} met towards L${prog.next}` +
+      (prog.partial ? `, ${prog.partial} partly in place` : "") : "";
+    html += `<div class="barrow" title="${esc(f.name)}: level ${score} (${LEVEL_NAMES[score]})${t ? " · target " + t : ""}${progTitle}">
       <div class="lbl">${esc(f.name)}</div>
-      <div class="bartrack"><div class="barfill" style="width:${pct}%"></div>${tpct!=null ? `<div class="bartick" style="left:calc(${tpct}% - 1px)"></div>` : ""}</div>
+      <div class="bartrack"><div class="barfill" style="width:${pct}%"></div>${
+        progW > 0 ? `<div class="barprog" style="left:${pct}%;width:${progW}%"></div>` : ""
+      }${tpct!=null ? `<div class="bartick" style="left:calc(${tpct}% - 1px)"></div>` : ""}</div>
       <div class="barval">L${score}</div>
     </div>`;
   }
@@ -384,12 +527,14 @@ function renderFunctions(){
       html += `<div class="level-block"><h4>Level ${lvl} — ${LEVEL_NAMES[lvl]}</h4>`;
       items.forEach((text, i) => {
         const key = critKey(f.id, lvl, i);
-        const checked = !!state.checks[key];
+        const st = statusOf(key);
         const ev = state.evidence[key] || "";
-        html += `<div class="crit">
-          <input type="checkbox" id="chk-${key}" data-key="${key}" ${checked ? "checked" : ""}>
+        html += `<div class="crit" data-state="${st}" data-critkey="${key}">
+          <select class="state" data-key="${key}" id="st-${key}" aria-label="Status">
+            ${STATES.map(s => `<option value="${s.v}"${s.v===st?" selected":""}>${esc(s.label)}</option>`).join("")}
+          </select>
           <div class="ev-wrap">
-            <label for="chk-${key}">${esc(text)}</label>
+            <label for="st-${key}">${esc(text)}</label>
             <input type="text" data-ev="${key}" value="${esc(ev)}" placeholder="Evidence (optional) — document, screenshot, metric export…">
           </div>
         </div>`;
@@ -404,8 +549,11 @@ function renderFunctions(){
     if(e.target.tagName === "SELECT") return;
     el.closest(".func").classList.toggle("open");
   }));
-  host.querySelectorAll("input[type=checkbox][data-key]").forEach(cb => cb.addEventListener("change", () => {
-    state.checks[cb.dataset.key] = cb.checked; saveState(); renderAll(true);
+  host.querySelectorAll("select.state[data-key]").forEach(sel => sel.addEventListener("change", () => {
+    const v = Number(sel.value);
+    if(v) state.states[sel.dataset.key] = v; else delete state.states[sel.dataset.key];
+    sel.closest(".crit").dataset.state = v;
+    saveState(); renderAll(true);
   }));
   host.querySelectorAll("input[type=text][data-ev]").forEach(inp => inp.addEventListener("input", () => {
     state.evidence[inp.dataset.ev] = inp.value; saveState();
@@ -418,7 +566,8 @@ function renderFunctions(){
 }
 
 function renderResult(){
-  let html = `<thead><tr><th>Function</th><th>Score</th><th>Target</th><th>Gap</th><th>Next steps to close it</th></tr></thead><tbody>`;
+  let html = `<thead><tr><th>Function</th><th>Score</th><th>Target</th><th>Gap</th>
+    <th>Progress to next level</th><th>Next steps to close it</th></tr></thead><tbody>`;
   for(const f of FUNCS){
     const score = functionScore(f);
     const t = state.targets[f.id];
@@ -427,12 +576,23 @@ function renderResult(){
       const d = t - score;
       gapCell = d <= 0 ? `<span class="met-note">at/above target</span>` : `<span class="gap-note">${d} level${d>1?"s":""} short</span>`;
     }
+    const prog = nextLevelProgress(f, score);
+    let progTxt = "—";
+    if(prog){
+      const bits = [`${prog.met}/${prog.total} met`];
+      if(prog.partial) bits.push(`${prog.partial} partly in place`);
+      if(prog.planned) bits.push(`${prog.planned} planned`);
+      const untouched = prog.total - prog.met - prog.partial - prog.planned;
+      if(untouched) bits.push(`${untouched} not considered`);
+      progTxt = bits.join(" · ");
+    }
     const gapItems = nextGapItems(f, score);
     const nextTxt = score >= 4 ? "—" : (gapItems.length
       ? `${gapItems.length} item${gapItems.length>1?"s":""} to reach L${score+1}: ${esc(gapItems.slice(0,2).join("; "))}${gapItems.length>2?"…":""}`
       : "—");
     html += `<tr><td><b>${esc(f.name)}</b></td><td>L${score} · ${LEVEL_NAMES[score]}</td>
-      <td>${t ? "L"+t : "—"}</td><td>${gapCell}</td><td style="font-size:.82rem">${nextTxt}</td></tr>`;
+      <td>${t ? "L"+t : "—"}</td><td>${gapCell}</td>
+      <td style="font-size:.82rem">${progTxt}</td><td style="font-size:.82rem">${nextTxt}</td></tr>`;
   }
   html += "</tbody>";
   document.getElementById("result-table").innerHTML = html;
@@ -481,15 +641,18 @@ jsonInput.addEventListener("change", async () => {
   if(!f) return;
   try{
     const s = JSON.parse(await f.text());
-    if(!s.checks) throw new Error("not a maturity-assessment snapshot");
-    state = {meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{}, ...s};
+    if(!s.states && !s.checks) throw new Error("not a maturity-assessment snapshot");
+    state = migrate({...blankState(), ...s});
     saveState(); renderAll();
   }catch(e){ alert("Could not import: " + e.message); }
 });
 document.getElementById("reset-all").addEventListener("click", () => {
   if(!confirm("Clear every answer and evidence note? Your existing resume link keeps working — copy it first if you may want to come back to it.")) return;
-  state = { meta: state.meta, checks:{}, evidence:{}, targets: state.targets };
+  state = { ...blankState(), meta: state.meta, targets: state.targets, strict: state.strict };
   saveState(); renderAll();
+});
+document.getElementById("strict-evidence").addEventListener("change", e => {
+  state.strict = e.target.checked; saveState(); renderAll(true);
 });
 
 /* ---- resume link controls ---- */

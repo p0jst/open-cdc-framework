@@ -148,6 +148,10 @@
   color: var(--ocdf-accent);
   margin: 0 0 0.9rem;
 }
+/* keep each segment whole when the line wraps on narrow screens */
+.ocdf-hero .ocdf-eyebrow span {
+  white-space: nowrap;
+}
 .md-typeset .ocdf-hero h1 {
   max-width: 20ch;
   margin: 0 auto 0.55em;
@@ -361,7 +365,8 @@
 
 @media screen and (max-width: 44.9375em) {
   .md-typeset .ocdf-hero h1 { font-size: 1.5rem; }
-  .ocdf-hero::before { opacity: 0.03; background-size: 34px 34px; }
+  /* the blueprint grid is texture at desktop width and noise at phone width */
+  .ocdf-hero::before { display: none; }
   .ocdf-hero { padding: 2.2rem 0.8rem 1.8rem; }
   .ocdf-stats { gap: 1rem 1.6rem; }
 }

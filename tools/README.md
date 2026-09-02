@@ -1,8 +1,48 @@
 # Tools
 
+Three single-file, dependency-free pages that run entirely in the browser — no
+account, no server, no data leaving the machine. Each works both online and as
+a local file.
+
+## regulatory-profile.html — interactive law selector (Tool 01)
+
+**[▸ Open the Regulatory Profile Selector](regulatory-profile.html)**
+
+Users **tick the laws that apply to them** (NIS2, GDPR, DORA, CRA, CER, and national acts such as Denmark's
+NIS 2-loven and Lov om styrket beredskab i energisektoren). All regulatory
+references in the page show/hide to match the selected profile, and
+"Print / save PDF" exports a tailored document.
+
+### Hosting
+- Works locally: just open the file in a browser.
+- For teams: enable **GitHub Pages** on this repo — the tool is then available
+  at `https://<org>.github.io/<repo>/tools/regulatory-profile.html`
+  (for this project: <https://opencdc.org/tools/regulatory-profile.html>).
+
+### Law tagging convention (for contributors)
+
+Two layers keep the framework filterable:
+
+1. **HTML tool:** any element carries `data-law="nis2 gdpr dk-energi"` —
+   it is visible if ANY of its tagged laws is selected.
+2. **Markdown docs:** law-specific sentences carry an HTML comment tag, e.g.
+   `<!-- law:nis2 -->` or `<!-- law:dk-nis2 -->`. These are invisible on GitHub
+   but machine-readable, so future tooling (roadmap v0.2: a build script that
+   generates per-profile Markdown/PDF) can filter the plain docs the same way.
+
+### Law IDs
+`nis2` `gdpr` `dora` `cra` `cer` — EU-wide ·
+`dk-nis2` `dk-energi` `dk-tele` `dk-cer` `dk-fin` — Denmark ·
+National implementations use `<iso2>-nat` (e.g. `de-nat`, `fr-nat`) — one tag per member state.
+Denmark is tagged per act (`dk-nis2`, `dk-energi`, `dk-tele`, `dk-cer`, `dk-fin`) as the
+reference example; contributors adding the same granularity for another country should
+follow that pattern (`<iso2>-<shortname>`).
+
 ## skill-matrix.html — team skill matrix (Tool 02)
 
-A single-file, dependency-free page for **mapping the skills of a CDC/SOC team**.
+**[▸ Open the Team Skill Matrix](skill-matrix.html)**
+
+**Maps the skills of a CDC/SOC team.**
 Team members each fill in the self-assessment sheet
 ([`templates/skill-self-assessment.xlsx`](../templates/skill-self-assessment.xlsx)
 or the [CSV version](../templates/skill-self-assessment.csv)) and send it back;
@@ -38,57 +78,36 @@ both the sheet and the tool if you change skill IDs).
 ### Hosting
 - Works locally: just open the file in a browser (no internet needed).
 - For teams: enable **GitHub Pages** — the tool is then available at
-  `https://<org>.github.io/<repo>/tools/skill-matrix.html`, and the download
+  `https://<org>.github.io/<repo>/tools/skill-matrix.html`
+  (for this project: <https://opencdc.org/tools/skill-matrix.html>), and the download
   links to the templates resolve automatically.
-
-## regulatory-profile.html — interactive law selector (Tool 01)
-
-A single-file, dependency-free page where users **tick the laws that apply to
-them** (NIS2, GDPR, DORA, CRA, CER, and national acts such as Denmark's
-NIS 2-loven and Lov om styrket beredskab i energisektoren). All regulatory
-references in the page show/hide to match the selected profile, and
-"Print / save PDF" exports a tailored document.
-
-### Hosting
-- Works locally: just open the file in a browser.
-- For teams: enable **GitHub Pages** on this repo — the tool is then available
-  at `https://<org>.github.io/<repo>/tools/regulatory-profile.html`.
-
-### Law tagging convention (for contributors)
-
-Two layers keep the framework filterable:
-
-1. **HTML tool:** any element carries `data-law="nis2 gdpr dk-energi"` —
-   it is visible if ANY of its tagged laws is selected.
-2. **Markdown docs:** law-specific sentences carry an HTML comment tag, e.g.
-   `<!-- law:nis2 -->` or `<!-- law:dk-nis2 -->`. These are invisible on GitHub
-   but machine-readable, so future tooling (roadmap v0.2: a build script that
-   generates per-profile Markdown/PDF) can filter the plain docs the same way.
-
-### Law IDs
-`nis2` `gdpr` `dora` `cra` `cer` — EU-wide ·
-`dk-nis2` `dk-energi` `dk-tele` `dk-cer` `dk-fin` — Denmark ·
-National implementations use `<iso2>-nat` (e.g. `de-nat`, `fr-nat`) — one tag per member state.
-Denmark is tagged per act (`dk-nis2`, `dk-energi`, `dk-tele`, `dk-cer`, `dk-fin`) as the
-reference example; contributors adding the same granularity for another country should
-follow that pattern (`<iso2>-<shortname>`).
 
 ## maturity-assessment.html — interactive maturity self-assessment (Tool 03)
 
-A single-file, dependency-free page that turns
-[`assessments/maturity-self-assessment.md`](../assessments/maturity-self-assessment.md)
+**[▸ Open the Maturity Self-Assessment](maturity-assessment.html)**
+
+Turns [`assessments/maturity-self-assessment.md`](../assessments/maturity-self-assessment.md)
 into something you actually fill out, instead of a markdown checklist whose
 `- [ ]` boxes render as inert text on the website. All 60 criteria across the
-six CSF functions are real checkboxes with an optional evidence field each.
+six CSF functions get a status of their own and an optional evidence field.
 
+- **Five-point status per criterion** — not considered / planned / partially in
+  place / implemented / implemented & evidenced — so work in flight is visible
+  without distorting the score. A toggle switches between counting
+  "implemented" and the stricter evidence-based reading that counts only
+  "implemented & evidenced". See the status scale in
+  [`docs/08-maturity-model.md`](../docs/08-maturity-model.md).
 - **Staged auto-scoring**, exactly as the maturity model defines it: a function
   reaches Level *N* only when every criterion at *N* and every level below it is
-  checked — no averaging up.
+  met — no averaging up. The three lower states never move the level; they drive
+  a separate progress view instead (a hatched segment on the score chart showing
+  how far into the next level the function has come, and a per-function
+  breakdown in the Result table).
 - **Target profiles** from [`docs/08-maturity-model.md`](../docs/08-maturity-model.md)'s
   target-setting table (SME, NIS2 important/essential, critical infrastructure)
   pre-fill a target per function, individually adjustable.
 - **Score chart** — current level vs. target, per function — plus a Result table
-  listing exactly which unchecked criteria are blocking the next level.
+  listing exactly which unmet criteria are blocking the next level.
 - **Resume link** — the full assessment (answers, evidence notes, targets and
   the header fields) is encoded into the page's URL fragment, so the address bar
   always holds a unique link that restores exactly the current state. Copy it,
@@ -107,7 +126,8 @@ sent anywhere.
 ### Hosting
 - Works locally: just open the file in a browser (no internet needed).
 - For teams: enable **GitHub Pages** — the tool is then available at
-  `https://<org>.github.io/<repo>/tools/maturity-assessment.html`.
+  `https://<org>.github.io/<repo>/tools/maturity-assessment.html`
+  (for this project: <https://opencdc.org/tools/maturity-assessment.html>).
 
 ### File format (for contributors)
 

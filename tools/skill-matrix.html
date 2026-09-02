@@ -7,11 +7,20 @@
 <style>
   :root{
     --ink:#1b2733; --paper:#fbfaf7; --line:#c9c4b8; --line-soft:#e6e2d8;
-    --eu:#123a6d; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
+    --eu:#123a6d; --eu-dark:#0d2c54; --eu-soft:#e8eef7; --accent:#8a1f2d; --muted:#6b7280;
     --ok:#1f6f43; --chipbg:#f1efe8;
     --l0:#f1efe8; --l1:#dbe5f2; --l2:#7b9cc9; --l3:#123a6d;
     --gap1:#ecc8cd; --gap2:#8a1f2d; --meet:#f1f0ea; --exceed:#cfe3d6;
   }
+  /* site nav — the tools are standalone pages outside the MkDocs theme,
+     so they carry their own way back to the framework */
+  .sitenav{background:var(--eu-dark);color:#cfdcef;font-size:.78rem;
+    padding:8px 28px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .sitenav a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+  .sitenav a:hover{text-decoration:underline}
+  .sitenav a.home{font-weight:600}
+  .sitenav .sep{opacity:.45}
+  .sitenav .here{color:#9db6d8}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);
     font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
@@ -128,6 +137,7 @@
   footer{max-width:1240px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);
     font-size:.78rem;color:var(--muted)}
   @media print{
+    .sitenav{display:none !important}
     header{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
     header p,.doc-id{color:var(--muted)}
     #uploader,nav.tabs,.toolbar,.steps,#drop,footer .noprint{display:none !important}
@@ -138,6 +148,15 @@
 </style>
 </head>
 <body>
+
+<nav class="sitenav">
+  <a class="home" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"
+     aria-hidden="true"><path d="M12 2 4 5v6.1c0 5 3.4 9.7 8 10.9 4.6-1.2 8-5.9 8-10.9V5l-8-3zm0 2.2 6 2.2v4.7c0 4-2.5 7.7-6 8.8V4.2z"/></svg>Open
+     CDC Framework</a>
+  <span class="sep">/</span><a href="./">Tools</a>
+  <span class="sep">/</span><span class="here">Team skill matrix</span>
+</nav>
+
 
 <header>
   <div class="doc-id">Open CDC Framework · Tool 02</div>

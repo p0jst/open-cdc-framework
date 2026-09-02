@@ -96,6 +96,6 @@
 1. Run all six workshops; log every weak answer as a backlog item tagged with its capability ID (e.g., `DE-4`).
 2. Score yourself with [maturity-self-assessment.md](maturity-self-assessment.md) — the navigator answers *are* much of your evidence.
 3. Prioritise: fix GOVERN gaps first (they block everything), then the cheapest blast-radius items (P1, P3, P4), then coverage (D1, D2).
-4. Set level targets per function (see [../docs/08-maturity-model.md](../docs/08-maturity-model.md)) and reassess in 6–12 months.
+4. Set level targets per function (see [../docs/08-maturity-model.md](../docs/08-maturity-model.md)) and reassess annually, or after major organisational change.
 
 *Open CDC Framework (CC BY 4.0).*

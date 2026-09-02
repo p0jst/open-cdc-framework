@@ -57,12 +57,20 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.superfences
+  # Renders the bare URLs used throughout the references and national annexes
+  # as real links instead of plain text.
+  - pymdownx.magiclink:
+      repo_url_shortener: false
+      social_url_shortener: false
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - search
+
+hooks:
+  - site/hooks.py
 
 extra:
   social:
@@ -133,7 +141,10 @@ nav:
           - Spain: docs/annexes/annex-es.md
           - Sweden: docs/annexes/annex-se.md
   - Tools & templates:
-      - Interactive tools: tools/README.md
+      # Wrapped in its own subsection: Material's navigation.indexes hoists a
+      # section's first page into the section title, which hid this page.
+      - Interactive tools:
+          - Overview: tools/README.md
       - Templates:
           - Overview & downloads: templates/index.md
           - CDC charter: templates/cdc-charter-template.md
