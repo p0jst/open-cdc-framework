@@ -3,7 +3,7 @@
 **An open source framework for building and maturing Security Operations Centers (SOC) and Cyber Defence Centers (CDC) across the European Union.**
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-![Status](https://img.shields.io/badge/status-v0.1--rc1-blue)
+![Version](https://img.shields.io/badge/version-v1.0.0-blue)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 
 **📖 Read the framework as a website: <https://opencdc.org/>** — searchable docs, interactive tools, template downloads.

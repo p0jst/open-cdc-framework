@@ -1,6 +1,10 @@
 # Changelog — Open CDC Framework (OCDF)
 
-## Unreleased
+## v1.0.0 — 2026-09-02
+
+First stable release. The framework is content-complete across all six functions, the regulatory layer and the practical assets; see the release notes for status and limitations, in particular that the reporting-deadline tables have not had independent legal review and nine national annexes still carry verification flags.
+
+Since the v0.1-rc1 freeze candidate:
 
 - **Persistent previous/next bar.** A slim bar slides in once you are past the first screenful of a page and hides again when the footer cards come into view, so the two never compete; it also steps aside for the mobile drawer and the search overlay. Built from MkDocs' own page order in `overrides/main.html` rather than scraped from the DOM.
 - **More filename links rewritten as prose.** The earlier sweep only matched paths beginning `../`, so same-directory references such as `[10-tiers.md](10-tiers.md)` survived in body text. Twenty-one more rewritten, including the shared "Credits" footer across the ten numbered documents. Filenames are kept where the filename is the point: the README's document tables and the annex index's file column.
