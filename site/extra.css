@@ -1,74 +1,367 @@
 /* Open CDC Framework site theme — matches the identity of the interactive tools
-   (EU blue #123a6d · paper #fbfaf7 · accent red #8a1f2d). */
+   (EU blue #123a6d · paper #fbfaf7 · accent red #8a1f2d).
+
+   Design intent: restrained and document-like. Warm paper ground, one blue,
+   one red used sparingly as a "keel" line, generous type. No shadows-as-decor,
+   no gradients beyond a single soft hero wash. */
 
 :root {
   --ocdf-eu: #123a6d;
+  --ocdf-eu-mid: #2a5490;
   --ocdf-eu-dark: #0d2c54;
+  --ocdf-eu-soft: #e8eef7;
   --ocdf-accent: #8a1f2d;
   --ocdf-paper: #fbfaf7;
+  --ocdf-line: #e3ded1;
+  --ocdf-ink-soft: #5d6975;
 }
 
-/* Primary & accent colors, both schemes */
+/* ---------------------------------------------------------------- palette */
+
 [data-md-color-scheme="default"],
 [data-md-color-scheme="slate"] {
   --md-primary-fg-color: var(--ocdf-eu);
-  --md-primary-fg-color--light: #2a5490;
+  --md-primary-fg-color--light: var(--ocdf-eu-mid);
   --md-primary-fg-color--dark: var(--ocdf-eu-dark);
   --md-accent-fg-color: var(--ocdf-accent);
   --md-typeset-a-color: var(--ocdf-eu);
 }
 
-/* Paper background and warm lines in light mode only */
 [data-md-color-scheme="default"] {
   --md-default-bg-color: var(--ocdf-paper);
   --md-typeset-table-color: rgba(27, 39, 51, 0.12);
+  --ocdf-card-bg: #ffffff;
+  --ocdf-hero-wash: linear-gradient(180deg, #f2f5fa 0%, var(--ocdf-paper) 100%);
+  --ocdf-rule: var(--ocdf-line);
 }
+
 [data-md-color-scheme="slate"] {
   --md-typeset-a-color: #8fb3e3;
+  --md-default-bg-color: #131c26;
+  --ocdf-eu-soft: #26354a;
+  --ocdf-card-bg: #1a242f;
+  --ocdf-hero-wash: linear-gradient(180deg, #18242f 0%, #131c26 100%);
+  --ocdf-rule: #2b3947;
+  --ocdf-ink-soft: #9aa7b4;
 }
+
+/* --------------------------------------------------------------- chrome */
 
 /* Header: the tools' signature red keel line */
 .md-header {
   border-bottom: 3px solid var(--ocdf-accent);
+  box-shadow: none;
+}
+.md-header--shadow {
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.08);
+}
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
-/* Landing page hero */
-.ocdf-hero {
-  text-align: center;
-  padding: 1.6rem 0 1.2rem;
-  max-width: 46rem;
-  margin: 0 auto;
+/* Tab bar: quieter, with an accent underline on the active tab */
+.md-tabs {
+  background-color: var(--ocdf-eu-dark);
 }
-.ocdf-hero h1 {
-  color: var(--md-typeset-color);
+.md-tabs__link {
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+.md-tabs__item--active .md-tabs__link {
+  box-shadow: inset 0 -2px 0 0 var(--ocdf-accent);
+}
+
+/* ----------------------------------------------------------- typography */
+
+.md-typeset {
+  font-size: 0.775rem;
+  line-height: 1.68;
+}
+.md-typeset h1 {
   font-weight: 700;
-  margin-bottom: 0.6em;
+  letter-spacing: -0.015em;
+  color: var(--md-default-fg-color);
 }
-.ocdf-hero .md-button {
-  margin: 0.2rem 0.25rem;
+.md-typeset h2 {
+  font-weight: 650;
+  letter-spacing: -0.008em;
+  margin-top: 2.2em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--ocdf-rule);
+}
+.md-typeset h3 {
+  font-weight: 640;
+}
+.md-typeset a {
+  text-underline-offset: 0.16em;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+}
+.md-typeset a:hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
-/* Cards: top keel in EU blue, like the tools' step cards */
+.md-typeset code {
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+/* Blockquotes read as margin notes rather than boxes */
+.md-typeset blockquote {
+  border-left: 2px solid var(--ocdf-eu);
+  color: var(--ocdf-ink-soft);
+}
+
+/* --------------------------------------------------------------- hero */
+
+.ocdf-hero {
+  position: relative;
+  text-align: center;
+  margin: -1.55rem calc(-50vw + 50%) 2.6rem;
+  padding: 3.4rem calc(50vw - 50%) 2.8rem;
+  background: var(--ocdf-hero-wash);
+  border-bottom: 1px solid var(--ocdf-rule);
+}
+/* faint blueprint grid, barely there */
+.ocdf-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--ocdf-eu) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ocdf-eu) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.05;
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, #000 0%, transparent 75%);
+}
+.ocdf-hero > * {
+  position: relative;
+}
+.ocdf-hero .ocdf-eyebrow {
+  display: inline-block;
+  font-family: var(--md-code-font-family, ui-monospace, Consolas, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ocdf-accent);
+  margin: 0 0 0.9rem;
+}
+.md-typeset .ocdf-hero h1 {
+  max-width: 20ch;
+  margin: 0 auto 0.55em;
+  font-size: 2.05rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.ocdf-hero .ocdf-lead {
+  max-width: 60ch;
+  margin: 0 auto;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--ocdf-ink-soft);
+}
+.ocdf-hero .ocdf-lead strong {
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+}
+.ocdf-hero .ocdf-cta {
+  margin-top: 1.6rem;
+}
+.md-typeset .ocdf-hero .md-button {
+  margin: 0.25rem 0.2rem;
+  border-radius: 5px;
+  border-width: 1px;
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 0.42em 1.1em;
+  transition: transform 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+}
+.md-typeset .ocdf-hero .md-button:hover {
+  transform: translateY(-1px);
+}
+.md-typeset .ocdf-hero .md-button--primary {
+  border-color: var(--ocdf-eu);
+}
+/* dark mode: the EU blue is too dark to sit on ink — lift the secondary
+   buttons, the eyebrow and the headline so they keep their contrast */
+[data-md-color-scheme="slate"] .ocdf-hero .ocdf-eyebrow {
+  color: #d98a94;
+}
+[data-md-color-scheme="slate"] .md-typeset .ocdf-hero h1 {
+  color: #eaeff5;
+}
+[data-md-color-scheme="slate"] .md-typeset .ocdf-hero .md-button {
+  color: #cfe0f5;
+  border-color: #3f5b7d;
+}
+[data-md-color-scheme="slate"] .md-typeset .ocdf-hero .md-button:hover {
+  background: var(--ocdf-accent);
+  border-color: var(--ocdf-accent);
+  color: #fff;
+}
+[data-md-color-scheme="slate"] .md-typeset .ocdf-hero .md-button--primary {
+  background: var(--ocdf-eu-mid);
+  border-color: var(--ocdf-eu-mid);
+  color: #fff;
+}
+
+/* stat strip under the hero */
+.ocdf-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 2.6rem;
+  margin: 2rem auto 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--ocdf-rule);
+  max-width: 48rem;
+}
+.ocdf-stats div {
+  min-width: 6.5rem;
+}
+.ocdf-stats b {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 650;
+  line-height: 1.1;
+  color: var(--ocdf-eu);
+  font-variant-numeric: tabular-nums;
+}
+[data-md-color-scheme="slate"] .ocdf-stats b {
+  color: #7ea6d8;
+}
+.ocdf-stats span {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ocdf-ink-soft);
+  margin-top: 0.15rem;
+}
+
+/* --------------------------------------------------------------- cards */
+
 .md-typeset .grid.cards > ul > li,
 .md-typeset .grid > .card {
+  background: var(--ocdf-card-bg);
+  border: 1px solid var(--ocdf-rule);
   border-top: 3px solid var(--ocdf-eu);
-  border-radius: 0 0 0.4rem 0.4rem;
+  border-radius: 0 0 6px 6px;
+  padding: 1.1rem 1.15rem 1.2rem;
+  box-shadow: none;
+  transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  transform: translateY(-2px);
+  border-top-color: var(--ocdf-accent);
+  box-shadow: 0 4px 14px rgba(18, 58, 109, 0.08);
 }
 [data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li {
   border-top-color: #4a76ad;
 }
-
-/* Tables: EU-soft header row, as in the tools */
-.md-typeset table:not([class]) th {
-  background: #e8eef7;
-  color: #1b2733;
+.md-typeset .grid.cards > ul > li > hr {
+  margin: 0.6em 0 0.8em;
+  border-color: var(--ocdf-rule);
 }
-[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
-  background: #26354a;
-  color: var(--md-typeset-color);
+.md-typeset .grid.cards > ul > li > p:first-child {
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+}
+/* card icon sits in a soft blue chip */
+.md-typeset .grid.cards .twemoji.lg,
+.md-typeset .grid.cards svg.lg {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 1.05rem;
+  height: 1.05rem;
+  padding: 0.32rem;
+  margin-right: 0.35rem;
+  border-radius: 5px;
+  background: var(--ocdf-eu-soft);
+  fill: var(--ocdf-eu);
+  color: var(--ocdf-eu);
+  vertical-align: -0.72rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji.lg {
+  fill: #8fb3e3;
+  color: #8fb3e3;
+}
+.md-typeset .grid.cards > ul > li p:not(:first-child) {
+  color: var(--ocdf-ink-soft);
+}
+.md-typeset .grid.cards > ul > li a {
+  font-weight: 500;
 }
 
-/* Keep long regulatory tables readable */
+/* "Where to begin" — three numbered steps, lighter than the feature cards */
+.md-typeset .grid.cards.ocdf-steps > ul > li {
+  border-top-width: 2px;
+  background: transparent;
+}
+.md-typeset .grid.cards.ocdf-steps > ul > li:hover {
+  background: var(--ocdf-card-bg);
+}
+.md-typeset .grid.cards.ocdf-steps > ul > li > p:first-child {
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  color: var(--ocdf-eu);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards.ocdf-steps > ul > li > p:first-child {
+  color: #8fb3e3;
+}
+
+/* --------------------------------------------------------- admonitions */
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-width: 1px;
+  border-left-width: 3px;
+  border-radius: 0 5px 5px 0;
+  box-shadow: none;
+  font-size: 0.73rem;
+  background: var(--ocdf-card-bg);
+}
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-weight: 650;
+  letter-spacing: 0.005em;
+}
+
+/* -------------------------------------------------------------- tables */
+
 .md-typeset table:not([class]) {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+  border: 1px solid var(--ocdf-rule);
+  border-radius: 5px;
+  box-shadow: none;
+}
+.md-typeset table:not([class]) th {
+  background: var(--ocdf-eu-soft);
+  color: var(--md-default-fg-color);
+  font-weight: 640;
+  letter-spacing: 0.01em;
+}
+.md-typeset table:not([class]) tr:hover {
+  background: color-mix(in srgb, var(--ocdf-eu-soft) 45%, transparent);
+}
+
+/* -------------------------------------------------------------- footer */
+
+.md-footer-meta {
+  background-color: var(--ocdf-eu-dark);
+}
+.md-footer {
+  background-color: #1b2733;
+}
+
+/* --------------------------------------------------------- responsive */
+
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .ocdf-hero h1 { font-size: 1.5rem; }
+  .ocdf-hero::before { opacity: 0.03; background-size: 34px 34px; }
+  .ocdf-hero { padding: 2.2rem 0.8rem 1.8rem; }
+  .ocdf-stats { gap: 1rem 1.6rem; }
 }

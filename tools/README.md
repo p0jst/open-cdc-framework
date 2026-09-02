@@ -89,11 +89,20 @@ six CSF functions are real checkboxes with an optional evidence field each.
   pre-fill a target per function, individually adjustable.
 - **Score chart** — current level vs. target, per function — plus a Result table
   listing exactly which unchecked criteria are blocking the next level.
+- **Resume link** — the full assessment (answers, evidence notes, targets and
+  the header fields) is encoded into the page's URL fragment, so the address bar
+  always holds a unique link that restores exactly the current state. Copy it,
+  mail it to yourself or paste it into a ticket, and continue later on any
+  device or browser — no account, no cookie, no server. The fragment is never
+  sent in an HTTP request, so the data stays with whoever holds the link.
 - **Snapshot export/import** (JSON) so you can date and keep assessments in
   version control to track the trend, per the reassessment cadence in the
-  maturity model doc.
+  maturity model doc. Prefer this over the link for long-term archiving, and
+  for assessments with long evidence notes (links past ~2 000 characters are
+  mangled by some mail clients — the tool warns when that happens).
 
-All data stays in the browser (localStorage) — nothing is sent anywhere.
+All data stays in the browser (localStorage plus the resume link) — nothing is
+sent anywhere.
 
 ### Hosting
 - Works locally: just open the file in a browser (no internet needed).

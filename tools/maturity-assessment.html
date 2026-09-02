@@ -80,6 +80,28 @@
   .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:12px}
   .legend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
 
+  /* resume-link panel — the tool's most important affordance */
+  .resume{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;
+    background:var(--eu-soft);padding:14px 18px 16px;margin:18px 0 6px}
+  .resume h2{border:0;margin:0 0 4px;padding:0;font-size:.98rem;color:var(--eu);display:flex;
+    align-items:center;gap:8px}
+  .resume h2 .badge{font-family:ui-monospace,Consolas,monospace;font-size:.62rem;letter-spacing:.12em;
+    text-transform:uppercase;background:var(--accent);color:#fff;border-radius:3px;padding:2px 7px;font-weight:600}
+  .resume p{margin:0 0 10px;font-size:.86rem;max-width:86ch}
+  .resume-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .resume-row input{flex:1 1 380px;min-width:0;font-family:ui-monospace,Consolas,monospace;
+    font-size:.76rem;padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+  .resume-row .btn{background:var(--eu);color:#fff;border-color:var(--eu);font-weight:600}
+  .resume-row .btn:hover{background:var(--eu-dark,#0d2c54);color:#fff;border-color:var(--eu)}
+  .resume-row .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line);font-weight:400}
+  .resume-row .btn.ghost:hover{background:#fff;color:var(--eu);border-color:var(--eu)}
+  .resume-note{margin:9px 0 0;font-size:.78rem;color:var(--muted)}
+  .resume-note b{color:var(--ink)}
+  .resume-warn{margin:8px 0 0;font-size:.78rem;color:var(--accent);display:none}
+  .resume.long .resume-warn{display:block}
+  #copy-flash{font-size:.8rem;color:var(--ok);opacity:0;transition:opacity .2s ease}
+  #copy-flash.on{opacity:1}
+
   table.result{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff;margin:10px 0}
   table.result th{background:var(--eu-soft);text-align:left;font-weight:600}
   table.result th,table.result td{border:1px solid var(--line-soft);padding:7px 10px;vertical-align:top}
@@ -88,7 +110,8 @@
   footer{max-width:1080px;margin:0 auto;padding:18px 28px;border-top:1px solid var(--line);
     font-size:.78rem;color:var(--muted)}
   @media print{
-    .toolbar,#reset-all,.func-head .chevron{display:none !important}
+    .toolbar,#reset-all,.func-head .chevron,.resume-row,.resume-note,.resume-warn{display:none !important}
+    .resume{background:#fff;border-left-color:var(--line)}
     .func-body{display:block !important}
     body{font-size:11px}
   }
@@ -102,10 +125,32 @@
   <p>Score each of the six CSF functions against the framework's four-level maturity model, right here in the
      browser. A level counts only when <b>every</b> box at that level and every level below it is checked —
      staged scoring, no averaging up. See <a href="../docs/08-maturity-model/">the maturity model</a> for the
-     full method. Answers are saved only in this browser.</p>
+     full method. Nothing is sent anywhere: your answers live in this browser and in your own
+     resume link.</p>
 </header>
 
 <main>
+
+<section class="resume" id="resume">
+  <h2><span class="badge">Save &amp; resume</span> Your assessment lives in this link</h2>
+  <p>There is no account and no cookie behind this page. Everything you tick is encoded into the
+     address below, which updates as you work. <b>Copy it and keep it</b> — in your notes, a
+     calendar invite or a mail to yourself — and open it whenever you want to carry on, on any
+     device or browser. Share it with a colleague and they see exactly the state you were in.</p>
+  <div class="resume-row">
+    <input type="text" id="share-url" readonly aria-label="Link that restores this assessment"
+           onfocus="this.select()">
+    <button class="btn" id="copy-url">Copy link</button>
+    <button class="btn ghost" id="mail-url">Mail it to myself</button>
+    <span id="copy-flash">Copied</span>
+  </div>
+  <p class="resume-note">The link carries your answers, evidence notes and targets — it is
+     <b>not</b> stored on any server, so treat it as the assessment itself: whoever holds the link
+     holds the data. A copy is also kept in this browser, so simply reopening the page works too.</p>
+  <p class="resume-warn">This link has grown long because of the evidence notes. Some mail clients
+     break links over ~2 000 characters — use <b>Export snapshot (.json)</b> below for long-term
+     archiving.</p>
+</section>
 
 <div class="meta">
   <div><label for="f-name">Assessor(s)</label><input type="text" id="f-name" placeholder="Names"></div>
@@ -162,10 +207,85 @@ const FUNCS = CATALOG.functions;
 const LEVEL_NAMES = {1:"Initial",2:"Managed",3:"Established",4:"Optimising"};
 let state = { meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{} };
 
+/* ------------------------------------------------------------------ *
+ * Resume links.  The whole assessment is encoded into the URL fragment
+ * (base64url of a compact JSON payload), so progress can be saved and
+ * reopened without an account, a cookie or a server round-trip.  The
+ * fragment never leaves the browser — it is not sent in HTTP requests.
+ * ------------------------------------------------------------------ */
+const HASH_PREFIX = "#a=";
+
+function critList(){                       // stable ordering for the bitfield
+  const out = [];
+  for(const f of FUNCS) for(const lvl of [2,3,4])
+    (f.levels[lvl]||[]).forEach((_, i) => out.push(critKey(f.id, lvl, i)));
+  return out;
+}
+function b64uEncode(bytes){
+  let s = ""; for(const b of bytes) s += String.fromCharCode(b);
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function b64uDecode(str){
+  const s = atob(str.replace(/-/g,"+").replace(/_/g,"/"));
+  const out = new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++) out[i] = s.charCodeAt(i);
+  return out;
+}
+
+function encodeState(){
+  const keys = critList();
+  const bytes = new Uint8Array(Math.ceil(keys.length / 8));
+  keys.forEach((k, i) => { if(state.checks[k]) bytes[i >> 3] |= 1 << (7 - (i & 7)); });
+  const ev = {};
+  keys.forEach((k, i) => { const v = state.evidence[k]; if(v) ev[i] = v; });
+  const payload = {
+    v: 1,
+    m: [state.meta.name||"", state.meta.date||"", state.meta.evrepo||"", state.meta.profile||""],
+    c: b64uEncode(bytes),
+    t: FUNCS.map(f => state.targets[f.id] || 0).join("")
+  };
+  if(Object.keys(ev).length) payload.e = ev;
+  return b64uEncode(new TextEncoder().encode(JSON.stringify(payload)));
+}
+
+function decodeState(token){
+  const p = JSON.parse(new TextDecoder().decode(b64uDecode(token)));
+  if(!p || p.v !== 1) throw new Error("unrecognised link version");
+  const keys = critList();
+  const bytes = b64uDecode(p.c || "");
+  const s = { meta:{name:"",date:"",evrepo:"",profile:""}, checks:{}, evidence:{}, targets:{} };
+  const m = p.m || [];
+  s.meta = { name:m[0]||"", date:m[1]||"", evrepo:m[2]||"", profile:m[3]||"" };
+  keys.forEach((k, i) => { if((bytes[i >> 3] >> (7 - (i & 7))) & 1) s.checks[k] = true; });
+  (p.t || "").split("").forEach((d, i) => { const n = Number(d); if(n && FUNCS[i]) s.targets[FUNCS[i].id] = n; });
+  for(const [i, txt] of Object.entries(p.e || {})) if(keys[i]) s.evidence[keys[i]] = txt;
+  return s;
+}
+
+let shareUrl = "";
+function currentShareUrl(){
+  return location.href.split("#")[0] + HASH_PREFIX + encodeState();
+}
+function syncShareLink(){
+  shareUrl = currentShareUrl();
+  const box = document.getElementById("share-url");
+  if(box && document.activeElement !== box) box.value = shareUrl;
+  document.getElementById("resume").classList.toggle("long", shareUrl.length > 2000);
+  try{ history.replaceState(null, "", HASH_PREFIX + encodeState()); }catch(e){}
+}
+
 function loadState(){
+  const hash = location.hash || "";
+  if(hash.startsWith(HASH_PREFIX)){
+    try{ state = decodeState(hash.slice(HASH_PREFIX.length)); saveState(); return; }
+    catch(e){ alert("That resume link could not be read (" + e.message + "). Starting from what this browser has saved."); }
+  }
   try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const s = JSON.parse(raw); if(s) state = {...state, ...s}; } }catch(e){}
 }
-function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+  syncShareLink();
+}
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 function critKey(fid, lvl, idx){ return fid+"|"+lvl+"|"+idx; }
@@ -367,12 +487,36 @@ jsonInput.addEventListener("change", async () => {
   }catch(e){ alert("Could not import: " + e.message); }
 });
 document.getElementById("reset-all").addEventListener("click", () => {
+  if(!confirm("Clear every answer and evidence note? Your existing resume link keeps working — copy it first if you may want to come back to it.")) return;
   state = { meta: state.meta, checks:{}, evidence:{}, targets: state.targets };
   saveState(); renderAll();
 });
 
+/* ---- resume link controls ---- */
+function flashCopied(){
+  const el = document.getElementById("copy-flash");
+  el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 1600);
+}
+document.getElementById("copy-url").addEventListener("click", async () => {
+  const box = document.getElementById("share-url");
+  box.value = shareUrl;
+  try{ await navigator.clipboard.writeText(shareUrl); flashCopied(); }
+  catch(e){ box.focus(); box.select(); try{ document.execCommand("copy"); flashCopied(); }catch(e2){} }
+});
+document.getElementById("mail-url").addEventListener("click", () => {
+  const d = state.meta.date || new Date().toISOString().slice(0,10);
+  location.href = "mailto:?subject=" + encodeURIComponent("CDC maturity self-assessment — resume link (" + d + ")") +
+    "&body=" + encodeURIComponent("Open this link to continue the assessment where it was left off:\n\n" + shareUrl + "\n");
+});
+/* Someone pasting a different resume link into the address bar of an open tab. */
+window.addEventListener("hashchange", () => {
+  if(location.hash === HASH_PREFIX + encodeState()) return;
+  loadState(); renderAll();
+});
+
 loadState();
 renderAll();
+syncShareLink();
 </script>
 </body>
 </html>

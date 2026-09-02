@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **Resume links in the maturity self-assessment**: the tool now encodes the whole assessment — answers, evidence notes, targets and header fields — into the page's URL fragment, so you get a unique link that restores exactly where you left off. Copy it, mail it to yourself, share it with a colleague; works on any device or browser without an account, a cookie or a server (the fragment is never sent in an HTTP request). Highlighted as a "Save & resume" panel at the top of the tool, with a warning when evidence notes push the link past ~2 000 characters.
+
+- **Website look & feel**: refreshed theme (`site/extra.css`) and landing page — full-width hero with an at-a-glance stat strip, feature cards with icon chips and hover lift, a "Where to begin" three-step section, and tightened typography, tables and admonitions. Same minimal, document-like identity; no new dependencies or webfonts.
+
 - **Interactive maturity self-assessment** (Tool 03): `tools/maturity-assessment.html` — the maturity checklist filled out in the browser instead of as inert markdown checkboxes. Real checkboxes with evidence fields for all 60 criteria, staged auto-scoring per the maturity model's rules, target-profile presets from `docs/08-maturity-model.md`, a score-vs-target chart, a Result table naming exactly which criteria block the next level, and JSON snapshot export/import for tracking the trend. `assessments/maturity-self-assessment.md` now links to it at the top; landing page's "Assess your maturity" button points to it directly.
 
 - **Website**: the framework now publishes as a documentation site (MkDocs Material) via GitHub Actions — landing page, full-text search, themed to match the tools; `site/` holds the landing page, theme CSS and staging script, `mkdocs.yml` the nav, `.github/workflows/publish-site.yml` the deployment. Repo layout and all links unchanged.
