@@ -48,7 +48,7 @@ Team members each fill in the self-assessment sheet
 or the [CSV version](../templates/skill-self-assessment.csv)) and send it back;
 the manager drops the returned files onto the page and gets:
 
-- a **team heatmap** (people × 47 skills in 8 domains) with per-skill coverage,
+- a **team heatmap** (people × 50 skills in 8 domains) with per-skill coverage,
   *bus factor 1* and *nobody proficient* flags, and mentor markers;
 - a **gap analysis** against editable per-role target levels (defaults derived
   from [`docs/12-roles-and-competences.md`](../docs/12-roles-and-competences.md));
